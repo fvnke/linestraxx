@@ -1,0 +1,7 @@
+.shopify-section {
+  margin-bottom: $section-padding;
+}
+
+.section-header {
+  @include gutter;
+}

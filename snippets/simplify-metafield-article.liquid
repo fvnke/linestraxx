@@ -1,0 +1,19 @@
+{% assign metafields = [entity].metafields.metafield_template %}
+
+{% if metafields[field_name] %}
+	{% assign article_list = metafields[field_name] | split: ',' %}
+	{% for theArticle in article_list %}
+		{% assign this_article = theArticle | split: ':' %}
+		{% assign this_blog_handle = this_article[1] %}
+
+		{% assign this_article_id = this_article[0] | plus: 0 %}
+		{% for article in blogs[this_blog_handle].articles %}	
+			{% if article.id == this_article_id %}
+				<h2>{{ article.title }}</h2>
+				<p> {{ article.excerpt_or_content }} </p>
+				<a href="{{ article.url }}">read more</a>
+			{% endif %}
+			
+		{% endfor %}
+	{% endfor %}
+{% endif %}

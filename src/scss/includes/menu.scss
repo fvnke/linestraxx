@@ -1,0 +1,20 @@
+.overflow-container {
+  @include overflowContainer;
+  ul {
+    @include horizontal-list;
+  }
+}
+
+.main-nav, .subnav, .footer-nav {
+  @include overflowScroll;
+  .utility-trigger-j {
+    cursor: pointer;
+  }
+  a, span, li {
+    @include noSelection;
+  }
+}
+
+.app-utilities {
+  @include noSelection;
+}

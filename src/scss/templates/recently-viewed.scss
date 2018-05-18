@@ -1,0 +1,15 @@
+#recently-viewed-products {
+  @include horizontal-scrolling-img-list;
+ 
+  div.product {
+    @include smallFlickity;
+    display: inline-block;
+    text-align: left;
+    a {
+      display: block;
+    }
+    h3 {
+      @include overflow;
+    }
+  }
+}

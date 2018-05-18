@@ -1,0 +1,57 @@
+<div class="section" id="instagram-feed">
+	<div class="wrapper">
+		
+		<div class="section-header">
+			{%- if section.settings['insta_link'] -%}
+				<a href="{{ section.settings['insta_link'] }}">
+					<h3>{{ section.settings['insta_title'] }}</h3>
+				</a>
+			{%- else -%}
+				<h3>{{ section.settings['insta_title'] }}</h3>
+			{%- endif -%}
+		</div>
+
+		{%- assign insta_app = section.settings['insta_widget'] -%}
+		{%- if insta_app != blank -%}
+			<script src="//lightwidget.com/widgets/lightwidget.js"></script>
+			{{ insta_app }}
+		{%- endif -%}
+	  
+	</div>
+</div>
+
+{% schema %}
+  {
+    "name": "Instagram",
+    "class": "section-instagram",
+    "settings": [
+	    {
+		    "type": "text",
+		    "id": "insta_title",
+		    "label": "Title"
+	    },
+	    {
+		    "type": "text",
+		    "id": "insta_link",
+		    "label": "Link"
+	    },
+	    {
+		    "type": "text",
+		    "id": "insta_widget",
+		    "label": "Light Widget Embed",
+				"info": "Get Instagram embed widget here: https://lightwidget.com/"
+	    }
+    ],
+    "presets": [
+	    {
+		    "name": "Instagram"
+	    }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet 'scss' %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

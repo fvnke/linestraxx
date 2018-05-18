@@ -1,0 +1,142 @@
+{% assign t = template | handleize %}
+
+<div id="app-login" data-module-init="login" class="page header-lower {% if t == 'customers-login' %}visible{% endif %}">
+	<div class="wrapper">
+		<div class="account-inner">
+			
+		  <div class="login-col">  
+		    <div id="reset-success" style="display:none;">
+		      {{ 'customer.recover_password.success' | t }}
+		    </div>
+		    <div class="login-box" id="customer-login">
+		      {% form 'customer_login' %}
+		        <input type="hidden" name="checkout_url" value="{{ canonical_url }}" />
+            <!--
+		        <div class="login-box-header">
+		          <h1>{{ 'customer.login.title' | t }}</h1>
+		        </div>
+		          -->
+		        {{ form.errors | default_errors }}
+						<span class="error" style="display: none;">Invalid login credentials</span>
+						<div class="field-wrap">
+              <label class="label">{{ 'customer.register.email' | t }}</label>
+			        <input type="email" name="customer[email]" id="CustomerEmail" placeholder="{{ 'customer.login.email' | t }}"{% if form.errors contains "email" %} class="error"{% endif %} autocorrect="off" autocapitalize="off" autofocus>
+						</div>
+		
+		        {% if form.password_needed %}
+							<div class="field-wrap no-marg">
+                <label class="label">{{ 'customer.login.password' | t }}</label>
+                <a href="#" onclick="showRecoverPasswordForm();return false;">{{ 'customer.login.forgot_password' | t }}</a>
+			          <input type="password" value="" name="customer[password]" id="CustomerPassword" placeholder="{{ 'customer.login.password' | t }}" {% if form.errors contains "password" %} class="error"{% endif %}>
+							</div>
+							
+		          
+		        {% endif %}
+						
+						<div class="field-wrap btn-wrap btn-container">
+			        <input type="submit" class="btn login-btn" value="{{ 'customer.login.sign_in' | t }}">
+						</div>
+		        
+		      {% endform %}
+		    </div>
+		    <div class="login-box" id="recover-password" style="display: none;">
+		
+		      <div class="login-box-header">
+		        <h1>{{ 'customer.recover_password.title' | t }}</h1>
+		        <p>{{ 'customer.recover_password.subtext' | t }}</p>
+		      </div>
+		
+		      {% form 'recover_customer_password' %}
+		
+		        {{ form.errors | default_errors }}
+		
+		        {% if form.posted_successfully? %}
+		          {% assign reset_success = true %}
+		        {% endif %}
+						
+						<div class="field-wrap">
+              <label class="label">{{ 'customer.recover_password.email' | t }}</label>
+			        <input type="email" value="" name="email" id="RecoverEmail" placeholder="Enter your Email" autocorrect="off" autocapitalize="off">
+				        <a href="#" onclick="hideRecoverPasswordForm();return false;">{{ 'customer.recover_password.cancel' | t }}</a>
+						</div>
+		
+		        <div class="field-wrap btn-wrap btn-container">
+		          <input type="submit" class="btn" value="{{ 'customer.recover_password.submit' | t }}">
+			        
+		        </div>
+		        
+		      {% endform %}
+		
+		    </div>
+		  </div>
+		   
+      {% comment %}
+		  <div class="login-col">
+				<div class="login-box" id="customer-create-account">
+			    <div class="login-box-header">
+			      <h1>{{ 'customer.register.title' | t }}</h1>
+			    </div>
+			    {% form 'create_customer' %}
+			      {{ form.errors | default_errors }}
+						<div class="field-wrap">
+				      <input type="text" name="customer[first_name]" id="FirstName" placeholder="{{ 'customer.register.first_name' | t }}" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocapitalize="words" autofocus>
+						</div>
+						<div class="field-wrap">
+				      <input type="text" name="customer[last_name]" id="LastName" placeholder="{{ 'customer.register.last_name' | t }}" {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocapitalize="words">
+						</div>
+						<div class="field-wrap">
+              <label>{{ 'customer.register.email' | t }}</label>
+				      <input type="email" name="customer[email]" id="Email" placeholder="{{ 'customer.register.email' | t }}" {% if form.errors contains "email" %} class="error"{% elsif form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off">
+						</div>
+						<div class="field-wrap no-marg">
+				      <input type="password" name="customer[password]" id="CreatePassword" placeholder="{{ 'customer.register.password' | t }}" {% if form.errors contains "password" %} class="error"{% endif %}>
+						</div>
+						<p class="account-note">
+							<input type="checkbox" name="account-policy" id="account-policy" />
+							<label for="account-policy">I understand that my information will be used in accordance with the <a href="#">privacy policy</a>.</label>
+						</p>
+						<div class="field-wrap btn-wrap no-marg btn-container">
+			        <input type="submit" value="{{ 'customer.register.submit' | t }}" class="btn">
+						</div>
+			    {% endform %}
+				</div>
+			
+		    {% if shop.checkout.guest_login %}
+		      <hr>
+		      <h2>{{ 'customer.login.guest_title' | t }}</h2>
+		      {% form 'guest_login' %}
+		      <div class="field-wrap btn-wrap btn-container">
+		        <input type="submit" class="btn" value="{{ 'customer.login.guest_continue' | t }}">
+		      </div>
+		      {% endform %}
+		    {% endif %}
+		  </div>
+      {% endcomment %}
+		  
+		</div>
+	</div>
+</div>
+
+<script>
+	/*
+    Show/hide the recover password form when requested.
+  */
+  function showRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'block';
+    document.getElementById('customer-login').style.display='none';
+  }
+
+  function hideRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'none';
+    document.getElementById('customer-login').style.display = 'block';
+  }
+
+  // Allow deep linking to the recover password form
+  if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+
+  // reset_success is only true when the reset form is
+  {% if reset_success %}
+    document.getElementById('reset-success').style.display = 'block';
+  {% endif %}
+  
+</script>

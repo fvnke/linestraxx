@@ -1,0 +1,12 @@
+{% assign collection = c %}
+<div class="p-section section-header">
+  <h3>About the Collaboration</h3>
+  {{ collection.description }}
+  
+  {% if collection.image %}
+  <section class="collab-pdp-image">
+    <img src="{{ collection.image | img_url: '1024x' }}" />
+    <p>ALYX collaborates with {{ collection.title }}</p>
+  </section>
+  {% endif %}
+</div>

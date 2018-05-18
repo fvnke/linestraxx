@@ -1,0 +1,52 @@
+.cc_container {
+  @include borderTop;
+  color: #000;
+  border: none !important;
+  @include globalText;
+  padding: 0 !important;
+  transition: none !important;
+  animation-duration: 0s !important;
+  -webkit-animation-duration: 0 !important;
+  -moz-animation-duration: 0 !important;
+  -o-animation-duration: 0 !important;
+  transition: none !important;
+  @include flexbox;
+  @include align-items(center);
+  flex-direction: row-reverse;
+  @include justify-content(flex-end);
+  &:before {
+    padding-bottom: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .cc_message {
+    @include overrideText;
+    color: #000;
+    margin-top: 0 !important;
+    padding: $v-padding/2 $gutter !important;
+    -webkit-animation-duration: 0 !important;
+    -moz-animation-duration: 0 !important;
+    -o-animation-duration: 0 !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .cc_more_info {
+    @include globalTextUC;
+    transition: none !important;
+    color: #000 !important;
+  }
+  .cc_btn {
+    @include btn;
+    @include overrideText;
+    letter-spacing: .08rem !important;
+    background: #fff !important;
+    margin: $gutter/2;
+    transition: none !important;
+    animation: none !important;
+    &:hover {
+      background: #000 !important;
+      color: #fff !important;
+    }
+  }
+}

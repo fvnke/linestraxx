@@ -1,0 +1,208 @@
+<div class="page">
+	<div class="wrapper wrapper-med">
+		
+		{% if cart.item_count > 0 %}
+			{% if settings.cart_promo != 'blank' %}
+				<span class="shipping-message">{{ settings.cart_promo }}</span>
+			{% endif %}
+		  <form action="/cart" id="CartForm" method="post" novalidate class="cart-form">
+		
+				<div class="cart-body">
+			    {% for item in cart.items %}
+			      <div id="cart-item-{{ item.id }}" class="cart-item" data-variant-id="{{ item.variant.id }}" data-module-init="cart-item">
+				      <div class="cart-item-inner">
+							<div class="c-col c-deets">
+								<div class="cart-inner">
+                  <div class="cart-inner-content">
+									<h3><a href="{{ item.url }}">{{item.sku}}<br>{{ item.product.title }}</a></h3>
+									
+									
+                  
+    							<div class="c-price">
+    		            <span>{{ item.price | money }}</span>
+    							</div>
+                  <br>
+    							<div class="c-qty">
+    								<div class="cart-header">
+    									<span>{{ 'cart.label.quantity' | t }}: <span class="item-set-variant">{{ item.quantity }}</span></span>
+    								</div>
+                    
+                    {% comment %}
+                    Get total quantity of product variant and output number buttons
+                    {% endcomment %}
+                    
+                    {% if item.variant.inventory_quantity > 0 %}
+                      <ul class="c-qty-select dummy-select edit-options">
+                      {% assign selected_qty = item.quantity %}
+                      {% assign qty_limit = item.variant.inventory_quantity %}
+                      {% for i in (1..qty_limit) %}
+                        <li {% if i == selected_qty %} class="disabled active" {% endif%}><span>{{ i }}</span></li>
+                      {% endfor %}
+                      </ul>
+                    {% endif %}
+                    <!--
+    		            <input type="number" class="cart__quantity-selector" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0" aria-label="{{ 'cart.label.quantity' | t }}">
+                      -->
+    							</div>
+                  
+                  
+                  
+									<ul>
+									{% unless item.variant.title contains 'Default' %}
+										{% for vari in item.product.options %}
+										  <li>{{ vari }}: <span class="item-set-variant">{{ item.variant.options[forloop.index0] }}</span></li>
+										{% endfor %}
+									{% endunless %}
+			            
+			            {% assign propertySize = item.properties | size %}
+			            {% if propertySize > 0 %}
+			              {% for p in item.properties %}
+				              <li>
+			                {% assign first_character_in_key = p.first | truncate: 1, '' %}
+			                {% unless p.last == blank or first_character_in_key == '_' %}
+			                  {{ p.first }}:
+			                  {% if p.last contains '/uploads/' %}
+			                    <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+			                  {% else %}
+			                    {{ p.last }}
+			                  {% endif %}
+			                {% endunless %}
+				              </li>
+			              {% endfor %}
+			              
+			            {% endif %}
+			            </ul>
+                  
+                  <div class="edit-options">
+                  {% include 'cart-item-select' with item %}
+                  </div>
+                  
+    							<div class="c-total">
+    								<div class="cart-header">
+    									<span>{{ 'cart.label.total' | t }}: </span>
+      		            <span>
+      		              {% if item.original_line_price != item.line_price %}
+      		                <small><s>{{ item.original_line_price | money }}</s></small>
+      		              {% endif %}
+      		              {{ item.line_price | money }}
+      		            </span>
+      		            {% if item.original_line_price != item.line_price %}
+      		              {% for discount in item.discounts %}
+      		                <small>
+      		                  {{ discount.title }}
+      		                </small>
+      		              {% endfor %}
+      		            {% endif %}
+    								</div>
+    							</div>
+                  
+    							
+                </div>
+                <!-- /cart-inner-contents -->
+                
+  							<div class="c-col c-remove">
+                  <button class="edit-item">Edit</button>
+  								<span class="remove-item">
+  			            <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="cart__remove">{{ 'cart.general.remove' | t }}</a>
+  								</span>
+              
+  							</div>
+  							<div class="c-col c-edit-controls">
+                  <button class="cancel-edit-item">Cancel</button>
+                  <button class="submit-edit-item">Submit</button>
+  							</div>
+                
+                
+								</div>
+  							<div class="c-item">
+                  <!--
+  					      <div class="cart-header">
+  									<span>{{ 'cart.label.product' | t }}</span>
+  					      </div>
+                  -->
+  		            <a href="{{ item.url | within: collections.all }}">
+  		              <img src="{{ item | img_url: 'large' }}" alt="{{ item.title | escape }}">
+  		            </a>
+  							</div>
+							</div>
+              
+              
+							
+							
+							
+							
+							
+							
+			      </div>
+          </div>
+			    {% endfor %}
+				</div>
+		
+		    <div class="cart-footer">
+          
+          
+		      
+					<div id="checkout-buttons">
+						
+						<div class="total-price"><span class="subtotal-label">{{ 'cart.general.subtotal' | t }}</span> {{ cart.total_price | money | remove: '.00' }}<br>{{ 'cart.general.shipping_at_checkout' | t }}</div>
+						<div class="btn-wrap">
+              <!--
+							<button type="submit" name="update" class="btn solid update-cart">{{ 'cart.general.update' | t }}</button>
+                -->
+			        <button type="submit" name="checkout" class="secondary-button btn solid checkout">{{ 'cart.general.checkout' | t }}</button>
+			        {% if additional_checkout_buttons %}
+			          <div class="cart__additional_checkout">{{ content_for_additional_checkout_buttons }}</div>
+			        {% endif %}
+						</div>
+					</div>
+					
+					<div id="order-notes">
+			      
+		        {% assign noteSize = cart.note | size %}
+		        
+		        {% if settings.cart_notes_enable %}
+			        <div class="cart__note{% if noteSize > 0 %} is-active{% endif %}">
+			          <textarea rows="6" name="note" class="input-full" id="CartSpecialInstructions" placeholder="{{ 'cart.general.note' | t }}">{{ cart.note }}</textarea>
+			        </div>
+			        
+			        <div>
+				        <button type="button" class="btn text-link cart__note-add{% if noteSize > 0 %} is-hidden{% endif %}">{{ 'cart.label.add_note' | t }}</button>
+			        </div>
+		        {% endif %}	
+					
+						<div id="cart-menu">
+							<ul>
+								{% for link in linklists.cart-menu.links %}
+									<li><a href="{{ link.href }}">{{ link.title }}</a></li>
+								{% endfor %}
+							</ul>
+						</div>			
+		      </div>				
+					
+		    </div>
+			
+		  </form>
+		{% else %}
+			<div class="flex">
+				<div id="cart-empty">
+					<div class="section-header">
+						<h2 class="note">{{ 'cart.general.empty' | t }}</h2>
+						<a href="/" class="btn">Return to store</a>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+		
+	</div>  
+</div>
+<p class="mlvedaCartNote" style="display:none">
+  {{ shop.name }} process all orders in {{ shop.currency }}.
+  While the content of your cart is currently displayed in
+  <span class="selected-currency"></span>,
+  you will checkout using {{ shop.currency }} at the most current exchange rate.
+</p>
+<div id="related-cart-products" class="wrapper">
+{% include 'related-cart-products' %}
+</div>
+
+

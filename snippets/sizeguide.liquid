@@ -1,0 +1,15 @@
+<div style="display:none;">
+	
+	<div id="sizeguide">
+		
+		<h1>Size Chart</h1>
+		
+		{% if settings.sizeguide_option == 'image' %}
+			{{ settings.sizeguide_img | img_url: 'master' | img_tag }}
+		{% elsif settings.sizeguide_option == 'html' %}
+			{{ settings.sizeguide_html }}
+		{% endif %}
+		
+	</div>
+	
+</div>

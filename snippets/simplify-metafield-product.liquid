@@ -1,0 +1,11 @@
+{% assign metafields = [entity].metafields.metafield_template %}
+
+{% if metafields[field_name] %}
+	{% assign product_list = metafields[field_name] | split: ',' %}
+	{% for theHandle in product_list %}
+		{% assign theProduct = all_products[theHandle] %}
+		<h1>{{ theProduct.title }}</h1>
+		<img src="{{ theProduct.featured_image | img_url: 'small' }}" />
+    	<div class="description">{{ theProduct.description }}</div>
+	{% endfor %}
+{% endif %}

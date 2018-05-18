@@ -1,0 +1,77 @@
+{% include 'collection-settings' with 'section' %}
+{% assign collection = section.settings['featured_collection'] %}
+{% assign featured_collection = collections[collection] %}		
+{% assign total_products = 50 %}
+<section class="section transition-point">	
+	<div class="wrapper">
+		<div class="grid-wrapper collection-wrapper">
+			{% for product in featured_collection.products limit: total_products %}
+				{% include 'product-item' with item_width %}
+			{% endfor %}
+		</div>
+	</div>
+</section>
+
+{% schema %}
+  {
+    "name": "Collection",
+    "class": "section-collection",
+    "settings": [
+	    {
+		    "type": "select",
+		    "id": "featured_collection_row",
+		    "label": "Rows",
+		    "options": [
+			    {
+				    "value": "1",
+				    "label": "1"
+			    },
+			    {
+				    "value": "2",
+				    "label": "2"
+			    },
+			    {
+				    "value": "3",
+				    "label": "3"
+			    }
+		    ],
+		    "default": "3"
+	    },
+	    {
+		    "type": "select",
+		    "id": "featured_collection_per",
+		    "label": "Items per row",
+		    "options": [
+			    {
+				    "value": "2",
+				    "label": "2"
+			    },
+			    {
+				    "value": "3",
+				    "label": "3"
+			    },
+			    {
+				    "value": "4",
+				    "label": "4"
+			    }
+		    ]
+	    },
+	    {
+		    "type": "collection",
+		    "id": "featured_collection",
+		    "label": "Featured Collection" 
+	    }
+    ],
+    "presets": [
+	    {
+		    "name": "Collection"
+	    }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet 'scss' %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

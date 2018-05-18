@@ -1,0 +1,26 @@
+{% assign collection_tools = false %}
+{% if settings.enable_collection_sorting or settings.enable_collection_filtering %}
+  {% assign collection_tools = true %}
+{% endif %}
+
+{% assign total_products = 50 %}
+
+	{% if collection_tools %}
+    <button class="toggle-filter">Filter <span class="filter-count {% if current_tags.size > 0%}active{% endif %}">(<span class="filter-count-num">{{ current_tags.size }}</span>)</span></button>
+    
+		<div class="sorting-controls">
+      
+			{% if settings.enable_collection_sorting %}
+				{% include 'collection-sorting' %}
+			{% endif %}
+			{% if settings.enable_collection_filtering %}
+				{% include 'collection-filters' %}
+			{% endif %}
+      <!--
+			<div class="toggle-cols desktop-only">
+				<span class="icon icon-grid active"><svg><use xlink:href="#grid"></use></svg></span>
+				<span class="icon icon-two-col"><svg><use xlink:href="#two-col"></use></svg></span>
+			</div>
+      -->
+		</div>
+	{% endif %} 

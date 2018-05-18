@@ -1,0 +1,166 @@
+{% assign waitlist_settings = shop.metafields.simplify_wl_settings.enabled %}
+{% assign product_settings = product.metafields.simplify_waitlist.enabled %}
+
+{% if waitlist_settings == 'true' %}
+	{% if product_settings == 'true' %}
+	
+    <button id="waitlist-button" href="#">Add to Waitlist</button>
+    
+    <div id="waitlist-wrapper" style="display:none">
+      <a id="waitlist-close" href="#">close</a>
+      <form id="waitlist-form" action="//localhost:3000/notification_registration/register" method="get">
+        <input type="hidden" name="shop" value="{{ shop.permanent_domain }}">
+        <input type="hidden" name="product_id" value="{{ product.id }}">
+        <input id="variant-id" type="hidden" name="variant_id" value="">
+        <input type="hidden" name="product_name"  value="{{ product.title }}" >
+        <input type="hidden" id="variant-name" name="variant_name" value="">
+        <h2>{{ product.title }}</h2>
+        {% if product.available == false %}
+        <input type="radio" name="any_variant" value="true"> Notify me when any variants are back in stock.<br>
+        <input type="radio" name="any_variant" value="false" checked> Notify me when <strong><span class="variant-display"> </span></strong> is back in stock!<br>
+        {% else %}
+        <p>notify me when <strong><span class="variant-display"> </span></strong> is back in stock!</p>
+        {% endif %}
+        Email: <input id="email" type="text" name="email"><br>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+    
+    <script>
+    	// script moved below html elements, to ensure they all exitst when script runs
+    
+    	// this anonymous function will allow the use of '$' in place of 'jQuery' without conflicts
+      (function($) {      
+    
+          var product = {{ product | json }};
+          var variant_input  = $('select[name=id]')[0];
+          var variant_tag = $(variant_input).prop('tagName');
+          
+          // store previous selection in order to check if it has changed or not
+          var prev_variant_selection = variant_input.selectedIndex;
+          
+          // in case theme doesn't provide sold out ids,
+          // create array of all variant ids
+          var variantIds = [
+            {% for variant in product.variants %}
+              {{ variant.id }},						
+            {% endfor %}
+          ];
+    
+    			
+          $(variant_input).find('option').each(function(i){
+            var $me = $(this),
+                disabled = $me.attr('disabled'),
+                value = $me.attr('value');
+            
+            // remove all disabled options, so they can always be selected
+            if(disabled == 'disabled'){
+              $me.removeAttr('disabled');        
+            }
+            
+            // add id to option if it's missing
+            if(!value){
+              $me.attr('value', variantIds[i]);
+            }
+            
+          });
+    
+          $("#waitlist-close").on('click', function(){
+            $("#waitlist-wrapper").hide();
+          });
+    
+          $("#waitlist-button").on('click', function(){
+            $("#waitlist-wrapper").show();
+          });
+    
+          $("body").on('change', variant_input, function(){
+            
+            if(prev_variant_selection == variant_input.selectedIndex && $(variant_input).attr('disabled') ){ // e.g. if variant combo is unavailble - aka doesn't exist
+    	        // check if the original select menu was not changed from it's value, and if the select menu has been disabled
+            	// this should determine if an unavailable variant was selected from the "parsed" individual dropdowns
+              $("#waitlist-button").hide();
+              $("#waitlist-wrapper").hide();
+            } else {
+              // variant exists - now determine if sold out
+              setTimeout(function(){
+                var variant_id  = (variant_tag === 'INPUT' && $(variant_input).attr('type') === 'radio') ? $("input[type=radio]:checked").val() : $(variant_input).val();
+                _showHideButton(_checkOutOfStock(variant_id), variant_id);
+              }, 100);
+            }
+            
+            // update last selection
+            prev_variant_selection = variant_input.selectedIndex;
+            
+          });
+        
+          function _checkOutOfStock(variantId) {
+            if(variantId) {
+              var variant = _getVariantByID(variantId);
+            } else {
+              var variant = product.variants[0];
+            }
+            if(variant && variant.inventory_quantity <= 0 && variant.inventory_management == 'shopify') {
+              return variant.title;
+            }
+            return false;
+          };
+    
+          function _getVariantByID(variantId) {
+            for(var i=0;i<product.variants.length;i++) {
+              if(product.variants[i].id == variantId) {
+                return product.variants[i];
+              }
+            }
+          };
+    
+          function _showHideButton(title, variant_id) {
+           if(title) {
+              $("#variant-name").val(title);
+              $("#variant-id").val(variant_id);
+              $(".variant-display").html(title);
+              $("#waitlist-button").show();
+            } else {
+              $("#variant-name").val('');
+              $("#variant-id").val('');
+              $("#waitlist-button").hide();
+              $("#waitlist-wrapper").hide();
+            }
+          };
+    
+          function _validateEmail(email) { 
+            var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+            if( !emailReg.test( email ) ) {                  
+              return('Please enter valid email');
+            } else {
+                  return true;
+            }
+          };
+    
+          $("#waitlist-form").on('submit', function(e){
+            e.preventDefault();
+            var form = $('#waitlist-form');
+            var message = _validateEmail( $("#email").val() );
+            if( message != true) {
+                alert(message);
+              return;
+            }
+            $.ajax( {
+              url: form.attr( 'action' ),
+              data: form.serialize(),
+              dataType: 'jsonp',       
+              success: function( response ) {
+                $("#waitlist-wrapper").hide();
+                $("#email").val('');
+              },
+              error: function(xhr, status, error) {
+                //console.log(status + '; ' + error);
+              }
+            });
+          }); 
+    
+      })(jQuery);     
+    
+    </script>
+
+	{% endif %}
+{% endif %}

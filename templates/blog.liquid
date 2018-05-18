@@ -1,0 +1,70 @@
+{% assign articles_per_row = settings.articles_per_row %}
+{% assign rows = settings.articles_rows %}
+{% assign total_articles = articles_per_row | times: rows %}
+{% assign article_item_width = null %}
+
+{% case articles_per_row %}
+  {% when '1' %}
+    {% assign article_item_width = 'full' %}
+  {% when '2' %}
+    {% assign article_item_width = 'half' %}
+  {% when '3' %}
+    {% assign article_item_width = 'third' %}
+{% endcase %}
+
+{% paginate blog.articles by total_articles %}
+<div class="page">
+	<div class="wrapper">
+		
+    <div class="section-header">
+	    <h1>
+	      {% if current_tags %}
+	        {{ blog.title | link_to: blog.url }} &mdash; {{ current_tags.first }}
+	      {% else %}
+	        {{ blog.title }}
+	      {% endif %}
+	    </h1>
+	  </div>
+	
+	  <div class="blog-wrapper">
+	  {% for article in blog.articles | limit: total_articles %}
+	    <div class="article {{ article_item_width }} mh">
+	      {% if article.image %}
+		      <div class="article-featured-image">
+		        {% assign image_alt = article.title | escape %}
+		        {{ article | img_url: '1024x1024' | img_tag: image_alt, 'article__image' | link_to: article.url }}
+		      </div>
+	      {% endif %}	    	    
+				<div class="article-header">
+		      <h2><a href="{{ article.url }}">{{ article.title }}</a></h2>
+		      <p class="blog-date">
+		        <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time>
+		        {% if article.tags.size > 0 %}
+		          <span class="meta-sep">&#8226;</span>
+		          {% for tag in article.tags %}
+		            <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{% unless forloop.last %} <span class="meta-sep">&#8226;</span> {% endunless %}
+		          {% endfor %}
+		        {% endif %}
+		      </p>
+				</div>
+	      <div class="rte">
+	        {% if article.excerpt.size > 0 %}
+	          <p>{{ article.excerpt }}</p>
+	        {% else %}
+	          <p>{{ article.content | strip_html | truncatewords: 100 }}</p>
+	        {% endif %}
+	        <p><a href="{{ article.url }}">{{ 'blogs.article.read_more' | t }} &rarr;</a></p>
+	      </div>
+	    </div>
+	  {% endfor %}
+	</div>
+	
+	  {% if paginate.pages > 1 %}
+	    <div class="text-center">
+	      {% include 'pagination' %}
+	    </div>
+	  {% endif %}
+  
+  </div>
+</div>
+{% endpaginate %}

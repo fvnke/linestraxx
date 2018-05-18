@@ -1,0 +1,14 @@
+	<div class="mobile-app-utilities">	
+	  <ul class="mobile-utilities">
+	    {% if shop.customer_accounts_enabled %}
+	      {% if customer %}
+		      <li class="desktop-only {% if template contains 'customers' %}active {% endif %}"><a class="icon icon-account" href="/account">Account</a></li>
+	        <!--<li class="desktop-only">{{ 'layout.customer.log_out' | t | customer_logout_link }}</li>-->
+	      {% else %}
+		      <li class="desktop-only {% if template contains 'customers' %}active {% endif %}"><a href="/account/login">Account</a></li>
+	      {% endif %}
+	    {% endif %}
+      <li class="currency-picker-mobile">{% include 'currency-picker' %}</li>
+	    
+	  </ul>  
+	</div>

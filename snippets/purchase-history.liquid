@@ -1,0 +1,49 @@
+<div class="page purchase-history"> 
+		
+	  <div class="customer-orders-wrap">
+			
+      
+      {% if customer %}
+  	    {% paginate customer.orders by 20 %}
+	
+  	    {% if customer.orders.size != 0 %}
+          <div class="order-table">
+            <!--
+  	        <div class="order-header">
+  		        <div class="oc order-num">{{ 'customer.orders.order_number' | t }}</div>
+  		        <div class="oc order-date">{{ 'customer.orders.date' | t }}</div>
+  		        <div class="oc order-payment">{{ 'customer.orders.payment_status' | t }}</div>
+  		        <div class="oc order-fulfill">{{ 'customer.orders.fulfillment_status' | t }}</div>
+  		        <div class="oc order-total">{{ 'customer.orders.total' | t }}</div>
+  	        </div>
+            -->
+  	        <div class="order-body">
+  		        {% for order in customer.orders %}
+  			        <div class="order-item">
+  				        <div class="oc order-num">Order {{ order.name | link_to: order.customer_url }}</div>
+  				        <div class="oc order-date">Made On {{ order.created_at | date: "%B %d, %Y" }}</div>
+  				        <div class="oc order-payment">Payment: {{ order.financial_status_label }}</div>
+  				        <div class="oc order-fulfill">Status: {{ order.fulfillment_status_label }}</div>
+  				        <div class="oc order-total">Total: {{ order.total_price | money }}</div>
+                  <a class="request-return" href="/a/returns?order={{order.order_number}}&email={{customer.email}}"> Request a return </a>
+  			        </div>
+  		        {% endfor %}
+  	        </div>
+  	        <div class="order-footer"></div>
+          </div>
+  	    {% else %}
+  	      <p>{{ 'customer.orders.none' | t }}</p>
+  	    {% endif %}
+	
+  	    {% if paginate.pages > 1 %}
+  	      <div class="text-center">
+  	        {% include 'pagination' %}
+  	      </div>
+  	    {% endif %}
+	
+  	    {% endpaginate %}
+	     {% endif %}
+       
+	  </div>
+
+</div>

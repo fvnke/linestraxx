@@ -1,0 +1,106 @@
+<div id="collection-sorting">
+	<div class="fake-select" id="sortBy-fake">
+		<span>{{ 'collections.sorting.title' | t }}<span class="icon icon-arrow"><svg><use xlink:href="#icon-down"></use></svg></span></span>
+		<ul>
+			<li data-value="manual">{{ 'collections.sorting.featured' | t }}</li>
+		  <li data-value="best-selling">{{ 'collections.sorting.best_selling' | t }}</li>
+		  <li data-value="title-ascending">{{ 'collections.sorting.az' | t }}</li>
+		  <li data-value="title-descending">{{ 'collections.sorting.za' | t }}</li>
+		  <li data-value="price-ascending">{{ 'collections.sorting.price_ascending' | t }}</li>
+		  <li data-value="price-descending">{{ 'collections.sorting.price_descending' | t }}</li>
+		  <li data-value="created-descending">{{ 'collections.sorting.date_descending' | t }}</li>
+		  <li data-value="created-ascending">{{ 'collections.sorting.date_ascending' | t }}</li>
+		</ul>
+	</div>
+	
+	
+	<!-- This is the real form. It gets updated by the fake form. -->
+	<div class="form-horizontal" style="display:none;">
+	  <label for="SortBy">{{ 'collections.sorting.title' | t }}</label>
+	  <select name="SortBy" id="SortBy">
+	    <option value="manual">{{ 'collections.sorting.featured' | t }}</option>
+	    <option value="best-selling">{{ 'collections.sorting.best_selling' | t }}</option>
+	    <option value="title-ascending">{{ 'collections.sorting.az' | t }}</option>
+	    <option value="title-descending">{{ 'collections.sorting.za' | t }}</option>
+	    <option value="price-ascending">{{ 'collections.sorting.price_ascending' | t }}</option>
+	    <option value="price-descending">{{ 'collections.sorting.price_descending' | t }}</option>
+	    <option value="created-descending">{{ 'collections.sorting.date_descending' | t }}</option>
+	    <option value="created-ascending">{{ 'collections.sorting.date_ascending' | t }}</option>
+	  </select>
+	</div>
+
+	<script>		
+	  /*============================================================================
+	    Inline JS because collection liquid object is only available
+	    on collection pages, and not external JS files
+	  ==============================================================================*/
+	  Shopify.queryParams = {};
+	  if (location.search.length) {
+	    for (var aKeyValue, i = 0, aCouples = location.search.substr(1).split('&'); i < aCouples.length; i++) {
+	      aKeyValue = aCouples[i].split('=');
+	      if (aKeyValue.length > 1) {
+	        Shopify.queryParams[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(aKeyValue[1]);
+	      }
+	    }
+	  }
+	
+	  $(function() {
+		  
+		  var $sortby = $('#SortBy');
+		  
+	    $sortby
+	      .val('{{ collection.sort_by | default: collection.default_sort_by }}')
+	      .bind('change', function() {
+	        Shopify.queryParams.sort_by = jQuery(this).val();
+	        location.search = jQuery.param(Shopify.queryParams);
+	      }
+	    );
+	    
+	    var me_val;
+			$('.fake-select').find('li').click(function(){
+				me_val = $(this).data('value');
+				old_val = $sortby.val();
+	
+				if(me_val == 'sale'){
+					{% if collection.handle %}
+						window.location.href = '/collections/{{ collection.handle }}/sale';
+					{% endif %}
+				} else {
+					if(me_val == old_val){
+						$sortby.val('').change();
+						$location.search('parameter', null);
+					} else {
+						$sortby.val(me_val).change();
+					}
+				}
+				
+			});
+			
+			// get sort param value
+			var parseQueryString = function() {		
+		    var str = window.location.search;
+		    var objURL = {};
+		
+		    str.replace(
+	        new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
+	        function( $0, $1, $2, $3 ){
+	          objURL[ $1 ] = $3;
+	        }
+		    );
+		    return objURL;
+			};
+			
+			// Compare current sort by to list of sort options. Set active class. 
+			var params = parseQueryString(),
+			    current_sort = params["sort_by"];
+			
+			$('#sortBy-fake').find('li').each(function(i, el){
+				var $me = $(el);
+				if($me.data('value') === current_sort){
+					$me.addClass('active');
+				}
+			});
+	    
+	  });
+	</script>
+</div>

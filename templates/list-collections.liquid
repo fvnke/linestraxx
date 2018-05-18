@@ -1,0 +1,6 @@
+{% for collection in collections %}
+  {% unless collection.handle == 'frontpage' %}
+    {% assign featured = collection.handle %}
+    {% include 'collection-grid-item' %}
+  {% endunless %}
+{% endfor %}

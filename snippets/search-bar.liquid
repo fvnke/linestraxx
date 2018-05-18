@@ -1,0 +1,28 @@
+{% if search-bar == 'header' %}
+  <form action="/search" method="get" role="search">
+    {% comment %}<input type="hidden" name="type" value="product">{% endcomment %}
+    <div class="search-wrapper field-wrap">
+      <input type="search" name="q" value="{{ search.terms | escape }}" aria-label="{{ 'general.search.placeholder' | t }}" placeholder="{{ 'general.search.placeholder' | t }}">
+      <button type="submit" class="btn">
+        <span>{{ 'general.search.submit' | t }}</span>
+      </button>
+      <button class="search-close"><svg><use xlink:href="#icon-close"></use></svg><button>
+    </div>
+    
+  </form>
+{% elsif search-bar == 'mobile-header' %}
+  <form action="/search" method="get" role="search">
+    <input type="search" name="q" value="{{ search.terms | escape }}" aria-label="{{ 'general.search.placeholder' | t }}" placeholder="{{ 'general.search.placeholder' | t }}">
+    <button type="submit">
+      <span class="icon icon-search" aria-hidden="true">Search</span>
+    </button>    
+  </form>
+{% else %}
+  <form action="/search" method="get" role="search">
+    {% comment %}<input type="hidden" name="type" value="product">{% endcomment %}
+    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.placeholder' | t }}" placeholder="{{ 'general.search.placeholder' | t }}">
+    <button type="submit" class="btn">
+      <span>{{ 'general.search.submit' | t }}</span>
+    </button>
+  </form>
+{% endif %}

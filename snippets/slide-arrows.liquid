@@ -1,0 +1,10 @@
+{% if slide-arrows == 'slideshow' %}
+	{% assign arrow_prev = section.id | prepend: 'prev-' %}
+	{% assign arrow_next = section.id | prepend: 'next-' %}
+{% else %}
+	{% assign arrow_prev = 'prev' %}
+	{% assign arrow_next = 'next' %}
+{% endif %}
+
+<span class="slide-arrow icon icon-arrow arrow-prev {{ arrow_prev }}"><svg><use xlink:href="#icon-arrow-prev"></use></svg></span>
+<span class="slide-arrow icon icon-arrow arrow-next {{ arrow_next }}"><svg><use xlink:href="#icon-arrow-next"></use></svg></span>

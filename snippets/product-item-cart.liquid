@@ -1,0 +1,144 @@
+{% unless current_collection == blank %} 
+  {% assign current_collection = collection %}
+{% endunless %}
+
+{% assign on_sale = false %}
+{% assign sale_text = 'products.product.sale' | t %}
+{% if product.compare_at_price > product.price %}
+  {% assign on_sale = true %}
+{% endif %}
+
+{% assign sold_out = true %}
+{% assign sold_out_text = 'products.product.sold_out' | t %}
+{% if product.available %}
+  {% assign sold_out = false %}
+{% endif %}
+
+<div class="grid-item cart-related-item gallery-child product-item {{ item_width }}{% if sold_out %} sold-out{% endif %}{% if on_sale %} on-sale{% endif %}" data-module-init="custom-select-cart">
+
+  <div class="gallery-inner-child">
+	  
+    <div class="item-image mh-image">
+      <img id="ProductPhotoImg-{{ product.id }}" src="{{ product.featured_image.src | img_url: '1024x' }}" alt="{{ product.featured_image.alt | escape }}">			
+    </div>
+    
+    <div class="item-details mh-details">
+      {% if on_sale and settings.collections_show_sale_indicator %}
+        <span class="badge"><span>{{ 'products.product.sale' | t }}</span></span>
+      {% endif %}
+      {% if sold_out and settings.collections_show_sold_out_indicator %}
+        <span class="badge"><span>{{ 'products.product.sold_out' | t }}</span></span>
+      {% endif %}
+	    {% if product.first_available_variant.sku %}
+		    <span class="product-barcode">{{ product.first_available_variant.sku }}</span>
+	    {% endif %}
+	    <h3 class="product-title">{{ product.title }}</h3>
+	    <span class="product-price">
+	      {% capture price %}{{ product.price | money }}{% endcapture %}
+	      {% if on_sale %}
+		      <s class="product-sale-price">{{ product.compare_at_price | money }}</s>
+	      {% endif %}
+	      {% if product.price_varies %}{{ 'products.general.from_html' | t: price: price }}{% else %}{{ price }}{% endif %}
+	    </span>
+    </div>
+
+    <form class="item-form" data-action="/cart/add" data-method="post" data-enctype="multipart/form-data" data-id="{{ product.id }}" id="AddToCartForm-{{ product.id }}">
+      <select name="id" id="productSelect-{{ product.id }}" class="product-single__variants block" style="text-indent: 0;" data-module-init="custom-select-cart">
+        {% for variant in product.variants %}
+          {% if variant.available %}    
+            <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+          {% else %}
+            <option disabled="disabled">
+              {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+            </option>
+          {% endif %}
+        {% endfor %}
+      </select>
+      <button  type="submit" name="add"  id="AddToCart-{{ product.id }}" data-id="{{ product.id }}" class="btn">
+        <span id="AddToCartText-{{product.id}}">{{ 'products.product.add_to_cart' | t }}</span>
+      </button>
+    </form>
+  
+</div>
+
+</div>
+
+
+<script>
+  
+  /*
+  $('#AddToCart-{{ product.id }}').on('click', function(e){
+    e.preventDefault();
+    
+    var p_id = $(this).data('id');
+    var $item = $(this).closest('.related');
+ 
+    var variantId = $('#productSelect-'+p_id+' :selected').val();
+    console.log('adding ' + variantId)
+    if(variantId != undefined) {
+      Shopify.addItem(variantId, 1, function(){
+        // Do Something here once the product is added
+        window.location.href = '/cart'
+      });
+      Shopify.onError = function(){
+        console.log('error')
+      }
+    }
+    
+    $(this).off('click');
+    
+    
+  });
+  */
+  
+  
+  function productPage(options){
+    
+  }
+  
+  var selectCallback = function(variant, selector) {
+    /*
+    productPage({
+      money_format: "{{ shop.money_format }}",
+      variant: variant,
+      selector: selector,
+      translations: {
+        add_to_cart : "{{ 'products.product.add_to_cart' | t }}",
+        sold_out : "{{ 'products.product.sold_out' | t }}",
+        unavailable : "{{ 'products.product.unavailable' | t }}"
+      }
+    });
+    */
+  };
+  
+  jQuery(function($) {
+    new Shopify.OptionSelectors('productSelect-{{ product.id }}', {
+      product: {{ product | json }},
+      onVariantSelected: selectCallback,
+      enableHistoryState: true
+    });
+    
+    $('.cart-related-item').last().addClass('last-cart-related-item');
+
+    // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
+    {% if product.options.size == 1 %}
+      {% for variant in product.variants %}
+          {% unless variant.available %}
+            jQuery('#AddToCartForm-{{ product.id }} .single-option-selector option:eq({{ forloop.index0 }})').attr('disabled', 'disabled');
+          {% endunless %}
+        {% endfor %}
+        jQuery('#AddToCartForm-{{ product.id }} option:first').attr('selected','selected');
+      $('#AddToCartForm-{{ product.id }} .selector-wrapper:eq(0)').prepend('<label for="productSelect-{{ product.id }}-option-0">{{ product.options.first | escape }}</label>');
+    {% endif %}
+
+    // Hide selectors if we only have 1 variant and its title contains 'Default'.
+    {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+      $('#AddToCartForm-{{ product.id }} .selector-wrapper').hide();
+      $('#AddToCartForm-{{ product.id }}').addClass('single-variant')
+    {% endif %}
+  });
+  
+  
+  
+  
+</script>

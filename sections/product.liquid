@@ -1,0 +1,43 @@
+{% assign product = section.settings['featured_product'] %}
+{% assign featured_product = all_products[product] %}
+
+<div class="section" id="featured-product">
+	
+	<div class="featured-product-image">
+		{{ featured_product.featured_image | img_url: 'master' | img_tag }}	
+	</div>
+	
+	<div class="featured-product-detail">
+		<div class="flex">
+			<h3>{{ featured_product.title }}</h3>	
+			<p>{{ featured_product.description }}</p>
+			<a class="btn" href="{{ featured_product.url }}">shop now</a>
+		</div>
+	</div>
+	
+</div>
+
+{% schema %}
+  {
+    "name": "Product",
+    "class": "section-product",
+    "settings": [
+	    {
+		    "type": "product",
+		    "id": "featured_product",
+		    "label": "Featured product"
+	    }
+    ],
+    "presets": [
+	    {
+		    "name": "Product"
+	    }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet 'scss' %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

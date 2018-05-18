@@ -1,0 +1,258 @@
+@mixin gutter {
+  margin: 0 $gutter;
+  @include break(mobile) {
+    margin: 0 $mobile-gutter;
+  }
+}
+
+@mixin half-gutter {
+  margin: 0 $gutter/2;
+  @include break(mobile) {
+    margin: 0 $mobile-gutter/2;
+  }
+}
+
+@mixin gutter-left ($amount: 1px) {
+  margin-left: #{$gutter} * $amount;
+  @include break(mobile) {
+    margin-left: #{$mobile-gutter} * $amount;;
+  }
+}
+
+@mixin gutter-right ($amount: 1px) {
+  margin-right: #{$gutter} * $amount;
+  @include break(mobile) {
+    margin-right: #{$mobile-gutter} * $amount;;
+  }
+}
+
+@mixin gutter-top ($amount: 1px) {
+  margin-top: #{$gutter} * $amount;
+  @include break(mobile) {
+    margin-top: #{$mobile-gutter} * $amount;
+  }
+}
+
+@mixin gutter-bottom ($amount: 1px) {
+  margin-bottom: #{$gutter} * $amount;
+  @include break(mobile) {
+    margin-bottom: #{$mobile-gutter} * $amount;
+  }
+}
+
+@mixin gutter-padding-bottom ($amount: 1px) {
+  padding-bottom: #{$gutter} * $amount;
+  @include break(mobile) {
+    padding-bottom: #{$mobile-gutter} * $amount;
+  }
+}
+
+@mixin gutter-padding-top ($amount: 1px) {
+  padding-top: #{$gutter} * $amount;
+  @include break(mobile) {
+    padding-top: #{$mobile-gutter} * $amount;
+  }
+}
+
+@mixin gutter-padding-left ($amount: 1px) {
+  padding-left: #{$gutter} * $amount;
+  @include break(mobile) {
+    padding-left: #{$mobile-gutter} * $amount;
+  }
+}
+
+@mixin gutter-padding-right ($amount: 1px) {
+  padding-right: #{$gutter} * $amount;
+  @include break(mobile) {
+    padding-right: #{$mobile-gutter} * $amount;
+  }
+}
+
+@mixin gutter-all {
+  margin: $gutter;
+  @include break(mobile) {
+    margin: $mobile-gutter;
+  }
+}
+
+@mixin opacity($opacity) {
+	opacity: $opacity;
+	$opacity-ie: $opacity * 100;
+	filter: alpha(opacity=$opacity-ie); //IE8
+}
+ 
+@mixin animation ($delay, $duration, $animation) {
+    -webkit-animation-delay: $delay;
+    -webkit-animation-duration: $duration;
+    -webkit-animation-name: $animation;
+    -webkit-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+
+    -moz-animation-delay: $delay;
+    -moz-animation-duration: $duration;
+    -moz-animation-name: $animation;
+    -moz-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+
+    -o-animation-delay: $delay;
+    -o-animation-duration: $duration;
+    -o-animation-name: $animation;
+    -o-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+
+    animation-delay: $delay;
+    animation-duration: $duration;
+    animation-name: $animation;
+    animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+}
+
+@mixin product-thumb {
+  
+  img {
+    width: 154px;
+  }
+}
+
+@mixin no-select {
+  -khtml-user-select: none;
+  -o-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@mixin touch {
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar; 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@mixin small-product-module {
+  width: 154px;
+  flex: 0 0 154px;
+  @include break(mobile) {
+    width: 154px;
+    flex: 0 0 154px;
+    .template-cart & {
+      margin-bottom: 0;
+    }
+    
+    &.related {
+      width: 90px;
+    }
+  }
+  
+  img {
+    width: 100%;
+    @include gutter-bottom(1);
+    @include break(mobile) {
+      .template-cart & {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  .item-image {
+    @include break(mobile) {
+      .template-cart & {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  .item-details {
+    visibility: hidden;
+    
+    @include break(mobile) {
+      visibility: visible;
+      .template-cart & {
+        display: none;
+      }
+    }
+  }
+  
+  &:hover {
+    .item-details {
+      visibility: visible;
+    }
+  }
+}
+
+@mixin largerPaddingTop {
+  margin-top: $larger-padding;
+  @include break(mobile) {
+    margin-top: $larger-padding/2;
+  }
+}
+
+@mixin largerPaddingBottom {
+  padding-bottom: $larger-padding;
+  @include break(mobile) {
+    padding-bottom: $larger-padding/2;
+  }
+}
+
+@mixin largerMarginBottom {
+  margin-bottom: $larger-padding;
+  @include break(mobile) {
+    margin-bottom: $larger-padding/2;
+  }
+}
+
+@mixin two-cols {
+  width: calc((#{$desktop-column * 2}) + #{$gutter});
+  min-width: 350px;
+  @include break(mobile) {
+    width: 100%;
+  }
+  
+}
+
+@mixin three-cols {
+  width: calc((#{$desktop-column * 3}) + #{$gutter*2});
+  
+  @include break(mobile) {
+    width: 100%;
+  }
+}
+
+@mixin smallFlickity {
+  @include small-product-module;
+  /*
+  margin-left: $gutter; 
+  @include break(mobile) {
+    margin-left: $mobile-gutter;
+  }
+  */
+  a {
+    @include gutter-right(0);
+    @include gutter-left(0);
+  }
+  &:last-child {
+    //padding-right: $gutter;
+    @include break(mobile) {
+      //padding-right: $mobile-gutter;
+    }
+  }
+}
+
+img {
+  display: block;
+}
+
+
+.scroll {
+  white-space: nowrap;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar; }
+
+.scroll::-webkit-scrollbar {
+  display: none; }
+  
+  
+  .horizontal-image-list {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    @include touch;
+  }

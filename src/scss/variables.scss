@@ -1,0 +1,163 @@
+//global
+
+
+//breakpoints
+$break-desktop:1441px;
+$break-laptop:1440px;
+$break-ipad:901px;
+$break-phone:901px;
+
+//animation
+$nav-transition-duration:1s;
+$transition-duration:1s;
+$button-duration:.3s;
+$hover-duration:.3s;
+$zoom-transition-duration:1.2s;
+$transition-timing-function: ease-out;
+$animation-speed: 0.2s;
+
+//gutters+margins
+$padding:1rem;
+$v-padding:15px;
+$gutter: 15px;
+$mobile-gutter: 10px;
+$section-padding: $gutter * 5; 
+$larger-padding: $gutter * 10;
+$desktop-column: 15.45%;
+$desktop-nav-height: 45px;
+
+//colors
+$c-white:#ffffff;
+$c-black:#000000; 
+$c-border: #ccc;
+$c-background:#bebecd;
+$c-background-search:#e5e5e5;
+$c-gray:$c-black; 
+$c-light-gray:#e7e7e7;
+$c-dark-gray:#282924;
+$c-orange:#BF6A49;
+$c-store:#dccbd4;
+$c-overlay-blue:#092647;
+$c-deactivated-text:#919191;
+$c-global:$c-black;
+
+//font sizes
+
+$p-font-sizes: (
+  null  : 14px,
+  $break-ipad : 16px,
+  $break-laptop : 16px,
+  $break-desktop: 16px
+);
+
+$p-line-height: (
+  null  : 16px,
+  $break-ipad : 18px,
+  $break-laptop : 18px,
+  $break-desktop: 18px
+);
+
+
+$p-smaller-font-sizes: (
+  null  : 14px,
+  $break-ipad : 14px,
+  $break-laptop : 14px,
+  $break-desktop: 14px
+);
+
+$a-smaller-font-sizes: (
+  null  : 1,
+  $break-ipad : 1,
+  $break-laptop : 1,
+  $break-desktop: 1
+);
+
+$p-smaller-line-height: (
+	null  : 1.4,
+	$break-ipad : 1.4,
+	$break-laptop : 1.4,
+	$break-desktop: 1.4
+);
+
+$logo-font-sizes: (
+	null  : 14vw,
+	$break-ipad : 6vw,
+	$break-laptop : 6vw,
+	$break-desktop: 6vw
+);
+
+$logo-line-height: ( 
+null  : 14vw,
+$break-ipad : 8vw,
+$break-laptop : 8vw,
+$break-desktop: 8vw
+);
+
+$h1-font-sizes: (
+  null  : 9.6vw,
+  $break-ipad : 2.1vw,
+  $break-laptop : 2.1vw,
+  $break-desktop: 2.1vw
+);
+
+$h1-line-height: (
+  null  : 1.2,
+  $break-ipad : 1.2,
+  $break-laptop : 1.2,
+  $break-desktop: 1.2
+);
+
+$h2-font-sizes: (
+  null  : 9.6vw,
+  $break-ipad : 2.2vw,
+  $break-laptop : 2.2vw,
+  $break-desktop: 2.2vw
+);
+
+$h2-line-height: (
+  null  : 1,
+  $break-ipad : 1.45,
+  $break-laptop : 1.45,
+  $break-desktop: 1.45
+);
+
+$h3-font-sizes: (
+  null  : 7.1vw,
+  $break-ipad : 1.2vw,
+  $break-laptop : 1.2vw,
+  $break-desktop: 1.2vw
+);
+
+$h3-line-height: (
+  null  : 1.3,
+  $break-ipad : 1.45,
+  $break-laptop : 1.45,
+  $break-desktop: 1.45
+);
+
+@mixin line-height($fs-map) {
+  @each $fs-breakpoint, $fs-font-size in $fs-map {
+    @if $fs-breakpoint == null {
+      line-height: $fs-font-size;
+    }
+    @else {
+      @media screen and (min-width: $fs-breakpoint) {
+        line-height: $fs-font-size;
+      }
+    }
+  }
+}
+
+//breakpoints
+@mixin font-size($fs-map) {
+  @each $fs-breakpoint, $fs-font-size in $fs-map {
+    @if $fs-breakpoint == null {
+      font-size: $fs-font-size;
+    }
+    @else {
+      @media screen and (min-width: $fs-breakpoint) {
+        font-size: $fs-font-size;
+      }
+    }
+  }
+}

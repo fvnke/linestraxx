@@ -1,0 +1,21 @@
+<div id="cart-flyout" class="empty">
+	
+	<span class="icon icon-close"><svg><use xlink:href="#icon-close"></use></svg></span>
+	
+  <form action="/checkout" method="post">
+    <h4>{{ 'cart.general.title' | t }}</h4>
+    <div class="message">
+	    {{ 'cart.general.empty' | t }}
+    </div>
+    <div class="products"></div>
+    <div class="summary">
+      <div id="subtotal">
+        {{ 'cart.general.subtotal' | t }}: <span></span><br />
+      </div>
+      <div class="buttons">
+        <input type="submit" class="btn" value="{{ 'cart.general.proceed' | t }}">
+        {{ content_for_additional_checkout_buttons | strip_newlines }}
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,11 @@
+.feature-collection {
+  .section-link {
+    margin-top: $section-padding;
+    text-align: center;
+    a {
+      @extend .btn;
+      display: inline-block;
+      max-width: 80%;
+    }
+  }
+}

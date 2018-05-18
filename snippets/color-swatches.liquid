@@ -1,0 +1,38 @@
+{% assign has_swatches = null %}
+{% assign related_color_handle = product.title | handleize %}
+{% assign related_collection = collections[related_color_handle] %}
+
+{% if related_collection.all_products.count > 0 %}
+	{% assign has_swatches = true %}
+{% endif %}
+
+{% for tag in product.tags %}
+	{% if tag contains 'color-' %}
+		{% assign current_color = tag %}
+	{% endif %}
+{% endfor %}
+
+{% if has_swatches %}
+	<div class="color-swatches">
+		<div class="header label">{{ 'products.product.color' | t }}:</div>
+		<div class="swatch-wrap">
+      {% for this_product in related_collection.products %}
+        {% for this_tag in this_product.tags %}
+          {% if this_tag contains 'color-' %}
+						
+            {% assign color_class = this_tag | remove: 'color-' | trim %}
+            {% assign color_tag = this_tag | trim %}
+            {% assign color_title = color_class | replace: '-', ' ' | capitalize %}
+            
+            {% if current_color == color_tag %}
+              <span class="swatch {{ color_class }} active" data-swatchtitle="{{ color_title }}"></span>
+            {% else %}
+              <a href="{{shop.url}}/collections/{{ related_color_handle }}/products/{{ this_product.handle }}" class="swatch {{ color_class }}" data-swatchtitle="{{ color_title }}"></a>
+            {% endif %}              
+              
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+		</div>
+	</div>
+{% endif %}

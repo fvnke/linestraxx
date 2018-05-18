@@ -1,0 +1,32 @@
+<ul class="social-links">
+	{% if settings.facebook_link != blank %}
+		<li><a href="{{ settings.facebook_link }}" title="Find on Facebook" class="icon icon-social icon-fb"><svg><use xlink:href="#icon-facebook"></use></svg></a></li>
+	{% endif %}
+	{% if settings.twitter_link != blank %}
+		<li><a href="{{ settings.twitter_link }}" title="Follow us on Twitter" class="icon icon-social icon-tw"><svg><use xlink:href="#icon-twitter"></use></svg></a></li>
+	{% endif %}
+	{% if settings.pinterest_link != blank %}
+		<li><a href="{{ settings.pinterest_link }}" title="Follow on Pinterest" class="icon icon-pin"></a></li>
+	{% endif %}
+	{% if settings.google_plus_link != blank %}
+		<li><a href="{{ settings.google_plus_link }}" title="Find on Google Plus" class="icon icon-gp"></a></li>
+	{% endif %}
+	{% if settings.instagram_link != blank %}
+		<li><a href="{{ settings.instagram_link }}" title="Follow on Instagram" class="icon icon-insta"></a></li>
+	{% endif %}
+	{% if settings.tumblr_link != blank %}
+		<li><a href="{{ settings.tumblr_link }}" title="Find on Tumblr" class="icon icon-tb"></a></li>
+	{% endif %}
+	{% if settings.youtube_link != blank %}
+		<li><a href="{{ settings.youtube_link }}" title="Find on YouTube" class="icon icon-yt"></a></li>
+	{% endif %}
+	{% if settings.vimeo_link != blank %}
+		<li><a href="{{ settings.vimeo_link }}" title="Find on Vimeo" class="icon icon-vm"></a></li>
+	{% endif %}
+	{% if settings.fancy_link != blank %}
+		<li><a href="{{ settings.fancy_link }}" title="Find on Fancy" class="icon icon-fancy"></a></li>
+	{% endif %}
+	{% if settings.rss_link != blank %}
+		<li><a href="{{ settings.rss_link }}" title="Follow on Rss" class="icon icon-rss"></a></li>
+	{% endif %}
+</ul>

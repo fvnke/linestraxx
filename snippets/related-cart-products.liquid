@@ -1,0 +1,55 @@
+{% include 'collection-settings' with 'related' %}
+{% assign item_width = 'related' %}
+{% assign total_products = 50 %}
+{% if cart.item_count > 0 %}
+<div class="related-cart-products wrapper">
+  <div class="section-header">
+    <h3>{{ 'products.general.related_products_title' | t }}</h3>
+  </div>
+  <div id="related-products" class="grid-wrapper gallery" data-module-init="cart-related" data-infinite="false">
+    <div class="gallery-inner">
+  {% assign tags = '' %}
+  {% for item in cart.items %}
+    
+    {% assign current_product = item.product %}
+    {% assign tag = current_product.tags %}
+    {% assign c = '' %}
+    
+    {% for t in tag %}
+      {% if t != 'Woman' and t != 'Man' and t != 'XS' and t != 'S' and t != 'M' and t != 'L' and t != 'XL' %}
+      {% assign tags = tags | append: t %}
+      {% endif %}
+      {% for collection in collections %}
+          {% if t == collection.title %}
+            {% assign c = collection %}
+          {% endif %}
+      {% endfor %}
+    {% endfor %}
+    
+  {% endfor %}
+  
+  {% if c != '' %}
+
+    {% for product in c.products limit: total_products %}
+      {% assign product_found = false %}
+      
+      {% for item in cart.items %}
+        {% assign current_product = item.product %}
+        {% if current_product.id == product.id %}
+          {% assign product_found = true %}
+        {% endif %}
+      {% endfor %}
+        {% assign isLast = false %}
+        {% if forloop.index == forloop.size %}{% assign isLast = true %}{% endif %}
+      {% if product_found == false and product.available %}
+        {% include 'product-item-cart' with isLast %}
+      {% endif %}
+      
+    {% endfor %}
+      
+  {% endif %}
+  
+    </div>
+  </div>
+</div>
+{% endif %}

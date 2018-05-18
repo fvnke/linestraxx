@@ -1,0 +1,86 @@
+{% include 'collection-settings' with 'section' %}
+{% assign collection = section.settings['featured_collection'] %}
+{% assign featured_collection = collections[collection] %}		
+{% assign featured_collection_button_text = section.settings['featured_collection_button_text'] %}
+
+<section class="section transition-point">	
+	<div class="wrapper">
+		<div class="grid-wrapper">
+			{% for product in featured_collection.products limit: total_products %}
+				{% include 'product-item' with item_width %}
+			{% endfor %}
+		</div>
+    <div class="section-link">
+      <a href="{{ featured_collection.url }}">{{ featured_collection_button_text }}</a>
+    </div>
+	</div>
+</section>
+
+{% schema %}
+  {
+    "name": "Feature Collection",
+    "class": "section-collection feature-collection", 
+    "settings": [
+	    {
+		    "type": "select",
+		    "id": "featured_collection_row",
+		    "label": "Rows",
+		    "options": [
+			    {
+				    "value": "1",
+				    "label": "1"
+			    },
+			    {
+				    "value": "2",
+				    "label": "2"
+			    },
+			    {
+				    "value": "3",
+				    "label": "3"
+			    }
+		    ],
+		    "default": "3"
+	    },
+	    {
+		    "type": "select",
+		    "id": "featured_collection_per",
+		    "label": "Items per row",
+		    "options": [
+			    {
+				    "value": "2",
+				    "label": "2"
+			    },
+			    {
+				    "value": "3",
+				    "label": "3"
+			    },
+			    {
+				    "value": "4",
+				    "label": "4"
+			    }
+		    ]
+	    },
+	    {
+		    "type": "collection",
+		    "id": "featured_collection",
+		    "label": "Featured Collection" 
+	    },
+      {
+		    "type": "text",
+		    "id": "featured_collection_button_text",
+		    "label": "Featured Collection Button Text"
+      }
+    ],
+    "presets": [
+	    {
+		    "name": "Feature Collection"
+	    }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet 'scss' %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

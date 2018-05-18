@@ -1,0 +1,72 @@
+div.page {
+  
+  padding-top: $gutter * 5;
+  text-align: left;
+  
+  @include break(mobile) {
+    padding-top: $mobile-gutter * 2;
+  }
+  
+
+  
+  .template-cart &, .template-page & {
+    //padding-top: $v-padding * 5;
+    @include break(mobile) {
+      //padding-top: $v-padding * 2;
+    }
+  }
+  
+  
+
+}
+
+.page-content {
+  @include two-cols;
+  @include gutter;
+  
+  &.full {
+    width: auto;
+  }
+  
+  @include break(mobile) { 
+    margin: 0;
+    .rte {
+      @include gutter;
+    }
+  }
+  
+  a {
+    //@include underline;
+  }
+  
+  .rte {
+    h3 {
+      margin-top: 2.4em;
+    }
+  }
+  
+  ul {
+    @include gutter-left(1);
+    @include gutter-bottom(1);
+    li {
+      list-style:none;
+      position: relative;
+      &:before {
+        content: '';
+        display: block;
+        background-color: #000;
+        width: 4px;
+        height: 4px;
+        top: .35rem; 
+        left:-$gutter;
+        position: absolute;
+        @include break(mobile) {
+          left: -$mobile-gutter;
+          width: .2rem;
+          height: .2rem;
+          top: .45rem;
+        }
+      }
+    }
+  }
+}

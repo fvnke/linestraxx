@@ -1,0 +1,50 @@
+{% if settings.signup_form_action != blank %}
+	{% assign form_action = settings.signup_form_action %}
+	{% assign newsletter_copy = null %}
+	
+  {% if newsletter-form == 'footer' %}
+	  {% assign form_name = 'mc-embedded-subscribe-form-footer' %}
+	  {% assign input_id = 'mail-footer' %}
+	  {% assign submit_id = 'subscribe-footer' %}  
+    {% assign newsletter_headline = 'layout.footer.newsletter_caption' | 't' %}
+  {% else %}
+	  {% assign form_name = 'mc-embedded-subscribe-form' %}
+	  {% assign input_id = 'mail' %}
+	  {% assign submit_id = 'subscribe' %}
+  
+		{% if settings.popup_headline != blank %}
+			{% assign newsletter_headline = settings.popup_headline %}
+		{% else %}
+			{% assign newsletter_headline = 'layout.footer.newsletter_caption' | 't' %}
+		{% endif %}
+		
+		{% if settings.popup_text != blank %}
+			{% assign newsletter_copy = settings.popup_text %}
+		{% endif %}
+  
+  {% endif %}
+  
+  <div class="newsletter-container">
+	  
+    <!--
+	  <h4>{{ newsletter_headline }}</h4>
+	  {% if newsletter_copy != blank %}
+		  <p>{{ newsletter_copy }}</p>
+	  {% endif %}
+	  -->
+      
+		<form action="{{ form_action }}" data-module-init="newsletter" method="post" id="{{ form_name }}" name="{{ form_name }}" target="_blank">
+      <div class="field-wrap">
+        <label class="label">Email</label>
+		    <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="EMAIL" id="{{ input_id }}" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}" autocorrect="off" autocapitalize="off">
+      </div>
+      <div class="field-wrap btn-wrap btn-container">
+		     <input type="submit" class="btn" name="subscribe" id="{{ submit_id }}" value="{{ 'general.newsletter_form.submit' | t }}">
+      </div>
+		</form>
+		
+		<div class="subscribe-status"></div>
+		
+  </div>
+	
+{% endif %}

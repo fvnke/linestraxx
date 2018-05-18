@@ -1,0 +1,59 @@
+.section-video {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  &.video-module {
+    .billboard-bg-video {
+      min-height:600px;
+      z-index: 1 !important;
+      div {
+        min-height:600px;
+        z-index: 1 !important;
+      }
+      .billboard-text {
+        min-height: auto;
+        position: absolute;
+        bottom: 10%;
+        text-align: center;
+        width: 100%;
+        h1 {
+          @include mTitle;
+        }
+      }
+    }
+    .billboard {
+      @include gutter;
+    }
+  }
+  
+  video {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
+  .timestamp {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: $gutter;
+    @include break(mobile) {
+      bottom: $mobile-gutter;
+    }
+    color: #fff;
+  }
+  
+  .template-index & {
+    //position: fixed;
+  }
+  
+  .billboard {
+    height: 100%;
+    
+    .billboard-bg-video {
+      height: 100%;
+    }
+  }
+}

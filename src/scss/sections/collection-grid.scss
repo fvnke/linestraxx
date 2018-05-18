@@ -1,0 +1,45 @@
+.section-collection {
+  .grid-wrapper {
+    @include half-gutter;
+  }
+}
+
+.collection-wrapper {
+  .grid-wrapper {
+    @include half-gutter;
+  }
+}
+ 
+.grid-wrapper {
+  @include flexbox;
+  flex-wrap: wrap;
+  //margin: 0 $gutter/2;
+  .grid-item {
+    &.third {
+      width:33.333%;
+      @include break(mobile) {
+        width: 50%;
+      }
+    }
+    &.quarter {
+      width: 25%;
+      @include break(mobile) {
+        width: 50%;
+      }
+    }
+    a {
+      @include half-gutter;
+      display: block;
+    }
+    &.related {
+      @include smallFlickity;
+      a {
+        //margin: 0;
+      }
+      .item-details {
+        @include gutter-top(1);
+      }
+    }
+  }
+}
+

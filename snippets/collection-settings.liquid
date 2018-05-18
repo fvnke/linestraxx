@@ -1,0 +1,40 @@
+{% assign item_width = null %} 
+
+{% if collection-settings == 'section' %}
+
+	{% assign products_per_row = section.settings['featured_collection_per'] %}
+	{% assign rows = section.settings['featured_collection_row'] %}
+	{% assign total_products = products_per_row | times: rows %}
+		
+{% elsif collection-settings == 'related' %}
+
+	{% assign products_per_row = 4 %}
+	{% assign rows = 1 %}
+	{% assign total_products = products_per_row | times: rows %}
+
+{% elsif collection-settings == 'search' %}
+	
+	{% assign products_per_row = 4 %}
+	{% assign rows = 4 %}
+	{% assign total_products = products_per_row | times: rows %}	
+	
+{% else %}
+
+	{% assign products_per_row = settings.collections_products_per_row %}
+	{% assign rows = settings.collections_rows %}
+	{% assign total_products = products_per_row | times: rows %}
+	
+{% endif%}
+
+{% case products_per_row %}
+  {% when '2' %}
+    {% assign item_width = 'half' %}
+  {% when '3' %}
+    {% assign item_width = 'third' %}
+  {% when '4' %}
+    {% assign item_width = 'quarter' %}
+  {% when '5' %}
+    {% assign item_width = 'fifth' %}
+  {% else %}
+	  {% assign item_width = 'third' %}
+{% endcase %}

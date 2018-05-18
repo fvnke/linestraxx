@@ -1,0 +1,324 @@
+<!--
+<style type="text/css">
+  .slick-slider, #product-image { display: none; }
+  .slick-slider.slick-initialized, #product-image.slick-initialized { display: block; }
+</style>
+-->
+
+<style type="text/css">
+  #product-image {
+    white-space: nowrap;
+    display: flex;
+  }
+  
+  .product-image-container {
+    height: 100%;
+  }
+  
+  .product-image-container img {
+    height: 100%;
+  }
+</style>
+
+<div itemscope itemtype="http://schema.org/Product" id="productPage">
+
+  <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+  <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+	
+  <div id="product-upper">
+	  
+	  {% if settings.enable_breadcrumbs %}
+		  <div class="wrapper">
+			  {% include 'breadcrumb' %}
+		  </div>
+	  {% endif %}
+	    
+    {% comment %}
+    {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+    <img class="{% if settings.product_image_zoom_type == 'takeover' %}takeover-img{% elsif settings.product_image_zoom_type == 'window' %}zoom{% endif %}" src="{{ featured_image | img_url: '1024x1024' }}" alt="{{ featured_image.alt | escape }}" {% if settings.product_image_zoom_type == 'window' %} data-zoom-image="{{ featured_image | img_url: '2048x2048' }}"{% endif %} data-image-id="{{ featured_image.id }}">
+    {% endcomment %}  
+    <div id="product-images" data-module-init="slick" class="gallery">
+      <div id="product-image" class="product-slick gallery-inner" data-infinite="false">
+  
+        {% for image in product.images %}
+        {% assign min = 0 %}
+        {% assign max = 5 %}
+        {% assign diff = max | minus: min %}
+        {% assign randomNumber = "now" | date: "%N" | modulo: diff | plus: min %}
+        
+          <div class="product-image-container gallery-child">
+            <div class="inner-product-image-container gallery-inner-child {% if randomNumber == 2%}product-narrative-interruption{% endif %}" {% if randomNumber == 2%}data-module-init="narrative-interruption"{% endif %}>
+              <img src="{{ image.src | img_url: '1024x' }}" alt="{{ image.alt | escape }}">
+            </div>
+          </div>
+        {% endfor %} 
+        
+      </div>
+			
+      {% comment %}
+			{% if settings.product_thumbnails_position == 'below' and product.images.size > 1 %}
+	      {% include 'product-thumbs' %}
+      {% endif %}
+      {% endcomment %}
+      
+    </div>
+      
+    <div id="product-details" class="mh">
+	    <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+	    <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+      
+	    
+	    <h1 class="product-title" itemprop="name">{{ product.first_available_variant.sku }}<br>{{ product.title }}</h1>
+      <span class="product-prices">
+        <span id="product-price" itemprop="price">
+          {{ product.price | money }}
+        </span>
+        {% if product.compare_at_price > product.price %}
+          <s id="ComparePrice" class="product-single__sale-price">
+            {{ product.compare_at_price_max | money }}
+          </s>
+        {% endif %}
+      </span>
+      
+			<div class="product-description rte" itemprop="description">
+        <p>{{ product.description }}</p>
+      </div>
+	    
+      <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+	      
+        {% assign variant = product.selected_or_first_available_variant %}
+        <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="{{ settings.product_options_placement }}">
+          <select name="id" id="productSelect" class="product-single__variants block" data-module-init="custom-select" style="display: none;">
+            {% for variant in product.variants %}
+              {% if variant.available %}    
+                <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+              {% else %}
+                <option disabled="disabled">
+                  {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                </option>
+              {% endif %}
+            {% endfor %}
+          </select>
+          
+          
+					
+          
+          {% comment %}
+          {% include 'color-swatches' %}
+          {% if settings.product_quantity_enable and product.available %}
+					  {% include 'product-qty' %}
+					{% endif %}
+          {% endcomment %}
+					
+					
+
+          <button type="submit" name="add" id="AddToCart" class="btn">
+            <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+          </button>
+          
+          {% if customer %}
+          <!-- include 'wishlist-button-product' with '{{ product.id }}' -->
+          {% endif %}
+        
+        </form>
+        
+        <div class="details-sizing" class="accordion" data-module-init="accordion">
+          <button><h3>Details &amp; Sizing</h3></button>
+          <div class="accordion-inner" style="display:none;">
+            <p>Fits true to size, take your normal size.<br>Designed to be worn fitted.</p>
+            <h3>Model Measures:</h3>
+            <p>Height 188cm, Chest 38/96 cm,<br>Waist 33/80 cm, Hip 36/92 cm</p>
+            {{ settings.sizeguide_html }}
+          </div>
+        </div>
+        
+        <div class="pdp-details" class="accordion" data-module-init="accordion">
+          <button><h3>Shipping, Returns &amp; Help</h3></button>
+          <div class="accordion-inner" style="display:none;">
+            {{ settings.shipping_returns }}
+          </div>
+        </div>
+        
+        <div class="pdp-share" class="accordion" data-module-init="accordion">
+          <button><h3>Share</h3></button>
+          <div class="accordion-inner" style="display:none;">
+            {% include 'social-sharing' %}
+          </div>
+        </div>
+        
+        {% if settings.product_thumbnails_position == 'right' and product.images.size > 1 %}
+		      {% include 'product-thumbs' %}
+	      {% endif %}
+        
+				             
+
+      </div>
+
+    </div>
+
+  </div>
+	
+	<div id="product-lower">
+	  {% if settings.product_related_enable %}
+      {% comment %}
+      Detect whether or not the product is in a collaboration. If not just show default related products
+      {% endcomment %}
+      
+      {% assign c = product.collection %}
+      {% assign show_related_collab = false %}
+      
+      {% for link in linklists.main-menu.links %}
+        {% if link.title == 'Collaborations' %}
+          {% assign child_list_handle = link.title | handleize %}
+          {% if linklists[child_list_handle].links != blank %}
+            {% for link in linklists[child_list_handle].links %}
+              {% for tag in product.tags %}
+                {% if link.title == tag %}
+                  {% assign c = collections[tag] %}
+                  {% assign show_related_collab = true %}
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+      
+      
+      {% if show_related_collab == false %}
+	      {% include 'related-products' %}
+      {% else %}
+        {% include 'collab-pdp-description' with c %}
+        {% include 'related-collab-products' with c %}
+      {% endif %}
+      
+	  {% endif %}
+    
+    {% include 'menu-breadcrumb' %}
+	</div>
+  
+  
+
+</div>
+{% comment %}
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+{% endcomment %}
+{{ 'wish-list.js' | asset_url | script_tag }}
+
+<script>
+  
+  function productPage(options){
+    
+    var moneyFormat = options.money_format,
+        variant = options.variant,
+        selector = options.selector,
+        translations = options.translations;
+
+    // Selectors
+    var $productImage = $('#ProductPhotoImg'),
+        $addToCart = $('#AddToCart'),
+        $productPrice = $('#ProductPrice'),
+        $comparePrice = $('#ComparePrice'),
+        $quantityElements = $('.quantity-selector, label + .js-qty'),
+        $addToCartText = $('#AddToCartText');
+
+    if (variant) {
+      // Update variant image, if one is set
+      if (variant.featured_image) {
+        var newImg = variant.featured_image,
+            el = $productImage[0];
+      console.log('switch variant image')
+        Shopify.Image.switchImage(newImg, el, function (newImageSizedSrc, newImage, element) {
+    	 	console.log('switch')
+          	$(element).parents('a').attr('href', newImageSizedSrc);
+          	$(element).attr('src', newImageSizedSrc);
+        });
+      }
+
+      // Select a valid variant if available
+      if (variant.available) {
+        // Available, enable the submit button, change text, show quantity elements
+        $addToCart.removeClass('disabled').prop('disabled', false);
+        $addToCartText.html(translations.add_to_cart);
+        $quantityElements.show();
+      } else {
+        // Sold out, disable the submit button, change text, hide quantity elements
+        $addToCart.addClass('disabled').prop('disabled', true);
+        $addToCartText.html(translations.sold_out);
+        $quantityElements.hide();
+      }
+
+      // Regardless of stock, update the product price
+      $productPrice.html( Shopify.formatMoney(variant.price, moneyFormat) );
+
+      // Also update and show the product's compare price if necessary
+      if (variant.compare_at_price > variant.price) {
+        $comparePrice
+          .html(Shopify.formatMoney(variant.compare_at_price, moneyFormat))
+          .show();
+      } else {
+        $comparePrice.hide();
+      }
+
+    $('.product-qty').removeClass('disabled');
+
+    // Add to cart disable if variant less than 3
+    if ( variant.inventory_quantity > 0 && variant.inventory_quantity <= 3) {
+        $addToCartText.html($addToCartText.html() + ' — Only ' + variant.inventory_quantity + ' Left!');
+    }
+
+    if (variant.inventory_quantity == 0) {
+    	$('.product-qty').addClass('disabled');
+    }
+
+    } else {
+      // The variant doesn't exist, disable submit button.
+      // This may be an error or notice that a specific variant is not available.
+      // To only show available variants, implement linked product options:
+      //   - http://docs.shopify.com/manual/configuration/store-customization/advanced-navigation/linked-product-options
+    $('.product-qty').addClass('disabled');
+      $addToCart.addClass('disabled').prop('disabled', true);
+      $addToCartText.html(translations.unavailable);
+      $quantityElements.hide();
+    }
+    
+  }
+  
+  
+  
+  var selectCallback = function(variant, selector) {
+    productPage({
+      money_format: "{{ shop.money_format }}",
+      variant: variant,
+      selector: selector,
+      translations: {
+        add_to_cart : "{{ 'products.product.add_to_cart' | t }}",
+        sold_out : "{{ 'products.product.sold_out' | t }}",
+        unavailable : "{{ 'products.product.unavailable' | t }}"
+      }
+    });
+  };
+  
+  jQuery(function($) {
+    new Shopify.OptionSelectors('productSelect', {
+      product: {{ product | json }},
+      onVariantSelected: selectCallback,
+      enableHistoryState: true
+    });
+
+    // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
+    {% if product.options.size == 1 %}
+      {% for variant in product.variants %}
+          {% unless variant.available %}
+            jQuery('.single-option-selector option:eq({{ forloop.index0 }})').attr('disabled', 'disabled');
+          {% endunless %}
+        {% endfor %}
+        jQuery('.single-option-selector').trigger('change');
+      $('#AddToCartForm .selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>');
+    {% endif %}
+
+    // Hide selectors if we only have 1 variant and its title contains 'Default'.
+    {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+      $('#AddToCartForm .selector-wrapper').hide();
+    {% endif %}
+  });
+</script>

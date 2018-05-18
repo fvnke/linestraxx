@@ -1,0 +1,33 @@
+{% assign item_type = item.object_type %}
+
+{% if item_type == 'product' %}
+	
+	{% assign product = item %}
+
+	{% include 'product-item' with product %}
+	
+{% else %}
+
+<div class="grid-item third">
+
+	<a href="{{ item.url }}" title="{{ image_alt  }}">
+
+	  {% assign has_image = false %}  
+	  <div class="item-image mh-image">
+		  {% if item.featured_image or item.image %}
+		    {% assign has_image = true %}
+		    {% assign image_alt = item.title | escape %}
+		      {{ item | img_url: 'medium' | img_tag: image_alt }}
+		  {% endif %}
+	  </div>
+
+	  <div class="item-details mh-details">
+	    <h3 class="article-title">{{ item.title }}</h3>
+	    <p>{{ item.content | strip_html | truncatewords: 20 }}</p>
+	  </div>
+
+	</a>
+
+</div>
+
+{% endif %}

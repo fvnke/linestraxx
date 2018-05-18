@@ -1,0 +1,58 @@
+{% assign footer_menu_1 = linklists[settings.footer_menu_1] %}
+{% assign footer_menu_2 = linklists[settings.footer_menu_2] %}
+
+<footer id="app-footer" role="contentinfo">
+	
+	{% if footer_menu_1.links.size > 0 or settings.footer_signup_enable or footer_menu_2.links.size > 0 %}
+		<div id="footer-upper">
+			<div class="wrapper">
+				<div class="flex">
+					
+					{% if footer_menu_1.links.size > 0 %}
+						<div class="footer-col">
+							<nav data-module-init="horizontal-scroll" class="overflow-container">
+					      <ul class="footer-nav">
+					        {% for link in footer_menu_1.links %}
+					          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+					        {% endfor %}
+					      </ul>
+							</nav>
+						</div>
+					{% endif %}
+					
+          
+          
+					
+		      {% comment %}
+		      {% if footer_menu_2.links.size > 0 %}
+			      <div class="footer-col">
+				      <span>{{ footer_menu_2.title }}</span>
+				      <nav>
+					      <ul>
+					        {% for link in footer_menu_2.links %}
+					          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+					        {% endfor %}
+					      </ul>
+				      </nav>
+			      </div>
+		      {% endif %}
+          
+					{% if settings.footer_signup_enable %}
+						<div class="footer-col" id="footer-newsletter">
+							{% include 'newsletter-form' with 'footer' %}
+						</div>
+					{% endif %}
+          
+  		    {% if settings.footer_social_enable %}
+  	        {% include 'social-links' %}
+  		    {% endif %}
+          
+  		    <div id="copyright">© {{ shop.name }} {{ 'now' | date: "%Y" }} </div>
+  		    {% endcomment %}
+		      
+				</div>
+			</div>	    
+		</div>
+	{% endif %}
+
+</footer>

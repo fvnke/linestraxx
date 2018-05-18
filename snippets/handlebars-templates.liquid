@@ -1,0 +1,35 @@
+{% raw %}
+<script id="product-grid-item" type="text/x-handlebars-template">
+  <div id="product-{{ id }}" class="product three columns">
+    <a href="{{ url }}">
+      <img src="{{ image }}" alt="{{ title }}" />
+      <div class="details">
+        <p class="vendor">{{ vendor }}</p>
+        <h2 class="h3">{{ title }}, {{ price }}</h2>
+      </div>
+    </a>
+  </div>
+</script>
+
+<script id="cart-template" type="text/x-handlebars-template">
+  {{#each items}}
+  <div class="cart-item {{ classes }}">
+	  <div class="cart-img">
+		  <div class="image"><img src="{{ image }}" alt="{{ title }}"></div>
+	  </div>
+    <div class="details">
+      <div class="title">{{ title }}</div>
+      {{#each variant_options}}
+        <div>{{this}}</div>
+      {{/each}}
+      <div class="price">Price: {{ price }}</div>
+      <div class="qty">
+        <span class="down">-</span>
+        <input data-variant="{{ id }}" name="updates[]" id="updates_{{ id }}" class="quantity" value="{{ qty }}">
+        <span class="up">+</span>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</script>
+{% endraw %}

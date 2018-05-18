@@ -1,0 +1,457 @@
+{% assign slideArray = 'slide_1|slide_2|slide_3' | split: '|' %}
+{% assign section_id = section.id %}
+
+<div class="slider-wrap">
+	{% assign dots = section.settings.enable_dots %}
+	{% assign arrows = section.settings.enable_arrows %}
+	{% assign autoplay = section.settings.slideshow_autoplay %}
+	{% assign timer = section.settings.slideshow_interval %}
+	{% assign transition = section.settings.slideshow_transition %}
+	{% assign fill_screen = section.settings.slideshow_fillscreen %}
+	{% if transition == 'fade' %}
+		{% assign is_fade = true %}
+	{% else %}
+		{% assign is_fade = false %}
+	{% endif %}
+	
+	<div class="slick" data-slick='{
+		"slidesToShow": 1,
+		"slidesToScroll": 1,
+		"arrows": {{ arrows }},
+		{% if arrows %}
+		"nextArrow": ".next-{{ section_id }}",
+		"prevArrow": ".prev-{{ section_id }}",
+		{% endif %}
+		"dots": {{ dots }},
+		"fade": {{ is_fade }},
+		"autoplay": {{ autoplay }},
+		{% if autoplay %}
+		"autoplaySpeed": {{ timer }},
+		{% endif %}
+		"responsive": [
+			{
+				"breakpoint": 782,
+				"settings": {
+				}
+			}
+		]		
+	}'>
+		
+		{% for item in slideArray %}
+			{% assign enable = item %}
+			{% assign pic = item | append: '_img' %}
+			{% assign headline = item | append: '_headline' %}
+			{% assign text = item | append: '_text' %}
+			{% assign btn = item | append: '_btn' %}
+			{% assign link = item | append: '_link' %}
+			{% assign position_x = item | append: '_x' %}
+			{% assign position_y = item | append: '_y' %}
+			{% assign color = item | append: '_color' %}
+						
+			{% if section.settings[enable] %}
+				<div class="billboard slide-item">
+					
+					{% if fill_screen %}
+						<div class="billboard-bg-img" style="background-image: url({{ section.settings[pic] | img_url: 'master' }});">
+							{% if section.settings[headline] != blank or section.settings[text] != blank or section.settings[btn] != blank %}
+								{% include 'billboard-text' with 'home' %}
+							{% endif %}
+						</div>
+					{% else %}
+						<div class="billboard-img">
+							{% if section.settings[headline] != blank or section.settings[text] != blank or section.settings[btn] != blank %}
+								{% include 'billboard-text' with 'home' %}
+							{% endif %}
+							<img src="{{ section.settings[pic] | img_url: 'master' }}" alt="" />
+						</div>
+					{% endif %}
+										
+				</div>
+			{% endif %}
+		{% endfor %}
+				
+	</div>
+	
+	{% include 'slide-arrows' with 'slideshow' %}
+		
+</div>
+
+{% schema %} 
+  {
+    "name": "Slideshow",
+    "class": "section-slideshow",
+    "settings": [
+	    {
+		    "type": "header",
+		    "content": "Slideshow Settings" 
+	    },
+	    {
+		    "type": "checkbox",
+		    "id": "enable_dots",
+		    "label": "Display pagination dots?",
+		    "default": true
+	    },
+	    {
+		    "type": "checkbox",
+		    "id": "enable_arrows",
+		    "label": "Display prev/next arrows?",
+		    "default": true
+	    },
+	    {
+		    "type": "checkbox",
+		    "id": "slideshow_autoplay",
+		    "label": "Autoplay?",
+		    "default": true
+	    },
+	    {
+		    "type": "radio",
+		    "id": "slideshow_interval",
+		    "label": "Interval timer (in seconds)",
+		    "options": [
+          {
+            "value": "3000",
+            "label": "3"
+          },
+          {
+            "value": "6000",
+            "label": "6"
+          },
+          {
+            "value": "9000",
+            "label": "9"
+          },
+          {
+            "value": "12000",
+            "label": "12"
+          }
+        ],
+        "default": "3000"
+	    },
+	    {
+		    "type": "radio",
+		    "id": "slideshow_transition",
+		    "label": "Transition type",
+		    "options": [
+			    {
+				    "value": "fade",
+				    "label": "Fade"
+			    },
+			    {
+				    "value": "slide",
+				    "label": "Slide"
+			    }
+		    ],
+		    "default": "fade"
+	    },
+	    {
+		    "type": "checkbox",
+		    "id": "slideshow_fillscreen",
+		    "label": "Fill the screen?",
+		    "info": "Fill screen will use a CSS background image vs HTML image. Consider browser resize when selecting option.",
+		    "default": false
+	    },
+	    {
+		    "type": "color",
+		    "id": "slide_color_light",
+		    "label": "Light color text",
+		    "default": "#ffffff"
+	    },
+	    {
+		    "type": "color",
+		    "id": "slide_color_dark",
+		    "label": "Dark color text",
+		    "default": "#000000"
+	    },	    
+	    {
+		    "type": "header",
+		    "content": "Slide 1"
+	    },
+	    {
+		    "type": "checkbox",
+		    "id": "slide_1",
+		    "label": "Enable slide 1?",
+		    "default": false
+	    },
+	    {
+		    "type": "image_picker",
+		    "id": "slide_1_img",
+		    "label": "Image",
+        "info": "1600px x 700px recommended"
+	    },
+	    {
+		    "type": "text",
+		    "id": "slide_1_headline",
+		    "label": "Headline"
+	    },
+	    {
+		    "type": "textarea",
+		    "id": "slide_1_text",
+		    "label": "Text"
+	    },
+	    {
+		    "type": "text",
+		    "id": "slide_1_btn",
+		    "label": "Button text"
+	    },
+	    {
+		    "type": "text",
+		    "id": "slide_1_link",
+		    "label": "Button URL",
+		    "info": "Paste full URL (ex: http:\/\/google.com)"
+	    },
+	    {
+		    "type": "radio",
+		    "id": "slide_1_color",
+		    "label": "Text color",
+		    "options": [
+			    {
+	          "value": "dark",
+	          "label": "Dark"
+          },
+          {
+	          "value": "light",
+	          "label": "Light"
+          }
+        ],
+        "default": "dark"
+	    },
+      {
+	      "type": "radio",
+	      "id": "slide_1_x",
+	      "label": "Text X position",
+	      "options": [
+		      {
+			      "value": "left-x",
+			      "label": "Left"
+		      },
+		      {
+			      "value": "center-x",
+			      "label": "Center"
+		      },
+		      {
+			      "value": "right-x",
+			      "label": "Right"
+		      }
+	      ],
+	      "default": "left-x"
+      },
+      {
+	      "type": "radio",
+	      "id": "slide_1_y",
+	      "label": "Text Y position",
+	      "options": [
+		      {
+			      "value": "low",
+			      "label": "Low"
+		      },
+		      {
+			      "value": "center-y",
+			      "label": "Middle"
+		      },
+		      {
+			      "value": "high",
+			      "label": "High"
+		      }
+	      ],
+	      "default": "center-y"
+      },
+	    {
+		    "type": "header",
+		    "content": "Slide 2"
+	    },
+	    {
+		    "type": "checkbox",
+		    "id": "slide_2",
+		    "label": "Enable slide 2?",
+		    "default": false
+	    },
+	    {
+		    "type": "image_picker",
+		    "id": "slide_2_img",
+		    "label": "Image",
+        "info": "1600px x 700px recommended"
+	    },
+	    {
+		    "type": "text",
+		    "id": "slide_2_headline",
+		    "label": "Headline"
+	    },
+	    {
+		    "type": "textarea",
+		    "id": "slide_2_text",
+		    "label": "Text"
+	    },
+	    {
+		    "type": "text",
+		    "id": "slide_2_btn",
+		    "label": "Button text"
+	    },
+	    {
+		    "type": "text",
+		    "id": "slide_2_link",
+		    "label": "Button URL",
+		    "info": "Paste full URL (ex: http:\/\/google.com)"
+	    },
+	    {
+		    "type": "radio",
+		    "id": "slide_2_color",
+		    "label": "Text color",
+		    "options": [
+			    {
+	          "value": "dark",
+	          "label": "Dark"
+          },
+          {
+	          "value": "light",
+	          "label": "Light"
+          }
+        ],
+        "default": "dark"
+	    },
+      {
+	      "type": "radio",
+	      "id": "slide_2_x",
+	      "label": "Text X position",
+	      "options": [
+		      {
+			      "value": "left-x",
+			      "label": "Left"
+		      },
+		      {
+			      "value": "center-x",
+			      "label": "Center"
+		      },
+		      {
+			      "value": "right-x",
+			      "label": "Right"
+		      }
+	      ],
+	      "default": "center-x"
+      },
+      {
+	      "type": "radio",
+	      "id": "slide_2_y",
+	      "label": "Text Y position",
+	      "options": [
+		      {
+			      "value": "low",
+			      "label": "Low"
+		      },
+		      {
+			      "value": "center-y",
+			      "label": "Middle"
+		      },
+		      {
+			      "value": "high",
+			      "label": "High"
+		      }
+	      ],
+	      "default": "center-y"
+      },
+	    {
+		    "type": "header",
+		    "content": "Slide 3"
+	    },
+	    {
+		    "type": "checkbox",
+		    "id": "slide_3",
+		    "label": "Enable slide 3?",
+		    "default": false
+	    },
+	    {
+		    "type": "image_picker",
+		    "id": "slide_3_img",
+		    "label": "Image",
+        "info": "1600px x 700px recommended"
+	    },
+	    {
+		    "type": "text",
+		    "id": "slide_3_headline",
+		    "label": "Headline"
+	    },
+	    {
+		    "type": "textarea",
+		    "id": "slide_3_text",
+		    "label": "Text"
+	    },
+	    {
+		    "type": "text",
+		    "id": "slide_3_btn",
+		    "label": "Button text"
+	    },
+	    {
+		    "type": "text",
+		    "id": "slide_3_link",
+		    "label": "Button URL",
+		    "info": "Paste full URL (ex: http:\/\/google.com)"
+	    },
+	    {
+		    "type": "radio",
+		    "id": "slide_3_color",
+		    "label": "Text color",
+		    "options": [
+			    {
+	          "value": "dark",
+	          "label": "Dark"
+          },
+          {
+	          "value": "light",
+	          "label": "Light"
+          }
+        ],
+        "default": "dark"
+	    },
+      {
+	      "type": "radio",
+	      "id": "slide_3_x",
+	      "label": "Text X position",
+	      "options": [
+		      {
+			      "value": "left-x",
+			      "label": "Left"
+		      },
+		      {
+			      "value": "center-x",
+			      "label": "Center"
+		      },
+		      {
+			      "value": "right-x",
+			      "label": "Right"
+		      }
+	      ],
+	      "default": "center-x"
+      },
+      {
+	      "type": "radio",
+	      "id": "slide_3_y",
+	      "label": "Text Y position",
+	      "options": [
+		      {
+			      "value": "low",
+			      "label": "Low"
+		      },
+		      {
+			      "value": "center-y",
+			      "label": "Middle"
+		      },
+		      {
+			      "value": "high",
+			      "label": "High"
+		      }
+	      ],
+	      "default": "center-y"
+      }          
+    ],
+    "presets": [
+	    {
+		    "name": "Slideshow"
+	    }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet 'scss' %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

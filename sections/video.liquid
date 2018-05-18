@@ -1,0 +1,175 @@
+{%- assign headline = section.settings['video_headline'] -%}
+{%- assign text = section.settings['video_text'] -%}
+{%- assign btn = section.settings['video_btn'] -%}
+{%- assign link = section.settings['video_link'] -%}
+{%- assign position_x = section.settings['video_x'] -%}
+{%- assign position_y = section.settings['video_y'] -%}
+{%- assign color = section.settings['video_color'] -%}
+{%- assign mp4 = section.settings['video_mp4'] -%}
+{%- assign webm = section.settings['video_webm'] -%}
+{%- assign ogv = section.settings['video_ogv'] -%}
+
+  {%- if mp4 != blank or webm != blank or ogv != blank -%}
+  <section class="section-video video-module" data-module-init="video" data-timestamp="false" data-mp4="{{ mp4 }}" data-webm="{{ webm }}" data-ogv="{{ ogv }}" data-poster="{{ settings.home_video_poster | img_url: 'master' }}">
+  	<div class="billboard">
+  		<div class="billboard-bg-video">
+  			{%- if headline != blank or text != blank or btn != blank -%}
+  				{%- include 'billboard-text' with 'video' -%}
+  			{%- endif -%}
+  		</div>
+  	</div>
+  </section>
+  {%- endif -%}
+
+{% schema %}
+  {
+    "name": "Video",
+    "class": "section-video",
+    "settings": [
+	    {
+		    "type": "header",
+		    "content": "Video Settings" 
+	    },
+	    {
+		    "type": "text",
+		    "id": "video_mp4",
+		    "label": "URL of .mp4 file"
+	    },
+	    {
+		    "type": "text",
+		    "id": "video_ogv",
+		    "label": "URL of .ogv file"
+	    },
+	    {
+		    "type": "text",
+		    "id": "video_webm",
+		    "label": "URL of .webm file"
+	    },
+	    {
+		    "type": "image_picker",
+		    "id": "video_poster",
+		    "label": "Poster image"
+	    },
+	    {
+		    "type": "text",
+		    "id": "video_headline",
+		    "label": "Headline"
+	    },
+	    {
+		    "type": "textarea",
+		    "id": "video_text",
+		    "label": "Text"
+	    },
+	    {
+		    "type": "text",
+		    "id": "video_btn",
+		    "label": "Button text"
+	    },
+	    {
+		    "type": "text",
+		    "id": "video_link",
+		    "label": "Button URL",
+		    "info": "Paste full URL (ex: http:\/\/google.com)"
+	    },
+	    {
+		    "type": "color",
+		    "id": "video_color_light",
+		    "label": "Light color text",
+		    "default": "#ffffff"
+	    },
+	    {
+		    "type": "color",
+		    "id": "video_color_dark",
+		    "label": "Dark color text",
+		    "default": "#000000"
+	    },	    
+	    {
+		    "type": "radio",
+		    "id": "video_color",
+		    "label": "Text color",
+		    "options": [
+			    {
+	          "value": "dark",
+	          "label": "Dark"
+          },
+          {
+	          "value": "light",
+	          "label": "Light"
+          }
+        ],
+        "default": "dark"
+	    },
+      {
+	      "type": "radio",
+	      "id": "video_x",
+	      "label": "Text X position",
+	      "options": [
+		      {
+			      "value": "left-x",
+			      "label": "Left"
+		      },
+		      {
+			      "value": "center-x",
+			      "label": "Center"
+		      },
+		      {
+			      "value": "right-x",
+			      "label": "Right"
+		      }
+	      ],
+	      "default": "left-x"
+      },
+      {
+	      "type": "radio",
+	      "id": "video_y",
+	      "label": "Text Y position",
+	      "options": [
+		      {
+			      "value": "low",
+			      "label": "Low"
+		      },
+		      {
+			      "value": "center-y",
+			      "label": "Middle"
+		      },
+		      {
+			      "value": "high",
+			      "label": "High"
+		      }
+	      ],
+	      "default": "center-y"
+      }
+    ],
+    "presets": [
+	    {
+		    "name": "Video"
+	    }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet 'scss' %}
+{% endstylesheet %}
+
+{% javascript %}
+	
+{% endjavascript %}
+
+<script>
+	(function($){
+		$(document).ready(function(){
+			$('.billboard-bg-video').vide({
+				mp4: "{{ section.settings.video_mp4 }}",
+			  webm: "{{ section.settings.video_webm }}",
+			  ogv: "{{ section.settings.video_ogv }}",
+			  poster: "{{ section.settings.video_poster | img_url: 'master' }}"
+			}, {
+				muted: true,
+				loop: true,
+				position: '50% 50%',
+				autoplay: true,
+				posterType: 'detect'
+			});
+		});
+	})(jQuery);
+</script>

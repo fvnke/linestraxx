@@ -1,0 +1,55 @@
+@mixin productNarrativeInterruption {
+  position: relative;
+  .message {
+    display: none !important;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: blue;
+    animation: 1s slideDown;
+    animation-delay: .5s;
+    overflow: hidden;
+    animation-timing-function:linear;
+    animation-fill-mode:forwards;
+    -webkit-animation-timing-function:linear;
+    -webkit-animation-delay:.5s;
+    -webkit-animation-fill-mode: forwards;
+      
+    h4 {
+      @include smTitle;
+      position: absolute;
+      bottom: $section-padding/2;
+      text-align: center;
+      width: 80%;
+      left: 10%;
+      color: yellow;
+      white-space: pre-wrap;
+      br {
+        display: none;
+      }
+    }
+  }
+  
+}
+
+@keyframes slideDown {
+  from {
+    height: 100%;
+  }
+  to {
+    height: 0;
+  }
+}
+
+.narrative-interruption {
+  background-color: blue;
+  h2.xxl-title {
+    color: #fff;
+  }
+}
+
+.product-narrative-interruption {
+  @include productNarrativeInterruption;
+}

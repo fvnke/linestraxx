@@ -1,0 +1,286 @@
+{% assign parent_id = '' %}
+{% assign category_id = '' %}
+{% assign filter_active = false %}
+
+{% for link in linklists.main-menu.links %}
+  {% assign child_list_handle = link.title | handleize %}
+  {%- if linklists[child_list_handle].links != blank -%}
+    {%- for l in linklists[child_list_handle].links -%}
+      {%- if l.active -%}
+        {% assign filter_active = true %}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{% endfor %}
+
+{% if settings.enable_global_banner and settings.global_banner_text != blank %}
+	<div id="app-promo">
+		<span>
+			{% if settings.global_banner_link != blank %}
+				<a href="{{ settings.global_banner_link }}">{{ settings.global_banner_text }}</a>
+			{% else %}
+				{{ settings.global_banner_text }}
+			{% endif %}
+		</span>		
+	</div>
+{% endif %}
+
+<header id="app-header" role="banner" data-module-init="utilities" {% if filter_active %}class="filtered"{% endif %} 
+    {%- if template contains 'customer' or
+           template contains 'recently' or
+           template contains 'purchase' or
+           template contains 'wishlist' 
+     -%}
+class="active"{%- endif -%}>
+  
+  <button id="nav-hamburger">
+	
+    <svg class="hamburger-open"><use xlink:href="#icon-open"></use></svg>
+  	<svg class="hamburger-close"><use xlink:href="#icon-close"></use></svg>
+		
+  </button>
+  
+  
+  
+  
+  {% comment %}
+  <nav class="left-nav" role="navigation">
+      <ul>
+        {% for link in linklists.main-menu.links %}
+        {% assign parent_link_active = false %}
+        
+        
+		    {% for l in link.links %}
+		      {% if l.active %}
+		        {% assign parent_link_active = true %}
+		      {% endif %}
+		    {% endfor %}
+        
+          {% if link.links != blank %}
+            <li class="{% if link.active or parent_link_active  or current_tags.first == link.title  %}active{% endif %}">
+              <a href="{{ link.url }}">{{ link.title | escape }}</a>
+              <ul>
+                {% for childlink in link.links %}
+                  {% if childlink.links != blank %}
+                    <li>
+                      <a href="{{ childlink.url }}">{{ childlink.title | escape }}</a>
+                      <ul>
+                        {% for grandchildlink in childlink.links %}
+                          <li>
+                            <a href="{{ grandchildlink.url }}">{{ grandchildlink.title | escape }}</a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </li>
+                  {% else %}
+                    <li>
+                      <a href="{{ childlink.url }}">{{ childlink.title | escape }}</a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </li>
+          {% else %}
+            <li>
+              <a href="{{ link.url }}">{{ link.title | escape }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </nav>
+    {% endcomment %}
+  
+  
+  
+  <nav class="column-header desktop-only app-nav mobile-app-nav">
+		<ul class="nav-container">
+		  {% for link in linklists.main-menu.links %}
+		    {% assign menu_index = forloop.index %}
+			  {% assign parent_link_active = false %}
+		    {% assign child_list_handle = link.title | handleize %}
+		    {% assign break = false %}
+		    
+		    {% if linklists[child_list_handle].links != blank %}
+			    {% for l in linklists[child_list_handle].links %}
+			      {% if l.active %}
+			        {% assign parent_link_active = true %}
+			      {% endif %}
+			    {% endfor %}
+			    
+		      <li class="has-dropdown {% if link.active or parent_link_active  or current_tags.first == link.title  %}active{% endif %}" data-mega-menu="{{ link.handle }}" data-sub="{{ link.handle }}" aria-haspopup="true">
+		        <a class="top-link" href="{{ link.url }}">{{ link.title }}</a>
+            <ul class="" id="subnav-{{ link.handle }}">
+              {% for childlink in linklists[child_list_handle].links %}
+    	          {% if break == true %}
+    							{% assign break = false %}
+                  </ul>
+    					    <ul>
+    						{% endif %}
+    						{% if childlink.handle == 'break' %}
+                  {% assign break = true %}
+                  {% continue%}
+    						{% endif %}
+                <li class="{{ childlink.handle }} {% if childlink.active %}active{% endif %}">
+                  <a href="{{ childlink.url }}">{{ childlink.title | escape }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+		      </li>
+		    {% else %}
+		      <li {% if link.active or current_tags.first == link.title %}class="active"{% endif %}>
+		        <a href="{{ link.url }}">{{ link.title }}</a>
+		      </li>
+		    {% endif %}
+		  {% endfor %}
+		</ul>
+    
+    {% if linklists.submenu-season.size > 0 %}
+    <ul class="nav-container">
+      <li class="{% if link.active %}active{% endif %}">
+        {% for link in linklists.submenu-season.links %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      </li>
+    </ul>
+    {% endif %}
+    
+    {% include 'nav-utilities-mobile' %}
+    {%- if template contains 'customer' or
+           template contains 'recently' or
+           template contains 'purchase' or
+           template contains 'wishlist' 
+     -%}
+      
+    {%- endif -%}
+    
+    
+  </nav>
+	
+  
+  
+	<nav class="column-header desktop-only app-nav desktop-app-nav" data-module-init="desktop-nav">
+			<ul class="main-nav tier-1 nav-container">
+			  {% for link in linklists.main-menu.links %}
+			    {% assign menu_index = forloop.index %}
+				  {% assign parent_link_active = false %}
+			    {% assign child_list_handle = link.title | handleize %}
+			    {% assign break = false %}
+			    
+			    {% if linklists[child_list_handle].links != blank %}
+				    {% for l in linklists[child_list_handle].links %}
+				      {% if l.active %}
+				        {% assign parent_link_active = true %}
+				      {% endif %}
+				    {% endfor %}
+				    
+			      <li class="has-dropdown {% if link.active or parent_link_active  or current_tags.first == link.title  %}active{% endif %}" data-main="{{ link.handle }}" aria-haspopup="true" data-page="{{ link.handle }}">
+			        <a href="{{ link.url }}">{{ link.title }}</a>
+			      </li>
+			    {% else %}
+			      <li {% if link.active or current_tags.first == link.title %}class="active"{% endif %}>
+			        <a href="{{ link.url }}">{{ link.title }}</a>
+			      </li>
+			    {% endif %}
+			  {% endfor %}
+        <li class="desktop-only utility utility-trigger-j {% if template contains 'search' %}active{% endif %}" data-utility="app-search"><a href="/search">Search</a></li>
+			</ul>
+      
+      
+      
+		  {% for link in linklists.main-menu.links %}
+		    {% assign menu_index = forloop.index %}
+			  {% assign parent_link_active = false %}
+		    {% assign child_list_handle = link.title | handleize %}
+		    {% assign break = false %}
+        
+		    {% if linklists[child_list_handle].links != blank %}
+			    {% for l in linklists[child_list_handle].links %}
+			      {% if l.active %}
+			        {% assign parent_link_active = true %}
+              {% assign category_id = l.title %}
+			      {% endif %}
+			    {% endfor %}
+            
+            {% assign parent_id = link.title | downcase %}
+            
+            <div class="nav-container overflow-container tier-2 {% if parent_link_active or link.active or current_tags.first == link.title %}active{% endif %}" data-sub="{{ link.handle }}" data-module-init="horizontal-scroll">
+            <ul class="subnav" id="subnav-{{ link.handle }}">
+              {% for childlink in linklists[child_list_handle].links %}
+    	          {% if break == true %}
+    							{% assign break = false %}
+                  </ul>
+    					    <ul>
+    						{% endif %}
+    						{% if childlink.handle == 'break' %}
+                  {% assign break = true %}
+                  {% continue%}
+    						{% endif %}
+                <li class="{{ childlink.handle }} {% if childlink.active %}active{% endif %}">
+                  <a href="{{ childlink.url }}">{{ childlink.title | escape }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+            </div>
+            {% assign mega = 'mega_' | append: menu_index %}
+    				{% assign mega_img = mega | append: '_img' | append: '.jpg' %}
+    				{% assign mega_link = mega | append: '_link' %}
+    				{% assign linky = settings[mega_link] %}
+    				{% assign mega_text = mega | append: '_text' %}
+        
+    			        
+
+       
+        {% endif %}
+      {% endfor %}
+      
+
+      {% if linklists.submenu-season.size > 0 %}
+      <div class="overflow-container tier-3 subnav-container nav-container last-tier">
+      <ul class="subnav">
+        {% for link in linklists.submenu-season.links %}
+        <li class="{% if link.active %}active{% endif %}"><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {% endfor %}
+      </ul>
+      </div>
+      {% endif %}
+
+
+      
+      
+		</nav>	
+    
+    {% include 'account-nav' %}
+  
+
+	<div class="column-header app-utilities">	
+	  <ul class="desktop-utilities">
+	    {% if shop.customer_accounts_enabled %}
+	      {% if customer %}
+		      <li class="desktop-only trigger-account-nav {% if template contains 'customers' %}active {% endif %}"><a class="icon icon-account" href="/account">Account</a></li>
+	        <!--<li class="desktop-only">{{ 'layout.customer.log_out' | t | customer_logout_link }}</li>-->
+	      {% else %}
+		      <li class="desktop-only trigger-account-nav {% if template contains 'customers' %}active {% endif %}"><a href="/account/login">Account</a></li>
+	      {% endif %}
+	    {% endif %}
+      <li class="currency-switcher-container">{% include 'mlveda-currencies-switcher' %}</li>
+	    <li class="{% if template contains 'cart' %}active {% endif %}"><a href="/cart" class="icon icon-cart {% if cart.item_count < 1 %}no-items{% endif %}" id="cart-trigger"><span class="cart-count">Bag ({{ cart.item_count }})</span></a></li>
+	  </ul>  
+    <ul class="mobile-utilities">
+      <li class="mobile-cart {% if template contains 'cart' %}active {% endif %}"><a href="/cart" class="icon icon-cart {% if cart.item_count < 1 %}no-items{% endif %}"><svg class="icon-bag"><use xlink:href="#icon-bag{% if template contains 'cart' %}-full{% endif %}"></use></svg><span class="cart-count">{{ cart.item_count }}</span></a></li>
+      <li class="utility-trigger-j" data-utility="app-search"><a href="/search"><svg class="icon-search"><use xlink:href="#icon-search"></use></svg></a></li>
+    </ul>
+	</div>
+
+  <div id="app-search" data-nav="search" class="app-search utility-item last-tier">
+    <div class="autocomplete-list" style="display: none;">
+      {% assign auto_terms = settings.featured_search_terms | split:', ' %}
+      {% for term in auto_terms %}
+      <li class="auto-term">
+        <a href="/search?q={{ term }}"><span class="title">{{ term }}</span></a>
+      </li>
+      {% endfor %}
+    </div>
+    {% include 'search-bar' with 'header' %}
+  </div>
+     
+</header>

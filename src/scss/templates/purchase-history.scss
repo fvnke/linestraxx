@@ -1,0 +1,21 @@
+.page.purchase-history {
+  padding-top: 0;
+  @include gutter;
+  
+}
+
+.order-table {
+  //padding: $v-padding 0;
+  @include borderTop;
+  .order-item {
+    @include borderBottom;
+    @include gutter-padding-bottom(1);
+    position: relative;
+    
+    a.request-return {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+}

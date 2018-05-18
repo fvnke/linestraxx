@@ -1,0 +1,12 @@
+staging:
+  password: afe0172439104a6b2fc836af917e84c4
+  theme_id: "12126617655"
+  store: alyxstore.myshopify.com
+qa:
+  password: afe0172439104a6b2fc836af917e84c4
+  theme_id: "12126650423"
+  store: alyxstore.myshopify.com
+production:
+  password: afe0172439104a6b2fc836af917e84c4
+  theme_id: "12121833527"
+  store: alyxstore.myshopify.com

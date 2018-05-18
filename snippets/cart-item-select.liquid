@@ -1,0 +1,96 @@
+{% assign product = item.product %}
+<select name="id" id="productSelect-{{ item.id }}" class="product-single__variants block" style="text-indent: 0;" data-module-init="custom-select-cart-item">
+  {% for variant in product.variants %}
+    {% if variant.available %}    
+      <option {% if variant.id == item.id %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}" data-inventory="{{ variant.inventory_quantity }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+    {% else %}
+      <option disabled="disabled">
+        {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+      </option>
+    {% endif %}
+  {% endfor %}
+</select>
+
+
+<script>
+  
+  /*
+  $('#productSelect-{{ product.id }}').on('click', function(e){
+    e.preventDefault();
+
+    
+    var p_id = $(this).data('id');
+    var $item = $(this).closest('.related');
+    
+    var variantId = $('#productSelect-'+p_id+' :selected').val();
+    console.log('adding ' + variantId)
+    if(variantId != undefined) {
+      Shopify.addItem(variantId, 1, function(){
+        // Do Something here once the product is added
+        window.location.href = '/cart'
+      });
+      Shopify.onError = function(){
+        console.log('error')
+      }
+    }
+    
+    $(this).off('click');
+    
+    
+  });
+  */
+  
+  
+  function productPage(options){
+    
+  }
+  
+  var selectCallback = function(variant, selector) {
+    /*
+    productPage({
+      money_format: "{{ shop.money_format }}",
+      variant: variant,
+      selector: selector,
+      translations: {
+        add_to_cart : "{{ 'products.product.add_to_cart' | t }}",
+        sold_out : "{{ 'products.product.sold_out' | t }}",
+        unavailable : "{{ 'products.product.unavailable' | t }}"
+      }
+    });
+    */
+  };
+  
+  
+  
+  jQuery(function($) {
+    
+    
+    new Shopify.OptionSelectors('productSelect-{{ item.id }}', {
+      product: {{ product | json }},
+      onVariantSelected: selectCallback,
+      enableHistoryState: false
+    });
+    
+    // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
+    {% if product.options.size == 1 %}
+      {% for variant in product.variants %}
+          {% unless variant.available %}
+            jQuery('#cart-item-{{ item.id }} .single-option-selector option:eq({{ forloop.index0 }})').attr('disabled', 'disabled');
+          {% endunless %}
+        {% endfor %}
+       // jQuery('#cart-item-{{ item.id }} option:first').attr('selected','selected');
+      $('#cart-item-{{ item.id }} .selector-wrapper:eq(0)').prepend('<label for="productSelect-{{ item.id }}-option-0">{{ product.options.first | escape }}</label>');
+    {% endif %}
+
+    // Hide selectors if we only have 1 variant and its title contains 'Default'.
+    {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+      $('#cart-item-{{ item.id }} .selector-wrapper').hide();
+    {% endif %}
+    
+   
+  });
+  
+  
+  
+  
+</script>

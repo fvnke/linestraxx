@@ -1,0 +1,68 @@
+{% if billboard-text == 'home' %}
+		
+	{% assign text_color = null %}
+	
+	{% if section.settings[color] == 'dark' %}
+		{% assign text_color = section.settings.slide_color_dark %}
+	{% else %}
+		{% assign text_color = section.settings.slide_color_light %}
+	{% endif%}
+	
+	<div class="billboard-text slide-text {{ section.settings[position_y] }} {{ section.settings[position_x] }}" style="color: {{ text_color }}">		
+		{% if section.settings[headline] != blank %}
+			<h1 style="color: {{ text_color }}">{{ section.settings[headline] }}</h1>
+		{% endif %}
+		{% if section.settings[text] != blank %}
+			<p style="color: {{ text_color }}">{{ section.settings[text] }}</p>
+		{% endif %}
+	  {% if section.settings[btn] != blank %}
+	    {% if section.settings[link] != blank %}
+		    <a class="btn" style="color: {{ text_color }}; border-color: {{ text_color }};" href="{{ section.settings[link] }}">{{ section.settings[btn] }}</a>
+		  {% else %}
+			  <span class="btn" style="color: {{ text_color }}; border-color: {{ text_color }};" >{{ section.settings[btn] }}</span>
+	    {% endif %}
+	  {% endif %}
+	</div>
+
+{% elsif billboard-text == 'video' %}
+
+	{% assign text_color = null %}
+	
+	{% if color == 'dark' %}
+		{% assign text_color = section.settings.video_color_dark %}
+	{% else %}
+		{% assign text_color = section.settings.video_color_light %}
+	{% endif%}
+	
+	<div class="billboard-text slide-text {{ position_y }} {{ position_x }}" style="color: {{ text_color }}">		
+		{% if headline != blank %}
+			<h1 style="color: {{ text_color }}">{{ headline }}</h1>
+		{% endif %}
+		{% if text != blank %}
+			<p style="color: {{ text_color }}">{{ text }}</p>
+		{% endif %}
+	  {% if btn != blank %}
+	    {% if link != blank %}
+		    <a class="btn" style="color: {{ text_color }}; border-color: {{ text_color }};" href="{{ link }}">{{ btn }}</a>
+		  {% else %}
+			  <span class="btn" style="color: {{ text_color }}; border-color: {{ text_color }};">{{ btn }}</span>
+	    {% endif %}
+	  {% endif %}
+	</div>
+
+{% elsif billboard-text == 'collection' %}
+
+	<div class="billboard-text {{ settings.collection_text_x }}">
+		<h1>{{ collection.title }}</h1>
+		<div class="rte">
+			{{ collection.description | strip_html }}
+		</div>
+	</div>
+
+{% else %}
+
+	<div class="billboard-text">
+		<h2>{{ collections[featured].title }}</h2>
+	</div>
+	
+{% endif %}

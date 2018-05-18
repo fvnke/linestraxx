@@ -1,0 +1,60 @@
+{% unless current_collection == blank %} 
+  {% assign current_collection = collection %}
+{% endunless %}
+
+{% assign on_sale = false %}
+{% assign sale_text = 'products.product.sale' | t %}
+{% if product.compare_at_price > product.price %}
+  {% assign on_sale = true %}
+{% endif %}
+
+{% assign sold_out = true %}
+{% assign sold_out_text = 'products.product.sold_out' | t %}
+{% if product.available %}
+  {% assign sold_out = false %}
+{% endif %}
+
+<div class="grid-item gallery-child product-item {{ item_width }}{% if sold_out %} sold-out{% endif %}{% if on_sale %} on-sale{% endif %}">
+  <div class="gallery-inner-child">
+  <a href="{{ product.url | within: collection }}">
+	  
+    <div class="item-image mh-image">
+      {% if module != 'related' %}
+        <img src="{{ product.featured_image.src | img_url: '1024x' }}" alt="{{ product.featured_image.alt | escape }}">	
+      {% else %}
+        {% if product.metafields.metafield_template.related_image != blank %}
+           <img src="{{ product.metafields.metafield_template.related_image }}" alt="{{ product.featured_image.alt | escape }}">	
+        {% else %}
+           <img src="{{ product.featured_image.src | img_url: '1024x' }}" alt="{{ product.featured_image.alt | escape }}">	
+        {% endif %}
+      {% endif %}		
+      {% comment %}
+      {% if product.images[1] %}
+        <img class="hover-img" src="{{ product.images[1].src | img_url: 'grande' }}">
+      {% endif %}
+      {% endcomment %}
+    </div>
+    
+    <div class="item-details mh-details">
+      {% if on_sale and settings.collections_show_sale_indicator %}
+        <span class="badge"><span>{{ 'products.product.sale' | t }}</span></span>
+      {% endif %}
+      {% if sold_out and settings.collections_show_sold_out_indicator %}
+        <span class="badge"><span>{{ 'products.product.sold_out' | t }}</span></span>
+      {% endif %}
+	    {% if product.first_available_variant.sku %}
+		    <span class="product-barcode">{{ product.first_available_variant.sku }}</span>
+	    {% endif %}
+	    <h3 class="product-title">{{ product.title }}</h3>
+	    <span class="product-price">
+	      {% capture price %}{{ product.price | money }}{% endcapture %}
+	      {% if on_sale %}
+		      <s class="product-sale-price">{{ product.compare_at_price | money }}</s>
+	      {% endif %}
+	      {% if product.price_varies %}{{ 'products.general.from_html' | t: price: price }}{% else %}{{ price }}{% endif %}
+	    </span>
+    </div>
+    
+  </a>
+  </div>
+</div>

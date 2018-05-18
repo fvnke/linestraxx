@@ -1,0 +1,63 @@
+.tier-2 {
+  display: none;
+  &.active {
+    display: block;
+  }
+}
+
+
+body {
+  &[data-nav="account"], &.customers-addresses {
+    #app-header .account-tier {
+      display: block;
+    }
+    @include break(mobile) {
+      .account-tier {
+        display: none;
+      }
+      #app-header.active {
+        .account-tier {
+          display: block;
+        }
+      }
+    }
+    .utility-item {
+      display: none;
+    }
+  }
+  &[data-nav="search"] {
+    *[data-nav="search"], #app-search {
+      display: block;
+    }
+  }
+  &[data-nav="shop"] {
+    #app-header.filtered .tier-2.active, #app-header.filtered .tier-3 {
+      display: block;
+    }
+    #app-header {
+      .app-nav {
+        &.over {
+          .tier-2 {
+            display: none;
+            &.active {
+              display: none;
+            }
+            &.visible {
+              display: block;
+            }
+          }
+          .tier-3 {
+            display: block;
+          }
+        }
+    
+        .search-show & {
+          .tier-2, .tier-3 {
+            display: none !important;
+          }
+        }
+      }
+    }
+    
+  }
+}

@@ -1,0 +1,4 @@
+{% assign metafields = [entity].metafields.metafield_template %}
+{% if metafields[field_name] %}
+  {{ metafields[field_name] | date: "%m/%d/%y" }}
+{% endif %}

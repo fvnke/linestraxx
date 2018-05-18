@@ -1,0 +1,71 @@
+.collection-controls {
+  //margin: 0 $gutter;
+  text-align: left;
+  @include globalTextUC;
+  
+  position: relative;
+  
+  button.toggle-filter {
+    @include link-underline;
+    position: absolute;
+    right: 0;
+    top: 0;
+    @include gutter-right(1);
+    &.open {
+      &:after {
+        border-bottom: 1px solid #000;
+      }
+    }
+  }
+  
+  .sorting-controls {
+    display: none;
+    &.visible, .tagged & {
+      display: block;
+    }
+  }
+  
+  .coll-filter {
+    display: none;
+  }
+  .fake-select {
+    @include horizontal-list;
+    &.empty {
+      display: none !important;
+    }
+    ul {
+      margin-bottom: 0;
+    }
+  }
+  
+  .filter-count {
+    display: none;
+    &.active {
+      display: inline-block;
+    }
+  }
+  
+  ul {
+    height: $desktop-nav-height;
+    text-align: left;
+    margin-bottom: 0;
+    
+    li {
+      height: 100%;
+      a {
+        @include link-underline;
+      }
+      &.active {
+        a {
+          &:after {
+            border-bottom: 1px solid #000;
+          }
+        }
+      }
+    }
+  }
+  
+  .apply-filters {
+    display: none;
+  }
+} 

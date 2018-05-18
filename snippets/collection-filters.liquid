@@ -1,0 +1,272 @@
+<div id="collection-filtering">	
+  <form class="custom">
+	  
+		<div id="custom-filters">
+			
+			{% if settings.sort-dropdown-a-check and settings.sort_by_category != blank %}
+			  <nav class="filter">
+				  {% assign cat_tags = settings.sort_by_category  | replace: ' ,', ',' | replace: ', ', ',' | split: ',' %} 
+			    <select class="coll-filter">
+			      <option value="">{{ 'collections.filtering.category' | t }}</option>
+			      {% for tag in cat_tags %}
+			        {% if current_tags contains tag %}
+			          <option value="{{ tag | handle }}" selected>{{ tag }}</option>
+			        {% elsif collection.all_tags contains tag %}
+			          <option value="{{ tag | handle }}">{{ tag }}</option>
+			        {% endif %}
+			      {% endfor %}
+			    </select>
+			    
+			    <div class="fake-select">
+				    <span>{{ 'collections.filtering.category' | t }}<span class="icon icon-arrow"><svg><use xlink:href="#icon-down"></use></svg></span></span>
+				    <ul>
+					    {% for tag in cat_tags %}
+				        {% if current_tags contains tag %}
+				          <li data-value="{{ tag | handle }}">{{ tag | remove: 'category-' | replace: '-', ' ' }}</li>
+				        {% elsif collection.all_tags contains tag %}
+				          <li data-value="{{ tag | handle }}">{{ tag | remove: 'category-' | replace: '-', ' ' }}</li>
+				        {% endif %}
+				      {% endfor %}
+				    </ul>
+			    </div>
+			    
+        </nav>
+			{% endif %}			
+		
+			{% if settings.sort-dropdown-b-check and settings.sort_by_color != blank %}
+			  <nav class="filter">
+				  {% assign color_tags = settings.sort_by_color  | replace: ' ,', ',' | replace: ', ', ',' | split: ',' %} 
+			    <select class="coll-filter">
+			      <option value="">{{ 'collections.filtering.color' | t }}</option>
+			      {% for tag in color_tags %}
+			        {% if current_tags contains tag %}
+			          <option value="{{ tag | handle }}" selected>{{ tag }}</option>
+			        {% elsif collection.all_tags contains tag %}
+			          <option value="{{ tag | handle }}">{{ tag }}</option>
+			        {% endif %}
+			      {% endfor %}
+			    </select>
+			    
+			    <div class="fake-select">
+				    <ul>
+              <li>{{ 'collections.filtering.color' | t }}</li>
+					    {% for tag in color_tags %}
+				        {% if current_tags contains tag %}
+				          <li data-value="{{ tag | handle }}"><a href="#">{{ tag | remove: 'color-' | replace: '-', ' ' }}</a></li>
+				        {% elsif collection.all_tags contains tag %}
+				          <li data-value="{{ tag | handle }}"><a href="#">{{ tag | remove: 'color-' | replace: '-', ' ' }}</a></li>
+				        {% endif %}
+				      {% endfor %}
+				    </ul>
+			    </div>
+			  </nav>
+			{% endif %}
+		
+			{% if settings.sort-dropdown-c-check and settings.sort_by_size != blank %}
+			  <nav class="filter">
+			    {% assign size_tags = settings.sort_by_size  | replace: ' ,', ',' | replace: ', ', ',' | split: ',' %}
+			    <select class="coll-filter">
+			      <option value="">{{ 'collections.filtering.size' | t }}</option>
+			      {% for tag in size_tags %}
+			        {% if current_tags contains tag %}
+			          <option value="{{ tag | handle }}" selected>{{ tag }}</option>
+			        {% elsif collection.all_tags contains tag %}
+			          <option value="{{ tag | handle }}">{{ tag }}</option>
+			        {% endif %}
+			      {% endfor %}
+			    </select>
+			    
+			    <div class="fake-select">
+				    <ul>
+              <li>{{ 'collections.filtering.size' | t }}</li>
+				      {% for tag in size_tags %}
+				        {% if current_tags contains tag %}
+				          <li data-value="{{ tag | handle }}"><a href="#">{{ tag | remove: 'size-' | replace: '-', ' ' }}</a></li>
+				        {% elsif collection.all_tags contains tag %}
+				          <li data-value="{{ tag | handle }}" ><a href="#">{{ tag | remove: 'size-' | replace: '-', ' ' }}</a></li>
+				        {% endif %}
+				      {% endfor %}
+				    </ul>
+			    </div>
+			  </nav>
+			{% endif %}		
+				
+			{% if settings.sort-dropdown-d-check and settings.sort_by_custom != blank %}
+			  <nav class="filter">
+			    {% assign custom_tags = settings.sort_by_custom  | replace: ' ,', ',' | replace: ', ', ',' | split: ',' %}   
+			    <select class="coll-filter">
+			      <option value="">{{ settings.custom_sort_title }}</option>
+			      {% for tag in custom_tags %}
+				      {% if current_tags contains tag %}
+				      <option value="{{ tag | handle }}" selected>{{ tag }}</option>
+				      {% elsif collection.all_tags contains tag %}
+				      <option value="{{ tag | handle }}">{{ tag }}</option>
+				      {% endif %}
+			      {% endfor %}
+			    </select>
+	
+          {% if custom_tags.size > 0 %}
+			    <div class="fake-select">
+				    <ul>
+              <li>{{ settings.custom_sort_title }}</li>
+					    {% for tag in custom_tags %}
+				        {% if current_tags contains tag %}
+				          <li data-value="{{ tag | handle }}"><a href="#">{{ tag | replace: '-', ' ' }}</a></li>
+				        {% elsif collection.all_tags contains tag %}
+				          <li data-value="{{ tag | handle }}"><a href="#">{{ tag | replace: '-', ' ' }}</a></li>
+				        {% endif %}
+				      {% endfor %}
+				    </ul>
+			    </div>
+          {% endif %}
+			    
+			  </nav>
+			{% endif %}
+		
+    </div>
+		
+		<div class="mobile-only apply-filters">
+			<div class="wrapper wrapper-wide">
+				<div class="btn-wrap">
+					<span class="btn">{{ 'collections.filtering.apply' | t }}</span>
+				</div>
+			</div>
+	  </div>
+	  
+  </form>
+</div>       
+
+<script>
+	(function(){
+		
+	  var $body = $('body'),
+	      $apply_filters = $('.apply-filters'),
+	      $all_filters = $('.coll-filter'),
+	      all_tags = [],
+	      new_val,
+        $toggleFilter = $('.toggle-filter');
+    
+    $toggleFilter.on('click', function(){
+      $(this).toggleClass('open');
+      $('.sorting-controls').toggleClass('visible');
+    });
+    
+    $('.fake-select ul').each(function(){
+      if($(this).find('li').length < 2) {
+        $(this).closest('.fake-select').addClass('empty');
+      }
+    });
+	  
+	  // construct array of all currently selected filter options (array used in loop comparison below)
+	  $all_filters.each(function(i,el){ 
+		  me_val = $(el).val();
+	    if(me_val){
+	      all_tags.push(me_val);
+	    }
+	  });
+	  
+	  // compare all filter options to currently set filter values to set active state
+	  $('.fake-select').find('ul li').each(function(i,el){
+		  $me = $(el);
+		  me_text = $me.data('value');
+		  if(all_tags.indexOf(me_text) > -1){
+		    $me.addClass('active');
+			}
+	  });
+	
+	  // update window with new filtered results
+	  $all_filters.change(function(){
+	    var new_tags = [];
+	    $all_filters.each(function(i,el){ 
+		    me_val = $(el).val();
+	      if(me_val){
+	        new_tags.push(me_val);
+	      }
+	    });
+	
+	    if(new_tags.length){
+	      var query = new_tags.join('+');
+        window.location.href = $('{{ '0my-tag0' | link_to_tag: '0my-tag0' }}').attr('href').replace('0my-tag0', query);
+	    } else {
+        {% if collection.handle %}
+	        window.location.href = '/collections/{{ collection.handle }}';
+        {% elsif collection.products.first.type == collection.title %}
+	        window.location.href = '{{ collection.title | url_for_type }}';
+        {% elsif collection.products.first.vendor == collection.title %}
+	        window.location.href = '{{ collection.title | url_for_vendor }}';
+        {% endif %}
+	    }
+	  });
+	    
+	  // update filter selects and trigger change
+	  $body.on('click', '.fake-select li', function(e){
+		  var filter_set;
+		  e.stopPropagation();
+		  $me = $(this);
+		  $me_closest_filter = $me.closest('.fake-select').closest('.filter');
+		  $me_coll_filter = $me_closest_filter.find('.coll-filter');
+			new_val = $me.data('value');
+			old_val = $me_coll_filter.val();
+			$all_sibling_filters = $me_closest_filter.siblings('.filter').find('.fake-select').find('li');
+			
+			if($all_sibling_filters.hasClass('active')){
+				filter_set = true;
+			} else {
+				filter_set = false;
+			}
+				
+      console.log(new_val)  
+        
+			function updateFilters(elem, filter_val){
+        console.log('updateFilters ' + elem);
+				$el = $(elem);
+        
+        $me_coll_filter.val(filter_val).change();
+        return true;
+        
+				if($body.hasClass('wide-screen')){
+					$me_coll_filter.val(filter_val).change();
+				} else if($body.hasClass('narrow-screen')){
+					if($el.hasClass('active')){
+						$el.removeClass('active');
+						$me_coll_filter.val('');
+						if(!filter_set){
+							$apply_filters.slideUp().find('.btn').removeClass('ready-to-apply');
+							$apply_filters.find('.btn').off('click');
+						}
+					} else {
+						$el.addClass('active').siblings('li').removeClass('active');
+						$me_coll_filter.val(filter_val);
+						$apply_filters.slideDown().find('.btn').addClass('ready-to-apply');
+						$apply_filters.find('.btn').on('click', function(){
+							$me_coll_filter.change();
+						});
+					}
+				}
+			}
+			
+			// apply/remove filter
+			if(new_val === old_val){
+				updateFilters(me, '');
+			} else {
+				updateFilters(me, new_val);
+			}
+	  });
+	  
+	  // Split filter lists into 2 columns if greater than 5 
+    
+	  $('.filter').find('ul').each(function(i,el){
+		  me = $(el);
+      /*
+		  li_len = me.find('li').length;
+		  if(li_len > 5){
+			  half_len = Math.round(li_len / 2);
+			  var new_ul = $('<ul class="new-col"></ul>');
+			  new_ul.insertAfter(me);
+				me.find('li:gt('+half_len+')').appendTo(new_ul);
+		  }
+      */
+	  });
+	
+	})(jQuery);
+</script>

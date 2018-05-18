@@ -1,0 +1,113 @@
+<div class="single-image single-image--{{ section.settings.hero_size }}{% if section.settings.title != blank or section.settings.text != blank or section.settings.button_label != blank %} hero__overlay{% endif %} box ratio-container lazyload js">
+  <div class="hero__inner">
+    <div class="hero-text narrative-interruption">
+      {% if section.settings.text != blank %}
+        <h2 class="rte-setting xxl-title{% if section.settings.text_size == 'large' %} mega-subtitle--large{% endif %}">{{ section.settings.text }}</h2>
+      {% endif %}
+      {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+        <a href="{{ section.settings.button_link }}" class="btn hero__btn">
+          {{ section.settings.button_label | escape }}
+        </a>
+      {% endif %}
+    </div>
+    
+    {% assign image = section.settings.image %}
+    {% include 'picture' with image %}
+    
+    
+  </div>
+</div>
+
+<noscript>
+  <div class="hero hero--{{ section.settings.hero_size }}{% if section.settings.title != blank or section.settings.text != blank or section.settings.button_label != blank %} hero__overlay{% endif %}"{% if section.settings.image %} style="background-image: url('{{ section.settings.image | img_url: '2048x' }}'); background-position: center {{ section.settings.alignment }};"{% endif %}></div>
+</noscript>
+
+{% schema %}
+  {
+    "name": "Image",
+    "class": "index-section index-section--flush",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "select",
+        "id": "alignment",
+        "label": "Image alignment",
+        "default": "center",
+        "options": [
+          {
+            "value": "top",
+            "label": "Top"
+          },
+          {
+            "value": "center",
+            "label": "Middle"
+          },
+          {
+            "value": "bottom",
+            "label": "Bottom"
+          }
+        ]
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Text",
+        "default": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>"
+      },
+      {
+        "type": "select",
+        "id": "hero_size",
+        "label": "Section height",
+        "default": "medium",
+        "options": [
+          {
+            "label": "Extra Small",
+            "value": "x-small"
+          },
+          {
+            "label": "Small",
+            "value": "small"
+          },
+          {
+            "label": "Medium",
+            "value": "medium"
+          },
+          {
+            "label": "Large",
+            "value": "large"
+          },
+          {
+            "label": "Extra Large",
+            "value": "x-large"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "text_size",
+        "label": "Text size",
+        "default": "medium",
+        "options": [
+          {
+            "label": "Medium",
+            "value": "medium"
+          },
+          {
+            "label": "Large",
+            "value": "large"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Image",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}

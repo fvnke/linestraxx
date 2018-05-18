@@ -1,0 +1,36 @@
+.related-cart-products {
+  //padding-bottom: $v-padding; 
+  //border-bottom:1px solid $c-border;
+  //margin-bottom: $v-padding;
+  
+  #related-products {
+    margin: 0;
+  }
+}
+
+.related {
+  &.slick-slide {
+    margin-bottom: 0;
+  }
+  .item-details {
+    .template-product & {
+      visibility: hidden;
+    }
+  }
+  
+  &:hover {
+    .item-details {
+      .template-product & {
+        visibility: visible;
+      }
+    }
+  }
+  
+}
+
+#related-cart-products {
+  @include gutter-top(1);
+  .section-header {
+    @include borderTop;
+  }
+}

@@ -1,0 +1,7 @@
+<div id="product-thumbs">
+  {% for image in product.images %}
+    <a class="product-thumb" data-image-id="{{ image.id }}" href="{{ image.src | img_url: '2048x2048' }}">
+      <img src="{{ image.src | img_url: 'small' }}" alt="{{ image.alt | escape }}">
+    </a>
+  {% endfor %}
+</div>

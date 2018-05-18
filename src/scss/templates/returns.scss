@@ -1,0 +1,12 @@
+#alveoAppPortal {
+  @include globalText;
+  text-align: left !important;
+  
+  h1 {
+    text-align: left !important;
+  }
+}
+
+.app-returnmagic {
+  @include overrideText;
+}

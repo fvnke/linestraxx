@@ -1,0 +1,6 @@
+.newsletter-container {
+  @include form-styles;
+  input[type="submit"] {
+    //display: none;
+  }
+}

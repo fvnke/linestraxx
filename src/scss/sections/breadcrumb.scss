@@ -1,0 +1,33 @@
+.nav-breadcrumb {
+  //@include link-underline;
+  //position: absolute;
+  //left: $gutter; 
+  @include horizontal-list;
+  
+  &.bottom-breadcrumb {
+    @include largerPaddingTop;
+  }
+  
+  li {
+    margin-left: 0;
+    @include globalTextUC;
+    &:first-child {
+      @include gutter-left(1);
+    }
+  } 
+  .active {
+    @include link-underline-active;
+  }
+}
+
+.breadcrumb {
+  a, span {
+    @include link-underline;
+  }
+  
+  span:hover {
+    &:after {
+      border-color: transparent;
+    }
+  }
+}

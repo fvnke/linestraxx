@@ -1,0 +1,61 @@
+{% assign t = template | handleize %}
+
+<div id="app-register" class="page header-lower {% if t == 'customers-register' %}visible{% endif %}">
+	<div class="wrapper wrapper-narrow">
+		<div class="account-inner">
+ 
+			<div class="login-col">
+				<div class="login-box">
+			
+				  {% form 'create_customer' %}
+				
+				    {{ form.errors | default_errors }}
+				
+						<div class="field-wrap">
+              <label class="label">{{ 'customer.register.first_name' | t }}</label>
+				      <input type="text" name="customer[first_name]" id="FirstName" placeholder="{{ 'customer.register.first_name' | t }}" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocapitalize="words" autofocus placeholder="{{ 'customer.register.first_name' | t }}">
+						</div>
+						
+						<div class="field-wrap">
+              <label class="label">{{ 'customer.register.last_name' | t }}</label>
+				      <input type="text" name="customer[last_name]" id="LastName" placeholder="{{ 'customer.register.last_name' | t }}" {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocapitalize="words" placeholder="{{ 'customer.register.last_name' | t }}">
+						</div>
+						
+						<div class="field-wrap">
+              <label class="label">{{ 'customer.register.email' | t }}</label>
+				      <input type="email" name="customer[email]" id="Email" placeholder="{{ 'customer.register.email' | t }}" {% if form.errors contains "email" %} class="error"{% elsif form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off" placeholder="{{ 'customer.register.email' | t }}">
+						</div>
+						
+						<div class="field-wrap">
+              <label class="label">{{ 'customer.register.password' | t }}</label>
+				      <input type="password" name="customer[password]" id="CreatePassword" {% if form.errors contains "password" %} class="error"{% endif %}>
+						</div>
+            
+            <div class="field-wrap field-break field-checkbox field-standalone">
+                <input type="hidden" name="customer[accepts_marketing]" value="" />
+                <input type="checkbox" name="customer[accepts_marketing]" checked="checked" />
+                I want to receive the ALYX Newsletter
+            </div>
+            
+            <div class="field-wrap field-checkbox field-standalone">
+                <input type="hidden" name="customer[accepts_policy]" value="" />
+                <input type="checkbox" class="required" required data-error="Please agree with the Privacy Policy" name="customer[accepts_policy]" />
+                I agree with the Privacy Policy <a class="inline-link" href="/pages/privacy-policy">Read More</a>
+            </div>
+						
+				    <div class="field-wrap btn-wrap field-standalone btn-container">
+				      <input type="submit" value="{{ 'customer.register.submit' | t }}" class="register-btn btn">
+				    </div>
+				    
+				    <div class="field-wrap btn-wrap field-standalone">
+					    <a href="{{ shop.url }}">{{ 'customer.register.cancel' | t }}</a>
+				    </div>
+				
+				  {% endform %}
+				  
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>

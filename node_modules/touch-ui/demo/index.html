@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- user-scalable=no to prevent 300ms delay -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <script src="../dist/touch-ui.js"></script>
+  <script src="util.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1> Touch UI </h1>
+
+  <!-- ................................................................................................ -->
+  <!--                                           Console                                                -->
+  <!-- ................................................................................................ -->
+  <div id="movement-display"></div>
+  <script>
+    /* eslint-disable */
+    let touch = new TouchUI();
+
+    // Movement Display
+    [TouchUI.touchMove, TouchUI.touchEnd].forEach(eventName => {
+      document.body.addEventListener(eventName, e => {
+        document.querySelector('#movement-display').innerHTML = `
+            Total Movement: ${JSON.stringify(touch.getMove())}<br/>
+            ${touch.lastMove && touch.lastMove.direction} `;
+      });
+    });
+  </script>
+
+  <!-- ................................................................................................ -->
+  <!--                                           Tap/Hold Test                                          -->
+  <!-- ................................................................................................ -->
+  <h2 id="top-hold"> Tap/Hold </h2>
+  <div id="tap-hold" class="touch-box" style="height:200px">
+    Try these in the box
+    <ul>
+      <li>tap
+      <li>double tap
+      <li>triple tap
+      <li>hold
+      <li>tap then hold
+    </ul>
+  </div>
+  For test: <span id="tap-hold-webtest"></span>
+
+  <script id="tap-hold-script">
+    /* eslint-disable */
+    //Tap and Hold Test 
+    let tapHoldEl = document.querySelector('#tap-hold');
+    let tapHoldWebtest = document.querySelector('#tap-hold-webtest');
+    let tapHoldEventNames = 
+      ['tap', 'double-tap', 'triple-tap', 'hold', 'tap-and-hold', 'double-tap-and-old'];
+    tapHoldEventNames.forEach(eventName =>  {
+      tapHoldEl.addEventListener(eventName, e => {
+        setBgText(tapHoldEl, e.eventName);
+        tapHoldWebtest.innerHTML = e.eventName;
+      });
+    });
+  </script>
+
+  <h3>Code:</h3>
+  <pre id="tap-hold-code"></pre>
+  <script>showScript('#tap-hold-code', '#tap-hold-script')</script>
+
+  <!-- Drag Test Only -->
+  <h2 id="drag"> Drag </h2>
+  <div id="drag-test" class="touch-box">
+    <div class="box">
+      <div class="draggable"> Drag Anywhere </div>
+    </div>
+    <div class="box">
+      <div class="draggable" style="position: absolute;left: 20%"> Drag Horizontally </div>
+    </div>
+    <div class="box">
+      <div class="draggable" style="position: absolute;left: 40%"> Drag Vertically </div>
+    </div>
+  </div>
+  For test: <span id="drag-webtest"></span>
+
+  <script id="drag-script">
+    /* eslint-disable */
+    let dragEls = Array.from(document.querySelectorAll('.draggable'));
+    TouchUI.draggable(dragEls[0], {axis: 'xy'});
+    TouchUI.draggable(dragEls[1], {axis: 'x'});
+    TouchUI.draggable(dragEls[2], {axis: 'y'});
+
+    dragEls.forEach(el => {
+      el.addEventListener('hold', e => setBgText(el, 'drag-start') ); //intentionally wrong :)
+      el.addEventListener('drag-start', e => setBgText(el, e.eventName) );
+      el.addEventListener('drag-move',  e => setBgText(el, e.eventName) );
+      el.addEventListener('drag-end',   e => setBgText(el, e.eventName) );
+    });
+  </script>
+
+  <h3>Code:</h3>
+  <pre id="drag-code"></pre>
+  <script>showScript('#drag-code', '#drag-script')</script>
+
+  <!-- ................................................................................................ -->
+  <!--                                           Drag/Drop Test                                         -->
+  <!-- ................................................................................................ -->
+  <h2 id="drop"> Drop </h2>
+  <div id="drop-test" class="touch-box">
+    <div class="droppable">
+      <div class="draggable">Drag-1</div>
+      <div class="draggable">Drag-2</div>
+      <div class="draggable">Drag-3</div>
+    </div>
+    <div class="droppable"></div>
+  </div>
+  For test: <span id="drop-webtest"></span>
+
+  <script id="drag-drop-script">
+    /* eslint-disable */
+    let dropDragEls = Array.from(document.querySelectorAll('.droppable .draggable'));
+    let dropzoneEls = Array.from(document.querySelectorAll('.droppable'));
+    let dropWebtestEl = document.querySelector('#drop-webtest');
+    TouchUI.draggable(dropDragEls);
+    TouchUI.droppable(dropzoneEls);
+
+    dropzoneEls.forEach(el => {
+      el.addEventListener('drag-enter', e => setBgText(el, e.eventName) );
+      el.addEventListener('drag-leave', e => setBgText(el, e.eventName) );
+      el.addEventListener('drop',       e => {
+        e.target.appendChild(e.dragEl);
+        setBgText(el, e.eventName);
+        dropWebtestEl.innerHTML = e.target.children.length;
+      });
+    });
+  </script>
+
+ <h3>Code:</h3>
+ <pre id="drag-drop-code"></pre>
+  <script>showScript('#drag-drop-code', '#drag-drop-script')</script> 
+
+  <!-- ................................................................................................ -->
+  <!--                                           Swipe Test                                             -->
+  <!-- ................................................................................................ -->
+  <h2 id="swipe"> Swipe </h2>
+  <div id="swipe-test" class="touch-box">
+    <div class="swipable">Swipe Here</div>
+    <div class="swipable">Swipe Here</div>
+  </div>
+  Test: <span id="swipe-webtest"></span>
+
+  <div class="instruction">
+    Try these in the box
+    <ul>
+      <li>swipe left
+      <li>swipe right
+      <li>swipe up
+      <li>swipe down
+    </ul>
+  </div>
+
+  <script id="swipe-script">
+    /* eslint-disable */
+    let els = Array.from(document.querySelectorAll('.swipable'));
+    let swipeWebtest = document.querySelector('#swipe-webtest');
+    els.push(document.querySelector('#swipe-test'));
+    TouchUI.swipable(els);
+
+    els.forEach(el => {
+      ['up', 'down', 'left', 'right'].forEach(move => {
+        el.addEventListener('swipe-'+move, e => {
+          setBgText(el, e.eventName) 
+          swipeWebtest.innerHTML = e.eventName;
+        });
+      });
+    });
+  </script>
+
+  <h3>Code:</h3>
+  <pre id="swipe-code"></pre>
+  <script>showScript('#swipe-code', '#swipe-script')</script>
+ 
+  <!-- ................................................................................................ -->
+  <!--                                           Pan / Zoom                                             -->
+  <!-- ................................................................................................ -->
+  <h2 id="pan"> Pan / Zoom </h2>
+  <input type="checkbox" id="do-zoom" /> Press Ctrl(Command) key to zoom 
+  <div id="pan-test" class="touch-box" style="
+    background-image: url('http://lorempixel.com/1536/600/nature/');
+    background-repeat: no-repeat;
+    background-position: center;">
+  </div>
+  For Test: <span id="pan-webtest"></span>
+
+  <script id="pan-script">
+    /* eslint-disable */
+    let panTestEl = document.querySelector('#pan-test');
+    let doZoomEl = document.querySelector('#do-zoom');
+    let panWebtest = document.querySelector('#pan-webtest');
+    let moves, style, matches, bgStartSize, bgSize;
+    TouchUI.pannable(panTestEl);
+
+    panTestEl.addEventListener('pan-start', e => { // get the initial scale
+      style = window.getComputedStyle(e.target, null);
+      startX = parseInt(style.backgroundPositionX) || 0;
+      startY = parseInt(style.backgroundPositionY) || 0;
+      bgStartSize = parseInt(style.backgroundSize) || 100;
+    });
+
+    panTestEl.addEventListener('pan-move', e => { // update scale with moving distance
+      if (e.metaKey || e.ctrlKey || doZoomEl.checked) {
+        e.target.style.backgroundSize = bgStartSize + (e.distanceFromCenter/2) + '%';
+        panWebtest.innerHTML = `backgroundSize: ${e.target.style.backgroundSize}`;
+      } else {
+        panTestEl.style.backgroundPositionX = startX + e.move.x + 'px';
+        panTestEl.style.backgroundPositionY = startY + e.move.y + 'px';
+        panWebtest.innerHTML = `backgroundPosition: ${panTestEl.style.backgroundPositionX},${panTestEl.style.backgroundPositionY},`;
+      }
+    });
+  </script>
+
+  <h3>Code:</h3>
+  <pre id="pan-code"></pre>
+  <script>showScript('#pan-code', '#pan-script')</script>
+
+  <!-- ................................................................................................ -->
+  <!--                                          Resize Test                                       -->
+  <!-- ................................................................................................ -->
+  <h2 id="resize"> Resize </h2>
+  The border around it is to increase touch sensitivity by adding :before pseudo element.
+  <input type="radio" name="resize-position" onclick="resizable.reset({positions: 'right'})" checked /> Resize Width
+  <input type="radio" name="resize-position" onclick="resizable.reset({positions: 'bottom'})" /> Resize Height
+  <div id="resize-test" class="touch-box">
+    <div class="resizable" style="width: 50%; float: left; height: 100%; border: 1px solid #ccc; background: #dfd">
+      Resize Me
+    </div>
+    <div id="resize-right" style="width: 50%; float: left; height: 100%; border: 1px solid #ccc; background: #ddd">
+      When resize, width of this changes
+    </div>
+  </div>
+  For test: <span id="resize-webtest"></span>
+
+  <script id="resize-script">
+    /* eslint-disable */
+    let resizableEl = document.querySelector('.resizable');
+    let resizable = TouchUI.resizable(resizableEl, {positions: 'right'});
+    let elRight  = document.querySelector('#resize-right');
+    let elBottom = document.querySelector('#resize-bottom');
+    let resizeWebtest = document.querySelector('#resize-webtest');
+    let startWidth, startHeight;
+
+    resizableEl.addEventListener('resize-start', e => {
+      startWidth  = elRight.getBoundingClientRect().width;
+    });
+
+    resizableEl.addEventListener('resize-move', e => {
+      e.resizePosition === 'right' && 
+        (elRight.style.width  = startWidth  + (e.move.x * -1) + 'px');
+      resizeWebtest.innerHTML = `left: ${e.target.style.width}, right: ${elRight.style.width}`;
+    });
+  </script>
+
+  <h3>Code:</h3>
+  <pre id="resize-code"></pre>
+  <script>showScript('#resize-code', '#resize-script')</script>
+</body>
+</html>

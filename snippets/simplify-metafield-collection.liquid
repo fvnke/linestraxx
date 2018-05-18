@@ -1,0 +1,16 @@
+{% assign metafields = [entity].metafields.metafield_template %}
+{% if metafields[field_name] %}
+	{% assign the_collection = metafields[field_name] %}
+	{% assign collection_list = metafields[field_name] | split: ',' %}
+	{% for the_collection in collection_list %}
+	<h1> {{ collections[the_collection].title }}</h1>
+      {% for theProduct in collections[the_collection].products %}
+
+          <h2>{{ theProduct.title }}</h2>
+          <a href="{{ theProduct.url }}">
+            <img src="{{ theProduct.featured_image | img_url: 'small' }}" />
+          </a>
+          <div class="description">{{ theProduct.description }}</div>
+      {% endfor %}
+	{% endfor %}
+{% endif %}

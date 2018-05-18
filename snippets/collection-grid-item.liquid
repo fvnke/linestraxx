@@ -1,0 +1,33 @@
+{% if collections[featured].image %} 
+	<div class="collection-block">
+		<div class="billboard">
+			{% capture collection_title %}{{ collections[featured].title | escape }}{% endcapture %}
+			<a href="{{ collections[featured].url }}" title="{{ 'collections.general.link_title' | t: title: collection_title }}">
+				<div class="billboard-img">    
+			    {{ collections[featured].image.src | img_url: '2048x2048' | img_tag: collection_title }}
+			    {% include 'billboard-text' with 'collection-list' %}    
+				</div>
+		  </a>
+		</div>
+		
+		<div class="collection-list-products">
+			
+			<div class="wrapper">
+				<div class="grid-wrapper">
+				{% for product in collections[featured].products | limit: 3 %}
+					{% include 'product-item' %}
+				{% endfor %}
+				</div>
+				
+				<div class="btn-wrap">
+					<a class="btn fill" href="{{ collections[featured].url }}" title="{{ 'collections.general.link_title' | t: title: collection_title }}">
+						Shop All {{ collection_title }}
+					</a>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+	</div>
+{% endif %}

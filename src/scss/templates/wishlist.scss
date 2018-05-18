@@ -1,0 +1,145 @@
+.wk-row {
+  @include horizontal-scrolling-img-list;
+  //@include flexbox;
+      flex-direction: row;
+  .wk-item-column {
+    flex: 0 0 154px;
+    display: inline-block;
+    float: left;
+    .wk-variant-link {
+      @include overflow;
+    }
+  }
+}
+
+.wishlist-collection {
+  
+  .section-header + .wk-row {
+    @include gutter-top(1);
+  }
+  
+  .wk-select, .wk-purchase-section, .wk-button-wishlist-clear {
+    display: none;
+  }
+  
+  
+  li {
+    //@include small-product-module;
+    display: inline-block;
+    //margin: 0 $gutter;
+    a {
+      position: relative;
+      display: block;
+    }
+    .wishlist-buttons {
+      @include gutter-top(1);
+      
+      a {
+        @include globalTextUC;
+      }
+    }
+    svg {
+      position: absolute;
+      top: $gutter/3;
+      left: $gutter/3;
+      @include break(mobile) {
+        top: $mobile-gutter/3;
+        left: $mobile-gutter/3;
+      }
+      path {
+        fill: #000;
+      }
+    }
+  }
+} 
+
+
+.wk-row {
+  @include flexbox;
+}
+
+.wk-item-column {
+  @include smallFlickity;
+  @include break(mobile) {
+    width: 154px !important;
+  }
+}
+
+.wishlist-actions {
+  button {
+    margin-left: 1.5em;
+  }
+}
+
+button.wk-button-product {
+  &.wk-add-product {
+    svg {
+      path {
+        fill: #fff;
+      }
+    }
+  }
+  .wk-icon {
+    svg {
+      path {
+        fill: #fff;
+      }
+    }
+  }
+  &.wk-remove-item {
+    position: absolute;
+    top: 0;
+    margin-top: 0;
+    background: transparent;
+    padding-left:.4em;
+    padding-top:.2em;
+    .wk-icon {
+      svg {
+        path {
+          fill: #000;
+        }
+      }
+    }
+    span {
+      display: none;
+    }
+  }
+}
+
+
+#wk-share-head, #wk-share-list {
+  display: none !important;
+}
+
+.wk-wishlist-empty-note {
+  @include borderTop;
+  text-align: left;
+  @include gutter;
+}
+
+.wk-item { 
+  
+  @include globalTextUC;
+  .wk-product-title {
+    a {
+      @include globalTextUC;
+    }
+  }
+  
+  label {
+    @extend .label;
+  }
+}
+
+.wk-add-item-form {
+  .wk-add-to-cart {
+    //@extend .btn;
+    @include globalTextUC;
+    background: #fff;
+    color: #000;
+    width: auto;
+    max-width: auto;
+    border: none;
+    padding: 0;
+  }
+}

@@ -1,0 +1,99 @@
+{% comment %}
+<div class="page">
+	<div class="wrapper wrapper-narrow">
+		<div class="account-inner">
+		
+			<div class="account-detail-header">
+				<!--<a class="return-link" href="/collections/all">{{ 'customer.account.return_to_store' | t }}</a>-->
+			  <h1>{{ 'customer.account.details' | t }}</h1>
+			</div>
+		  
+			{% if customer.addresses_count > 0 %}		
+		    <div class="customer-address-wrap">
+					<div class="customer-address-block">
+						<div class="default-address">
+              
+              {{ 'customer.addresses.default' | t }}:<br>
+              {{ customer.default_address.first_name }} {{ customer.default_address.last_name }}<br>
+							{{ customer.default_address.address1 }}, {% if customer.default_address.address2 != "" %}
+				        {{ customer.default_address.address2 }}
+				      {% endif %}	
+              <br>
+				      {% if customer.default_address.city != "" %}
+				        {{ customer.default_address.city }}
+				      {% endif %}
+				
+				      {% if customer.default_address.province_code != "" %}
+				        {{ customer.default_address.province_code | upcase }}
+				      {% endif %}
+				
+				      {% if customer.default_address.zip != "" %}
+				        {{ customer.default_address.zip | upcase }}<br>
+				      {% endif %}
+				
+				      {% if customer.default_address.country != "" %}
+				        {{ customer.default_address.country }}<br>
+				      {% endif %}
+				
+				      {% if customer.default_address.phone != "" %}
+				        {{ customer.default_address.phone }}
+				      {% endif %}	
+						</div>
+            
+				   
+
+				    <p class="view-addresses"><a href="/account/addresses">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a></p>
+				    
+			    </div>
+				</div>
+		  {% else %}
+			  <p class="view-addresses"><a href="/account/addresses">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a></p>
+		  {% endif %}
+		
+		  <div class="customer-orders-wrap">
+				
+		    {% paginate customer.orders by 20 %}
+		
+		    {% if customer.orders.size != 0 %}
+       
+	        <div class="order-table">
+             <!--
+		        <div class="order-header">
+			        <div class="oc order-num">{{ 'customer.orders.order_number' | t }}</div>
+			        <div class="oc order-date">{{ 'customer.orders.date' | t }}</div>
+			        <div class="oc order-payment">{{ 'customer.orders.payment_status' | t }}</div>
+			        <div class="oc order-fulfill">{{ 'customer.orders.fulfillment_status' | t }}</div>
+			        <div class="oc order-total">{{ 'customer.orders.total' | t }}</div>
+		        </div>
+               -->
+		        <div class="order-body">
+			        {% for order in customer.orders %}
+				        <div class="order-item">
+					        <div class="oc order-num">Order: {{ order.name | link_to: order.customer_url }}</div>
+					        <div class="oc order-date">Created: {{ order.created_at | date: "%B %d, %Y" }}</div>
+					        <div class="oc order-payment">Payment: {{ order.financial_status_label }}</div>
+					        <div class="oc order-fulfill">Fulfull: {{ order.fulfillment_status_label }}</div>
+					        <div class="oc order-total">Total: {{ order.total_price | money }}</div>
+				        </div>
+			        {% endfor %}
+		        </div>
+		        <div class="order-footer"></div>
+	        </div>
+		    {% else %}
+		      <p>{{ 'customer.orders.none' | t }}</p>
+		    {% endif %}
+		
+		    {% if paginate.pages > 1 %}
+		      <div class="text-center">
+		        {% include 'pagination' %}
+		      </div>
+		    {% endif %}
+		
+		    {% endpaginate %}
+		
+		  </div>
+
+		</div>
+	</div>
+</div>
+{% endcomment %}

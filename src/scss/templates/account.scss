@@ -1,0 +1,47 @@
+.account-inner {
+  @include gutter;
+  
+  .account-details & {
+    @include borderTop;
+  }
+  
+  a {
+    @include globalTextUC;
+  }
+  li {
+    list-style: none;
+  }
+  .customers-account &, .customers-order &, .customers-addresses & {
+    @include borderTop;
+  }
+  .login-col {
+    width: 100%;
+    text-align: left;
+  }
+}
+
+.login-box-header {
+  p {
+    text-transform: none;
+  }
+}
+
+.customer-address-block {
+  p {
+    @include gutter-padding-top(1);
+  }
+}
+
+.default-address {
+  @include borderBottom;
+}
+
+.edit-address-wrap {
+  @include gutter-top(1);
+}
+
+.view-addresses {
+  a {
+    @include globalTextUC;
+  }
+}

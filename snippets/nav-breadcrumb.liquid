@@ -1,0 +1,50 @@
+{% comment %}
+  Documentation - http://docs.shopify.com/support/your-website/navigation/creating-a-breadcrumb-navigation
+{% endcomment %}
+{% unless template == 'index' or template == 'cart' %}
+<div class="nav-breadcrumb">
+<ul role="navigation" aria-label="breadcrumbs">
+    
+	  {% for link in linklists.main-menu.links %}
+	    {% assign menu_index = forloop.index %}
+		  {% assign parent_link_active = false %}
+	    {% assign child_list_handle = link.title | handleize %}
+	    {% assign break = false %}
+	    
+      
+      
+	    {%- if linklists[child_list_handle].links != blank -%}
+		    {%- for l in linklists[child_list_handle].links -%}
+		      {%- if l.active %}
+            {% assign parent_link_active = true %}
+            {% assign parent = linklists[child_list_handle] %}
+            {% assign sub = l %}
+          {%- endif -%}
+		    {%- endfor -%}
+        
+        
+        {%- if parent_link_active == false -%}
+        
+          {%- if link.active -%}{{ link.title }}{%- endif -%}
+        {%- else -%}
+        <li>
+          <a href="{{ link.url }}" title="{{ link.title }}">{{ parent.title }}</a>/<a href="{{ sub.url }}" class="active" title="{{ sub.title }}">{{ sub.title }}</a>
+          {% comment %}
+          {%- if current_tags != blank -%}/{%- endif -%}
+          {%- for tag in current_tags -%}
+            {%- if forloop.index > 1 -%}+{%- endif -%}<span class="active">{{ tag }}</span>
+          {%- endfor -%}
+          {% endcomment %}
+        </li>
+        {%- endif -%}
+      
+        
+	    {% else %}
+	      
+	    {% endif %}
+	  {% endfor %}
+  
+  
+</ul>
+</div>
+{% endunless %}

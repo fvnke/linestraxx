@@ -1,0 +1,184 @@
+#product-details {
+  @include gutter-all;
+  .product-description {
+    @include gutter-top(2);
+    @include gutter-bottom(2);
+    @include two-cols;
+  }
+}
+
+.product-image-container {
+  
+  .inner-product-image-container {
+   
+  }
+}
+
+.sizeguide {
+  //margin: $v-padding 0;
+  
+}
+
+#AddToCart {
+  @include gutter-top(2);
+}
+
+#AddToCartForm {
+  @include gutter-bottom(2);
+    #productSelect {
+      display: block;
+    }
+  
+}
+
+.model-measures {
+  @include globalTextUC;
+}
+
+#product-upper {
+  #product-details {
+    div {
+      //margin-top: $v-padding;
+    }
+  }
+}
+
+.collab-pdp-image {
+  @include largerPaddingTop;
+  //@include largerPaddingBottom;
+  @include two-cols;
+  img {
+    @include gutter-bottom(1);
+    width: 100%;
+  }
+  p {
+    width: 100%;
+  }
+}
+
+div[data-module-init="accordion"] {
+  .accordion-inner {
+    @include gutter-bottom(1);
+  }
+}
+
+.pdp-details {
+  a {
+    @include globalTextUC;
+  }
+}
+
+.add-to-wishlist {
+  @include globalTextUC;
+  display: block;
+  @include gutter-top(1);
+  border: none;
+  background: none;
+  @include gutter-bottom(2);
+  svg {
+    
+  }
+  &:hover {
+    svg, path {
+      fill: #000;
+    }
+  }
+}
+
+.dummy-select {
+  &:after {
+    content: '';
+    clear: both;
+    display: block;
+  }
+  li {
+    @include globalTextUC;
+    position: relative;
+    float: left;
+    clear: left;
+    display: block;
+    cursor: pointer;
+    margin-bottom: .06em;
+    
+    &[data-disabled="true"] {
+      @include strikeThrough;
+    }
+    @include underline;
+    &:after {
+      border-color: transparent;
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      top: 1em;
+    }
+    &.active, &:hover {
+      @include underline;
+    }
+    &[data-disabled="true"].active {
+      &:after {
+        display: none;
+      }
+    }
+  }
+}
+
+.selector-wrapper {
+  @include break(mobile) {
+    @include flexbox;
+    .label {
+      display: inline-block;
+    }
+    .dummy-select {
+      margin-left: 1rem;
+      li {
+        display: inline-block;
+        clear: none;
+        margin-right: 1rem;
+      }
+    }
+  }
+}
+
+#product-images {
+  white-space: nowrap;
+  overflow-x: scroll;
+  @include touch;
+}
+
+.dummy-select.option-Size {
+  li {
+    list-style: none;
+    //@include aft-mwc-regular;
+  }
+}
+
+#product-lower {
+  @include largerPaddingTop;
+  
+  .grid-wrapper {
+    //margin: 0 $gutter;
+  }
+  
+  .social-sharing {
+  
+  }
+}
+
+.breadcrumb {
+  @include gutter;
+  @include largerPaddingTop;
+  @include globalTextUC;
+ 
+  a, span {
+    
+     
+  }
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  * {
+    float: left;
+  }
+}

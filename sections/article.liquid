@@ -1,0 +1,46 @@
+{% assign article = section.settings['featured_article'] %}
+{% assign featured_article = articles[article] %}
+
+<div class="section" id="featured-article">
+	<div class="wrapper">
+		<article>
+			
+			<a href="{{ featured_article.url }}">
+				<div class="featured-article-image">
+					{{ featured_article | img_url: 'master' | img_tag }}
+				</div>
+				
+				<div class="featured-article-detail">
+					<h2>{{ featured_article.title }}</h2>
+					<p>{{ featured_article.excerpt }}</p>
+				</div>
+			</a>
+			
+		</article>
+	</div>
+</div>
+
+{% schema %}
+  {
+    "name": "Article",
+    "class": "section-article",
+    "settings": [
+	    {
+		    "type": "article",
+		    "id": "featured_article",
+		    "label": "Featured article"
+	    }
+    ],
+    "presets": [
+	    {
+		    "name": "Article"
+	    }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet 'scss' %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

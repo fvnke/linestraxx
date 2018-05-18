@@ -1,0 +1,118 @@
+.search-results-ajax-container {
+  display: none;
+  .results-available & {
+    display: block;
+  }
+  li {
+    list-style: none;
+  }
+}
+
+.results-count {
+  height: $desktop-nav-height;
+  line-height: $desktop-nav-height + 3;
+  text-align: left;
+  margin-left: $gutter;
+  a {
+    display: inline-block;
+    float: right;
+    margin-right: $gutter;
+  }
+}
+
+#app-search {
+  display: none;
+  
+  @include break(mobile) {
+    margin-top: $desktop-nav-height;
+  }
+  
+  .template-search & {
+    display: block;
+  }
+  
+  li {
+    list-style: none;
+  }
+  
+  &.show, .template-search & {
+    //display: block;
+    //margin: $v-padding 0 0;
+    form{
+      
+    }
+  }
+  
+  
+  
+  .auto-term {
+    a {
+      display: block;
+    }
+  }
+  
+  form {
+    @include form-styles;
+    //display: none;
+    
+    
+    .search-wrapper {
+      @include gutter;
+      height: $desktop-nav-height;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      &:after {
+        top: 2.15em;
+      }
+    }
+    
+    button {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      display: none;
+    }
+    
+    .search-close {
+      position: absolute;
+      right: 0;
+      display: block;
+      width: 12px;
+      height: 12px;
+      bottom: 19px;
+      z-index: 2;
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  
+  .suggestions {
+    
+  }
+  
+  .search-results {
+    @include overflowScroll;
+    text-align: left;
+    
+    li {
+      //margin: ($v-padding*2) 0;
+      display: inline-block;
+      padding-left: 0;
+      padding-left: 1.3rem;
+      
+      &:first-of-type {
+        @include gutter-padding-left(1);
+      }
+      a {
+        display: block;
+      }
+    }
+  }
+}
+
+
+
+

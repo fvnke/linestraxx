@@ -1,0 +1,50 @@
+.product-item {
+  @include globalTextUC;
+  @include gutter-bottom(1.5);
+  .feature-collection & {
+    margin-bottom: 0;
+  }
+  &.related {
+    .badge {
+      display: none !important;
+    }
+  }
+  a {
+    .item-image {
+      @include gutter-bottom(1);
+      img {
+        width: 100%;
+        &:nth-child(2) {
+          display: none;
+        }
+      }
+    }
+    .item-details {
+      h3 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .badge {
+        float: right;
+        display: none;
+      }
+      .product-price {
+        .money {
+          .related & {
+            display: block;
+          }
+          
+        }
+      }
+    }
+    &:hover {
+      .item-details {
+        .badge {
+          @include underline;
+          display: block;
+        }
+      }
+    }
+  }
+}

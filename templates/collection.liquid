@@ -1,0 +1,85 @@
+{% include 'collection-settings' %}
+
+{% assign collection_tools = false %}
+{% if settings.enable_collection_sorting or settings.enable_collection_filtering %}
+  {% assign collection_tools = true %}
+{% endif %}
+
+{% assign total_products = 48 %}
+
+{% paginate collection.products by total_products %}
+
+<!--
+{% if collection.image %}
+	<div id="collection-header" class="billboard">
+		{% if settings.collection_fillscreen %}
+	    <div class="billboard-bg-img {{ settings.collection_billboard_max }}" style="background-image:url({{ collection.image | img_url: 'master' }});">
+		    {% include 'billboard-text' with 'collection' %}
+	    </div>
+    {% else %}
+	    <div class="billboard-img">
+				{% include 'billboard-text' with 'collection' %}
+				{{ collection.image | img_url: 'master' | img_tag }}
+	    </div>
+    {% endif %}
+	</div>
+{% else %}
+	<div class="wrapper wrapper-slim">
+		<header class="section-header">
+			{% include 'billboard-text' with 'collection' %}
+		</header>
+	</div>
+{% endif %}
+-->
+
+<div class="wrapper collection-wrapper">
+  
+  {% if collection.handle != 'woman' and collection.handle != 'man' and collection.handle != 'collaboration' %}
+  <div class="collection-controls">
+    {% include 'nav-breadcrumb' %}
+    {% include 'filter-nav' %}
+  </div>
+  {% endif %}
+  
+  {% comment %}
+	{% if collection_tools %}
+		<div id="collection-controls">
+			{% if settings.enable_collection_sorting %}
+				{% include 'collection-sorting' %}
+			{% endif %}
+			{% if settings.enable_collection_filtering %}
+				{% include 'collection-filters' %}
+			{% endif %}
+			<div class="toggle-cols desktop-only">
+				<span class="icon icon-grid active"><svg><use xlink:href="#grid"></use></svg></span>
+				<span class="icon icon-two-col"><svg><use xlink:href="#two-col"></use></svg></span>
+			</div>
+		</div>
+	{% endif %} 
+  {% endcomment %}
+	<div class="grid-wrapper">
+	  {% for product in collection.products limit: total_products %}
+	    {% include 'product-item' with item_width %}
+	  {% endfor %}
+    
+    <div id="product-list-foot"></div>
+    <!-- END PRODUCTS -->
+	</div>	
+  <!--
+  <div class="section-header" id="back-to-top">{{ 'general.general.back_to_top' | t }}</div>
+    -->
+  {% comment %}
+	{% if paginate.pages > 1 %}
+	  {% include 'pagination' %}
+	{% endif %}
+  {% endcomment %}
+  
+  {% if paginate.next %}
+      <div id="more" style="display: none;"><p>&darr; <a href="{{ paginate.next.url }}">More</a></p></div>        
+  {% endif %}
+
+  
+  
+</div>
+
+{% endpaginate %}

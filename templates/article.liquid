@@ -1,0 +1,61 @@
+{% assign number_of_comments = article.comments_count %}
+
+{% if comment and comment.created_at %}
+  {% assign number_of_comments = article.comments_count | plus: 1 %}
+{% endif %}
+
+
+{% paginate article.comments by 5 %}
+<div class="page">	
+  <article class="article" itemscope itemtype="http://schema.org/Article">
+	  
+    {% if article.image %}
+      <figure class="article-featured-image">
+        {% assign image_alt = article.title | escape %}
+        {{ article | img_url: '2048x2048' | img_tag: image_alt, 'article__image' }}
+      </figure>
+    {% endif %}	    	    
+	  
+	  <div class="wrapper">
+		  
+	    <header class="article-header">
+	      <h1>{{ article.title }}</h1>
+		    <p>
+		      <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time>
+		      {% if article.tags.size > 0 %}
+		        <span class="meta-sep">&#8226;</span>
+		        {% for tag in article.tags %}
+		          <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{% unless forloop.last %} <span class="meta-sep">&#8226;</span> {% endunless %}
+		        {% endfor %}
+		      {% endif %}
+		    </p>      
+	    </header>
+	
+	    <div class="rte" itemprop="articleBody">
+	      {{ article.content }}
+	    </div>
+	
+	    {% if settings.social_sharing_blog %}
+	      {% include 'social-sharing' %}
+	    {% endif %}
+	
+	    {% if blog.next_article or blog.previous_article %}
+	      <div>
+	        {% if blog.previous_article %}
+	          <span class="left">
+	            &larr; {{ 'blogs.article.older_post' | t | link_to: blog.previous_article }}
+	          </span>
+	        {% endif %}
+	        {% if blog.next_article %}
+	          <span class="right">
+	            {{ 'blogs.article.newer_post' | t | link_to: blog.next_article }} &rarr;
+	          </span>
+	        {% endif %}
+	      </div>
+	    {% endif %}
+	    
+	  </div>
+	  
+  </article>
+</div>
+{% endpaginate %}

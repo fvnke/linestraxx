@@ -1,0 +1,39 @@
+<script type="text/javascript">
+  window.money_format = "{{ shop.money_without_currency_format }}";
+  console.log(window.money_format);
+</script>
+
+
+{{ '//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js' | script_tag }}
+{{ 'jquery.products.min.js' | asset_url | script_tag }}
+
+<div  class="collection clearfix page gallery" >
+  <div id="recently-viewed-products" class="gallery-inner">
+  </div>
+</div>
+
+{% raw %}
+<script id="recently-viewed-product-template"  type="text/x-jquery-tmpl">
+<div id="product-${handle}" class="product gallery-child">
+  <div class="gallery-inner-child">
+    <div class="image">
+      <a href="${url}">
+        <img src="${Shopify.Products.resizeImage(featured_image, "large")}" />
+      </a>
+    </div>
+    <div class="details">
+      <a href="${url}">
+      <h3>${variants[0].sku}</h3>
+      <h3 class="title">${title}</h3>
+      {{if price_varies}}<em>from </em>{{/if}}{{html Shopify.formatMoney(price_min, window.money_format)}}
+      </a>
+    </div>
+  </div>
+</div>
+</script>
+{% endraw %}
+
+<script>
+Shopify.Products.showRecentlyViewed( { howManyToShow:15 } );
+</script>
+
