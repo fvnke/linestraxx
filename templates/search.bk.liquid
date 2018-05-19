@@ -1,0 +1,63 @@
+{% comment %}
+{% include 'collection-settings' with 'search' %}
+{% endcomment %}
+
+{% assign item_width = 'third' %}
+
+{% assign respond_js_secret_key = shop.domain | md5 %}
+{% unless search.terms == respond_js_secret_key %}
+	<div class="page">		
+		<div class="wrapper collection-wrapper">
+	
+		  {% if search.performed %}
+		
+		    {% paginate search.results by 50 %}
+		
+		      {% if search.results_count == 0 %}
+		        {% comment %}
+		        <div class="section-header">
+		          <h1>{{ 'general.search.no_results_html' | t: terms: search.terms }}</h1>
+		          {% include 'search-bar' %}
+		        </div>
+		         {% endcomment %}
+		      {% else %}
+		        {% comment %}
+		        <div class="section-header">
+		          <h1>{{ 'general.search.results_for_html' | t: terms: search.terms }}</h1>
+		          {% include 'search-bar' %}
+		        </div>
+						{% endcomment %}
+						<div class="grid-wrapper">
+		          {% for item in search.results %}
+		            {% include 'search-result' with item_width %}
+		          {% endfor %}
+						</div>
+		
+		      {% endif %}
+		
+		      {% if paginate.pages > 1 %}
+		        <div class="text-center">
+		          {% include 'pagination-custom' %}
+		        </div>
+		      {% endif %}
+		
+		    {% endpaginate %}
+		
+		  {% else %}
+	    
+		    <div class="section-header">
+		      <h1>{{ 'general.search.title' | t }}</h1>
+		      {% include 'search-bar' %}
+		    </div>
+	
+		  {% endif %}
+	  
+	  </div>
+	</div>
+
+{% else %}
+
+  {% include 'respond' %}
+  {% layout none %}
+  
+{% endunless %}

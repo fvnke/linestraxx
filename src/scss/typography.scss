@@ -188,8 +188,21 @@
   letter-spacing: .01rem !important;
   font-size: 14px !important;
   line-height: 18px !important;
-  @media screen and (min-width: 1441px) {
-    font-size: 15px !important;
+  @media screen and (min-width: 901px) {
+    font-size: 16px !important;
+    line-height: 18px !important;
+  }
+}
+
+@mixin overrideTextUC {
+  @include aft-regular;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: .06rem !important;
+  text-transform: uppercase;
+  font-size: 14px !important;
+  line-height: 18px !important;
+  @media screen and (min-width: 901px) {
+    font-size: 16px !important;
     line-height: 18px !important;
   }
 }
@@ -256,10 +269,11 @@
     padding: 0;
     @include gutter-bottom(1);
     text-align: left;
+    @include flexbox;
     li {
       list-style: none;
       display: inline;
-      margin-left: 1em;
+      margin-left: $list-spacing;
       &:first-of-type {
         @include gutter-left(1);
       }
@@ -433,7 +447,7 @@
   @include borderBottom;
   position: relative;
   height: $desktop-nav-height;
-  line-height: $desktop-nav-height;
+  line-height: $desktop-nav-height + 2;
   display: inline-block;
   &:hover {
     &:after {
@@ -894,6 +908,7 @@ table {
   }
   &.p-section {
     @include largerPaddingBottom;
+    @include two-cols;
     h3 {
       margin-bottom: .2em;
     }

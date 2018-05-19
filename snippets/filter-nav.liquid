@@ -1,26 +1,67 @@
-{% assign collection_tools = false %}
-{% if settings.enable_collection_sorting or settings.enable_collection_filtering %}
-  {% assign collection_tools = true %}
-{% endif %}
+<div class="toggle-filter-container">
+  <ul>
+    <li><button class="toggle-filter">Filter <span class="filter-count">(<span class="filter-count-num"></span>)</span></button></li>
+    <li class="filter-clear-all" style="display:none;"><a href="javascript:;" class="bc-sf-filter-clear-all" onclick="clearAllFilterOptions(event)">Clear All</a></li>
+  </ul>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $toggleFilter = $('.toggle-filter');
+    $filterCount = $('.filter-count');
+    $filterCountNum = $('.filter-count-num'),
+    $filterClearAll = $('.filter-clear-all')
 
-{% assign total_products = 50 %}
-
-	{% if collection_tools %}
-    <button class="toggle-filter">Filter <span class="filter-count {% if current_tags.size > 0%}active{% endif %}">(<span class="filter-count-num">{{ current_tags.size }}</span>)</span></button>
+    $toggleFilter.on('click', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('click')
+      $(this).toggleClass('open');
+      if($(this).hasClass('open')){
+        $('#bc-sf-filter-tree').removeClass('init-hide').show();
+      } else {
+        $('#bc-sf-filter-tree').hide();
+      }
+     
+    });
     
-		<div class="sorting-controls">
-      
-			{% if settings.enable_collection_sorting %}
-				{% include 'collection-sorting' %}
-			{% endif %}
-			{% if settings.enable_collection_filtering %}
-				{% include 'collection-filters' %}
-			{% endif %}
-      <!--
-			<div class="toggle-cols desktop-only">
-				<span class="icon icon-grid active"><svg><use xlink:href="#grid"></use></svg></span>
-				<span class="icon icon-two-col"><svg><use xlink:href="#two-col"></use></svg></span>
-			</div>
-      -->
-		</div>
-	{% endif %} 
+    var filterInt = setInterval(function(){
+      if($('.bc-sf-filter-option-block').length > 0) {
+        clearInterval(filterInt);
+        setFilterCount();
+        setFilterLink();
+      }
+    }, 100);
+    
+    function setFilterLink(){
+      $('.bc-sf-filter-option-item').off('click').on('click', function(){
+        $filterClearAll.show();
+        setTimeout(function(){
+          setFilterCount();
+        }, 500);
+      });
+      $('.bc-sf-filter-clear-all').off('click').on('click', function(){
+        $filterClearAll.hide();
+        $filterCount.hide();
+        setTimeout(function(){
+          setFilterCount();
+        }, 500);
+      })
+    }
+    
+    function setFilterCount(){
+      var count = $('.bc-sf-filter-option-item.selected').length;
+      if(count > 0) {
+        
+        $filterCount.show();
+      } else {
+        $filterClearAll.hide();
+        $filterCount.hide();
+      } 
+      $filterCountNum.text(count);
+      console.log('count ' + count);
+      setFilterLink();
+    }
+    
+    
+  });
+</script>

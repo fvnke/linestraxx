@@ -199,10 +199,15 @@
 }
 
 @mixin two-cols {
-  width: calc((#{$desktop-column * 2}) + #{$gutter});
-  min-width: 350px;
+  //width: calc((#{$desktop-column * 2}) + #{$gutter});
+  //min-width: 350px;
+  width: 459px;
+  p, li {
+    max-width: 459px;
+  }
   @include break(mobile) {
     width: 100%;
+    //max-width: 459px;
   }
   
 }

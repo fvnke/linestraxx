@@ -5,12 +5,27 @@
   
   position: relative;
   
-  button.toggle-filter {
-    @include link-underline;
+  .toggle-filter-container {
     position: absolute;
     right: 0;
     top: 0;
     @include gutter-right(1);
+    @include horizontal-list;
+    a {
+      @include link-underline;
+      letter-spacing: .06rem !important;
+      text-transform: uppercase;
+      font-size: 14px !important;
+      @media screen and (min-width: 901px) {
+        font-size: 16px !important;
+      }
+      float: none !important;
+    }
+  }
+  button.toggle-filter {
+    @include link-underline;
+    
+    //@include gutter-right(1);
     &.open {
       &:after {
         border-bottom: 1px solid #000;
@@ -69,3 +84,113 @@
     display: none;
   }
 } 
+
+
+
+
+/*
+*
+* Override the Filter Plugin
+*
+*/
+#bc-sf-filter-tree {
+  //display: block !important;
+  .bc-sf-filter-selected-items {
+    display: none !important;
+  }
+  .bc-sf-filter-selection-wrapper {
+    border: none !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    position: absolute;
+    @include gutter-right(1);
+    right: 0;
+    
+    .bc-sf-filter-block-title {
+      display: none !important; 
+      h3, a { display: none !important; }
+    }
+    .bc-sf-filter-clear-all {
+      @include globalTextUC;
+    }
+  }
+}
+.bc-sf-filter-option-block {
+  @include horizontal-list;
+  @include flexbox;
+  border: none !important;
+  padding: 0 !important;
+  white-space: nowrap;
+  @include touch;
+  overflow-x: scroll;
+  .bc-sf-filter-option-amount {
+    margin: 0 !important;
+  }
+  .bc-sf-filter-block-title {
+    overflow: visible !important;
+    .bc-sf-filter-clear {
+      display: none !important;
+    }
+    h3 {
+      //@include overrideTextUC;
+      letter-spacing: .06rem !important;
+      text-transform: uppercase;
+      font-size: 14px !important;
+      @media screen and (min-width: 901px) {
+        font-size: 16px !important;
+      }
+      line-height: #{$desktop-nav-height + 2} !important;
+      height: $desktop-nav-height;
+      //@include link-underline;
+      overflow: visible;
+      span {
+        font-weight: normal;
+        @include gutter-left(1);
+        &:before {
+          display: none !important;
+        }
+      }
+    }
+  }
+
+  .bc-sf-filter-block-content {
+    width: auto !important;
+    margin-top: 0 !important;
+    ul {
+      &.bc-sf-filter-option-multiple-list {
+        li {
+          &:first-child {
+            margin-left: $list-spacing;
+          }
+        }
+      }
+      li {
+        margin-bottom: 0 !important;
+        a {
+          @include overrideTextUC;
+          display: inline-block !important;
+          @include link-underline;
+          &.selected{
+            @include link-underline-active;
+          }
+        }
+        input[type=checkbox]+a {
+          
+          &>span:first-child {
+            display: none;
+          }
+          padding-left: 0 !important;
+          //@include overrideTextUC;
+          line-height: #{$desktop-nav-height + 2} !important;
+        }
+      }
+    }
+  } 
+}
+
+#bc-sf-filter-tree.init-hide {
+  display: none !important;
+  * {
+    display: none !important;
+  }
+}

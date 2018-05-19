@@ -202,8 +202,10 @@ class="active"{%- endif -%}>
 			    {% endfor %}
             
             {% assign parent_id = link.title | downcase %}
-            
-            <div class="nav-container overflow-container tier-2 {% if parent_link_active or link.active or current_tags.first == link.title %}active{% endif %}" data-sub="{{ link.handle }}" data-module-init="horizontal-scroll">
+            {% comment %}
+            or link.active or current_tags.first == link.title
+            {% endcomment %}
+            <div class="nav-container overflow-container tier-2 {% if parent_link_active  %}active{% endif %}" data-sub="{{ link.handle }}" data-module-init="horizontal-scroll">
             <ul class="subnav" id="subnav-{{ link.handle }}">
               {% for childlink in linklists[child_list_handle].links %}
     	          {% if break == true %}
@@ -235,12 +237,16 @@ class="active"{%- endif -%}>
       
 
       {% if linklists.submenu-season.size > 0 %}
-      <div class="overflow-container tier-3 subnav-container nav-container last-tier">
-      <ul class="subnav">
-        {% for link in linklists.submenu-season.links %}
-        <li class="{% if link.active %}active{% endif %}"><a href="{{ link.url }}">{{ link.title }}</a></li>
-        {% endfor %}
-      </ul>
+      {% assign tier_3_active = false %}
+      {% for link in linklists.submenu-season.links %}
+        {% if link.active %}{% assign tier_3_active = true %}{% endif %}
+      {% endfor %}
+      <div class="overflow-container tier-3 subnav-container nav-container last-tier {% if tier_3_active %}active{% endif %}">
+        <ul class="subnav">
+          {% for link in linklists.submenu-season.links %}
+          <li class="{% if link.active %}active{% endif %}"><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
       </div>
       {% endif %}
 

@@ -68,7 +68,7 @@
 	    <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
       
 	    
-	    <h1 class="product-title" itemprop="name">{{ product.first_available_variant.sku }}<br>{{ product.title }}</h1>
+	    <h1 class="product-title" itemprop="name">{{ product.selected_or_first_available_variant.sku }}<br>{{ product.title }}</h1>
       <span class="product-prices">
         <span id="product-price" itemprop="price">
           {{ product.price | money }}

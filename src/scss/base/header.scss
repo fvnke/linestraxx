@@ -548,7 +548,7 @@
   }
   .template-collection & {
     .tier-3 {
-      display: block;
+      //display: block;
     }
     &.filtered {
       .tier-3 {
@@ -565,6 +565,9 @@
     .subnav-container, .tier-2 {
       display: none;
     }
+  }
+  .subnav-container.active {
+    display: block;
   }
   .account-module {
     display: none;

@@ -297,5 +297,22 @@
   },
   "date_formats": {
     "month_day_year": "%d de %B, %Y"
+  },
+  "product_filter_search": {
+    "refine": "Refine By",
+    "refine_mobile": "Refine By",
+    "clear": "Clear",
+    "clear_all": "Clear All",
+    "apply": "Apply",
+    "sale": "Sale",
+    "sold_out": "Sold Out",
+    "from": "from",
+    "breadcrumb_home": "Home",
+    "load_more": "Load more Products",
+    "show_limit": "Show",
+    "search_general_title": "Search",
+    "search_result_header": "Search Results for \"{{ terms }}\"",
+    "search_result_empty": "Your search for \"{{ terms }}\" didn't match any results",
+    "search_result_number": "Showing {{ count }} results for \"{{ terms }}\""
   }
 }

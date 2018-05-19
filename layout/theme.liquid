@@ -177,9 +177,9 @@ window.supported_currencies = "{{ settings.mlvedaACS_supportedCurrencies }}";
   {% endif %}
   {% endcomment %}
   
-  
+  {% comment %}
   {% include 'search-autocomplete' %}
-  
+  {% endcomment %}
   {% include 'narrative-interruptions' %}
   
   <!-- Begin Recently Viewed Products -->
@@ -196,7 +196,7 @@ window.supported_currencies = "{{ settings.mlvedaACS_supportedCurrencies }}";
   {% endif %}
 
   <!-- End Recently Viewed Products -->
-  
+  {% comment %}
   <script type="text/javascript">
    /*
     * jQuery doTimeout: Like setTimeout, but better! - v1.0 - 3/3/2010
@@ -263,6 +263,7 @@ window.supported_currencies = "{{ settings.mlvedaACS_supportedCurrencies }}";
        });
   {% endif %}
   </script>
+  {% endcomment %}
 
   
 {% include 'mlveda-currencies' %}

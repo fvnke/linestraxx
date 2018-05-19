@@ -146,10 +146,13 @@
 	      new_val,
         $toggleFilter = $('.toggle-filter');
     
+    /*
     $toggleFilter.on('click', function(){
       $(this).toggleClass('open');
-      $('.sorting-controls').toggleClass('visible');
+      //$('.sorting-controls').toggleClass('visible');
+      $('#bc-sf-filter-tree').removeClass('init-hide').toggle();
     });
+    */
     
     $('.fake-select ul').each(function(){
       if($(this).find('li').length < 2) {

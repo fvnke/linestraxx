@@ -113,6 +113,95 @@
   }
 }
 
+.bc-sf-search-suggestion-wrapper {
+  left: 0 !important;
+  width: 100% !important;
+  background: #fff;
+  .bc-sf-search-suggestion-popover {
+    display: none !important;
+  }
+  ul.bc-sf-search-suggestion {
+    box-shadow: none !important;
+    display: flex !important;
+    border-radius: none !important;
+    width: 100% !important;
+    left: 0 !important;
+    @include flexbox;
+    @include no-select;
+    @include flex-wrap(wrap);
+    text-align: left;
+    li.bc-sf-search-suggestion-item:nth-child(2){
+      @include gutter-left(1);
+    }
+    li.list-num-0 {
+      @include gutter-left(1);
+    }
+    .ui-autocomplete-category {
+      //display: none !important;
+    }
+    .bc-sf-search-suggestion-header {
+      background: #fff !important;
+      text-align: left !important;
+      width: 100% !important;
+      border: none !important;
+      font-size: 0 !important;
+      height: 0 !important;
+      overflow: hidden;
+    }
+    .bc-sf-search-suggestion-product-title {
+      @include overrideTextUC;
+      @include overflow;
+      font-weight: normal !important;
+      b, strong {
+        color: blue;
+      }
+    }
+    .bc-sf-search-suggestion-item-product {
+      @include gutter-top(.75);
+      @include gutter-bottom(1);
+      @include gutter-right(1);
+      //.bc-sf-search-suggestion-product-sku { text-indent: -2.4em; }
+      .bc-sf-search-suggestion-product-vendor { display: none !important; }
+      .ui-menu-item-wrapper {
+        @include flexbox;
+        @include flex-direction(column);
+        @include small-product-module;
+      }
+      padding: 0 !important;
+      
+      .bc-sf-search-suggestion-left {
+        margin-right: 0 !important;
+      }
+      
+      &:hover {
+        background: #fff !important;
+      }
+      a {
+        @include globalTextUC;
+        
+      }
+    }
+    .bc-sf-search-suggestion-item:not(.bc-sf-search-suggestion-item-product) {
+      padding: 0 !important;
+      a {
+        @include globalTextUC;
+        @include link-underline;
+        @include gutter-right(1);
+        b {
+          font-weight: normal !important;
+          text-decoration: none;
+          color: blue;
+        }
+      }
+      &:hover {
+        background: #fff !important;
+      }
+    }
+  }
+}
+
+
+
 
 
 

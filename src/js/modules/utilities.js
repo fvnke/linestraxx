@@ -128,10 +128,23 @@ module.exports = function( el ) {
       $('header').off('mouseleave').on('mouseleave', mouseLeave);
     }
     
+    
+    
     function mouseLeave(e){
       console.log(e)
       //if($(e.currentTarget).attr('id') == 'app-header') return true;
       var currentID = $(e.currentTarget).attr('id');
+      var target = $(e.relatedTarget);    
+      /*
+      if (target.parent('.bc-sf-search-suggestion-wrapper').length) {
+        $('body').attr('data-nav', 'search');
+        return true;
+      } 
+      */
+      
+      if ($('.bc-sf-search-suggestion-wrapper').length > 0){
+        console.log('search exists')
+      }
 
       if(!$('body').hasClass('results-available')) {
         $('li[data-page="'+ currentPage +'"]').addClass('active');

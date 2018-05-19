@@ -42,8 +42,8 @@
       {% if sold_out and settings.collections_show_sold_out_indicator %}
         <span class="badge"><span>{{ 'products.product.sold_out' | t }}</span></span>
       {% endif %}
-	    {% if product.first_available_variant.sku %}
-		    <span class="product-barcode">{{ product.first_available_variant.sku }}</span>
+	    {% if product.selected_or_first_available_variant.sku %}
+		    <span class="product-barcode">{{ product.selected_or_first_available_variant.sku }}</span>
 	    {% endif %}
 	    <h3 class="product-title">{{ product.title }}</h3>
 	    <span class="product-price">
