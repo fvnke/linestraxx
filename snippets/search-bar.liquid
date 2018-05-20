@@ -8,7 +8,17 @@
       </button>
       <button class="search-close"><svg><use xlink:href="#icon-close"></use></svg><button>
     </div>
+    {% if settings.featured_search_terms != blank %}
+    {% assign search_terms = settings.featured_search_terms | split:', ' %}
+    <div data-module-init="horizontal-scroll" class="overflow-container overflow-search">
+      <ul class="search-results">
+        {% for term in search_terms %}
+        <li><a class="search-result-suggestion" href="/search?q={{ term }}" />{{ term }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
     
+    {% endif %}
   </form>
 {% elsif search-bar == 'mobile-header' %}
   <form action="/search" method="get" role="search">

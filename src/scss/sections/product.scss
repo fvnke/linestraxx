@@ -32,6 +32,7 @@
         line-height: 1;
       }
       .product-price {
+        p { margin: 0 !important; }
         .money {
           .related & {
             display: block;

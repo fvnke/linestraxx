@@ -3,7 +3,7 @@ var bcSfFilterSettings = {
     general: {
         limit: 50,
         /* Optional */
-        //loadProductFirst: true,
+        loadProductFirst: true,
     }
 };
 

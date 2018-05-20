@@ -107,6 +107,7 @@
         @include gutter-padding-left(1);
       }
       a {
+        @include link-underline;
         display: block;
       }
     }
@@ -117,19 +118,40 @@
   left: 0 !important;
   width: 100% !important;
   background: #fff;
+  //top: 89px !important;
+  
   .bc-sf-search-suggestion-popover {
     display: none !important;
   }
   ul.bc-sf-search-suggestion {
     box-shadow: none !important;
-    display: flex !important;
+    display: block !important;
     border-radius: none !important;
     width: 100% !important;
     left: 0 !important;
-    @include flexbox;
+    margin-top: -1px;
+    top: 0 !important;
+    //@include flexbox;
     @include no-select;
     @include flex-wrap(wrap);
     text-align: left;
+    
+    &>div:first-child:not(.suggestion-list-wrapper) {
+      @include gutter-top(1);
+    }
+    
+    .suggestion-list-wrapper {
+      @include horizontal-list;
+      ul {
+        @include flexboxOverride;
+      }
+    }
+    .gallery-inner {
+      @include flexboxOverride;
+    }
+    .suggestion-list-wrapper, .product-list-wrapper {
+      
+    }
     li.bc-sf-search-suggestion-item:nth-child(2){
       @include gutter-left(1);
     }
@@ -143,6 +165,7 @@
       background: #fff !important;
       text-align: left !important;
       width: 100% !important;
+      display: none !important;
       border: none !important;
       font-size: 0 !important;
       height: 0 !important;
@@ -157,9 +180,10 @@
       }
     }
     .bc-sf-search-suggestion-item-product {
-      @include gutter-top(.75);
+      @include gutter-top(0);
       @include gutter-bottom(1);
       @include gutter-right(1);
+      @include smallFlickity;
       //.bc-sf-search-suggestion-product-sku { text-indent: -2.4em; }
       .bc-sf-search-suggestion-product-vendor { display: none !important; }
       .ui-menu-item-wrapper {
@@ -171,6 +195,11 @@
       
       .bc-sf-search-suggestion-left {
         margin-right: 0 !important;
+        float: none !important;
+        display: block !important;
+        img {
+          width: 100%;
+        }
       }
       
       &:hover {
