@@ -22,7 +22,6 @@ BCSfFilter.prototype.beforeBuildSearchBox = function(a) {}, BCSfFilter.prototype
     var b = this;
     if (jQ(a).length > 0) {
         var c = getParam(this.searchTermKey);
-        console.log(c)
         jQ(a).val(c), jQ(a).autocomplete({
             minLength: b.getSettingValue("search.suggestionMinLength"),
             source: function(a, c) {
@@ -56,10 +55,6 @@ BCSfFilter.prototype.beforeBuildSearchBox = function(a) {}, BCSfFilter.prototype
             b.buildStyleSuggestion(c, d, a)
         }, b.clickOutsideSuggestionEvent(a)
         
-        jQ(a).focus(function() {
-            jQ(a).autocomplete("search", $(this).val());
-        });
-        
         jQ('.search-close').on('click', function(e){
           e.stopPropagation();
           e.preventDefault();
@@ -75,14 +70,13 @@ BCSfFilter.prototype.beforeBuildSearchBox = function(a) {}, BCSfFilter.prototype
           jQ(a).val($(this).text());
           setTimeout(function() {
               jQ(a).focus();
+              jQ(a).click();
           });
-          //jQ(a).attr("data-search-box", a);
-          //var e = encodeURIParamValue(jQ(a).term);
-          //return b.buildSuggestion(e, d, c)
         });
     }
     this.setSuggestionPosition(a)
 }
+
 
 BCSfFilter.prototype.buildSuggestionPopular = function(a, b, c) {
     if (Object.keys(b).length > 0) {
