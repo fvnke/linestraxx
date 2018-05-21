@@ -4,7 +4,7 @@
 {% assign total_products = 50 %}
 {% include 'collection-settings' %}
 
-
+{{ collection.default_sort_by }}
 {% paginate featured_collection.products by total_products %}
 <div class="wrapper collection-wrapper">
   

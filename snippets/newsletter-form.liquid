@@ -32,8 +32,10 @@
 		  <p>{{ newsletter_copy }}</p>
 	  {% endif %}
 	  -->
-      
+    
+    
 		<form action="{{ form_action }}" data-module-init="newsletter" method="post" id="{{ form_name }}" name="{{ form_name }}" target="_blank">
+      <div class="subscribe-status" style="display:none;"></div>
       <div class="field-wrap">
         <label class="label">Email</label>
 		    <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="EMAIL" id="{{ input_id }}" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}" autocorrect="off" autocapitalize="off">
@@ -43,7 +45,7 @@
       </div>
 		</form>
 		
-		<div class="subscribe-status"></div>
+		
 		
   </div>
 	

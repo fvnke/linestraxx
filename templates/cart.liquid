@@ -47,7 +47,7 @@
                   
                   
                   
-									<ul>
+									<ul class="item-variant-list">
 									{% unless item.variant.title contains 'Default' %}
 										{% for vari in item.product.options %}
 										  <li>{{ vari }}: <span class="item-set-variant">{{ item.variant.options[forloop.index0] }}</span></li>

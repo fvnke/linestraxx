@@ -602,7 +602,7 @@ function initAppmate(Appmate){
       {% assign items_per_row = settings.app_wk_products_per_row %}
       {% assign wk_item_width = 100 | divided_by: items_per_row %}
 
-      <div class="wk-item-column gallery-child">
+      <div class="wk-item-column gallery-child wishlist-child">
         <div id="wk-item-{{ product.wishlist_item_id }}" class="wk-item gallery-inner-child {{ wk_item_class }} {% unless wishlist.read_only %}wk-fadeout{% endunless %}" data-wk-item="{{ product.wishlist_item_id }}">
 
           {% include 'wishlist-collection-product-image' with product %}

@@ -96,7 +96,7 @@
   .search-results {
     @include overflowScroll;
     text-align: left;
-    
+    @include flexbox;
     li {
       //margin: ($v-padding*2) 0;
       display: inline-block;
@@ -118,6 +118,8 @@
   left: 0 !important;
   width: 100% !important;
   background: #fff;
+  position: relative !important;
+  top: 0 !important;
   //top: 89px !important;
   
   .bc-sf-search-suggestion-popover {
@@ -131,6 +133,7 @@
     left: 0 !important;
     margin-top: -1px;
     top: 0 !important;
+    position: relative !important;
     //@include flexbox;
     @include no-select;
     @include flex-wrap(wrap);
@@ -193,6 +196,13 @@
       }
       padding: 0 !important;
       
+      &:last-child {
+        padding-right: $gutter !important;
+        @include break(mobile) {
+          padding-right: $mobile-gutter !important;
+        }
+      }
+      
       .bc-sf-search-suggestion-left {
         margin-right: 0 !important;
         float: none !important;
@@ -215,7 +225,7 @@
       a {
         @include globalTextUC;
         @include link-underline;
-        @include gutter-right(1);
+        //@include gutter-right(1);
         b {
           font-weight: normal !important;
           text-decoration: none;

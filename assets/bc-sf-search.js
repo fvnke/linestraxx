@@ -14,7 +14,8 @@ BCSfFilter.prototype.buildSuggestionWrapper = function(a) {
   var b = this.class.searchSuggestionWrapper;
   if (!jQ(a).parent().hasClass(b)) {
       jQ(a).wrap('<div class="' + b + '"></div>');
-      jQ('#app-search').append(jQ('.' + b))
+      jQ('#app-search').append(jQ('.' + b));
+      
   }
 }
 
@@ -59,6 +60,8 @@ BCSfFilter.prototype.beforeBuildSearchBox = function(a) {}, BCSfFilter.prototype
           e.stopPropagation();
           e.preventDefault();
           jQ(a).val('');
+          $('.search-suggestions-alyx').show();
+          
           jQ('.bc-sf-search-suggestion-wrapper ul').html('');
           setTimeout(function() {
               jQ(a).focus();
@@ -68,6 +71,7 @@ BCSfFilter.prototype.beforeBuildSearchBox = function(a) {}, BCSfFilter.prototype
         jQ('.search-result-suggestion').on('click', function(e){
           e.preventDefault();
           jQ(a).val($(this).text());
+          
           setTimeout(function() {
               jQ(a).focus();
               jQ(a).click();
@@ -80,6 +84,7 @@ BCSfFilter.prototype.beforeBuildSearchBox = function(a) {}, BCSfFilter.prototype
 
 BCSfFilter.prototype.buildSuggestionPopular = function(a, b, c) {
     if (Object.keys(b).length > 0) {
+        $('.search-suggestions-alyx').hide();
         var d = this.getSettingValue("search.suggestionPopularLimit"),
             e = this.getSettingValue("label.suggestion.popularHeader"),
             f = this.buildSuggestionHeader(e, "popular");
@@ -97,6 +102,7 @@ BCSfFilter.prototype.buildSuggestionPopular = function(a, b, c) {
 
 BCSfFilter.prototype.buildSuggestionProductList = function(a, b, c) {
     if (Object.keys(b).length > 0) {
+        $('.search-suggestions-alyx').hide();
         var d = 20, //term results limit
             e = 20, //product results limit
             f = this.buildSuggestionHeader(e, "product"),

@@ -43,7 +43,23 @@ div.page {
     h3 {
       margin-top: 2.4em;
     }
+    ol {
+      @include gutter-left(1);
+      @include gutter-bottom(1);
+      li {
+        margin-left: .2em;
+      }
+      &.gallery {
+        @include gutter-left(0);
+        @include gutter-bottom(0);
+        li {
+          margin-left: 0;
+        }
+      }
+    }
   }
+  
+ 
   
   ul {
     @include gutter-left(1);

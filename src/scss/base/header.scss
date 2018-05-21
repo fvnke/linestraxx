@@ -512,6 +512,13 @@
 
 
 #app-header {
+  @include break(mobile) {
+    max-height: 100%;
+    @include touch;
+    overflow-y: scroll;
+  }
+  
+  
   .subnav-container {
     display: none;
   }
@@ -561,7 +568,7 @@
       }
     }
   }
-  .account-nav-show & {
+  .account-nav-show &, body[data-nav="search"] &, body[data-nav="account"] & {
     .subnav-container, .tier-2 {
       display: none;
     }
@@ -585,6 +592,10 @@
   .account-tier {
     @include horizontal-list;
     @include borderTop;
+    
+    body[data-nav="search"] & {
+      display: none !important;
+    }
    
     ul {
       height: $desktop-nav-height;
@@ -609,7 +620,12 @@
     
     @include break(mobile) {
       a {
-        margin-left: $mobile-gutter;
+        margin-left: $list-spacing;
+      }
+      li:first-child {
+        a {
+          margin-left: $mobile-gutter;
+        }
       }
     }
     
@@ -627,7 +643,8 @@
     .customers-account &,
     .page-recently-viewed &,
     .page-wishlist &, 
-    .account-nav-show & {
+    .account-nav-show &,
+    .page-purchase-history & {
       display: block;
     }
     @include break(mobile) {
@@ -654,7 +671,8 @@
       .customers-account &,
       .page-recently-viewed &,
       .page-wishlist &, 
-      .account-nav-show & {
+      .account-nav-show &,
+      .page-purchase-history & {
         display: none;
       }
     }
@@ -666,7 +684,8 @@
         .customers-account &,
         .page-recently-viewed &,
         .page-wishlist &, 
-        .account-nav-show & {
+        .account-nav-show &,
+        .page-purchase-history & {
           display: block;
         }
       }
@@ -684,6 +703,11 @@
       .page-wishlist & {
         //display: block;
       }
+    }
+    
+    ul {
+      display: block;
+      margin-bottom: 0;
     }
     
     .mobile-app-utilities {
@@ -718,13 +742,15 @@
 }
 
 
-
 .customers-login,
 .customers-account,
 .customers-register,
 .page-recently-viewed,
 .page-purchase-history,
-.page-wishlist {
+.account-nav-show,
+.page-purchase-history,
+.page-wishlist,
+.customers-addresses {
   #app-header {
     position: absolute;
   }

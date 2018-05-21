@@ -96,6 +96,42 @@
           .c-remove { display: none; }
           .c-edit-controls { @include flexbox; }
         }
+        
+        @include break(mobile) {
+          .c-item {
+            display: none;
+          }
+          .cart-inner {
+            width: 100%;
+          }
+          div + ul { clear: left; }
+          
+          ul, .edit-options, .c-qty-select, .cart-header {
+            float: left;
+          }
+          
+          li { clear: none; margin-left: $list-spacing; }
+          
+          .c-qty-select { clear: none; }
+          
+          .item-variant-list {
+            li {
+              margin-left: 0; 
+              margin-right: $list-spacing;
+            }
+          }
+          
+          .selector-wrapper {
+            .dummy-select {
+              margin-left: 0; 
+            }
+          }
+          
+          .c-total {
+            clear: left;
+          }
+        }
+        
       }
       
       

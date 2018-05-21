@@ -678,12 +678,16 @@ form {
   }
 }
 
-.error, .errors li {
+
+.error, .errors li, .subscribe-status {
   @include link-underline;
   background: #000;
   color: #fff;
   &:after {
     display: none;
+  }
+  a {
+    color: #fff;
   }
   display: inline-block;
   @include gutter-top(1);

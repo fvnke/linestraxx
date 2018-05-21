@@ -182,7 +182,7 @@ class="active"{%- endif -%}>
 			      </li>
 			    {% endif %}
 			  {% endfor %}
-        <li class="desktop-only utility utility-trigger-j {% if template contains 'search' %}active{% endif %}" data-utility="app-search"><a href="/search">Search</a></li>
+        <li class="desktop-only utility utility-trigger-j {% if template contains 'search' %}active{% endif %}" data-utility="app-search"><a href="#">Search</a></li>
 			</ul>
       
       
@@ -273,7 +273,7 @@ class="active"{%- endif -%}>
 	  </ul>  
     <ul class="mobile-utilities">
       <li class="mobile-cart {% if template contains 'cart' %}active {% endif %}"><a href="/cart" class="icon icon-cart {% if cart.item_count < 1 %}no-items{% endif %}"><svg class="icon-bag"><use xlink:href="#icon-bag{% if template contains 'cart' %}-full{% endif %}"></use></svg><span class="cart-count">{{ cart.item_count }}</span></a></li>
-      <li class="utility-trigger-j" data-utility="app-search"><a href="/search"><svg class="icon-search"><use xlink:href="#icon-search"></use></svg></a></li>
+      <li class="utility-trigger-j" data-utility="app-search"><a href="#"><svg class="icon-search"><use xlink:href="#icon-search"></use></svg></a></li>
     </ul>
 	</div>
 

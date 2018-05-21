@@ -23,6 +23,12 @@
     padding-top: 0;
     ul {
       margin-bottom: 0;
+      @include break(mobile) {
+        display: block;
+      }
+      @include break(mobile) {
+        margin-left: 10px !important;
+      }
     }
     a {
       @include link-underline;

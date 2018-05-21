@@ -91,8 +91,8 @@ module.exports = function( el ) {
       }
       
       
-    }).on('mouseout', function(){
-  
+    }).on('click', function(e){
+      e.preventDefault();
     });
     
     
@@ -114,8 +114,8 @@ module.exports = function( el ) {
       $('.tier-2').removeClass('visible');
       
       $('.app-nav').addClass('over');
-      $('.tier-1 li[data-main="'+ handle + '"').addClass('active');
-      $('.tier-2[data-sub="'+ handle + '"').addClass('visible');
+      $('.tier-1 li[data-main="'+ handle + '"]').addClass('active');
+      $('.tier-2[data-sub="'+ handle + '"]').addClass('visible');
       
       
       //$('.app-nav').on('mouseleave', mouseLeave);
@@ -124,7 +124,14 @@ module.exports = function( el ) {
       
     });
     
-    if($('body').attr('id') != 'create-account'){
+    if($('body').attr('id') != 'create-account'
+      && $('body').attr('id') != 'purchase-history' 
+      && $('body').attr('id') != 'wishlist'
+      && $('body').attr('id') != 'purchase-history' 
+      && $('body').attr('id') != 'recently-viewed'
+      && $('body').attr('id') != 'account'
+      && $('body').attr('id') != 'addresses'    
+    ){
       $('header').off('mouseleave').on('mouseleave', mouseLeave);
     }
     
@@ -151,10 +158,10 @@ module.exports = function( el ) {
         $('body').attr('data-nav', '');
         //$('.account-module').hide();
         $('.app-nav').removeClass('over');
-        $('.tier-2[data-sub="'+ handle + '"').removeClass('visible');
+        $('.tier-2[data-sub="'+ handle + '"]').removeClass('visible');
         $('.tier-1 li').removeClass('active');
         $('body').attr('data-nav', '');
-        $('.tier-1 li[data-page="'+ currentPage + '"').addClass('active');
+        $('.tier-1 li[data-page="'+ currentPage + '"]').addClass('active');
         
         if($('body').attr('id') != 'create-account' && 
            $('body').attr('id') != 'address' &&
@@ -209,6 +216,8 @@ module.exports = function( el ) {
 	function hamburger(){
 	  $('#nav-hamburger').on('click', function(){
 	    $('#app-header').toggleClass('active');
+      $('body').attr('data-nav', '');
+      $('.account-module').hide();
       $('#main-dummy').css('height', $('header').outerHeight());
 	  });
 	}

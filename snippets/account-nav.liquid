@@ -3,8 +3,7 @@
 <ul class="account-subnav subnav">
   {% if shop.customer_accounts_enabled %}
     {% if customer %}
-      <!--<li class="desktop-only {% if template contains 'customers' %}active {% endif %}"><a class="icon icon-account" href="/account">Account</a></li>-->
-      <li data-module="login" class="desktop-only account-module-trigger over {% if template contains 'logged' %}active {% endif %}"><a href="/account">{{ customer.email }}</a></li>
+      <li data-module="login" class="desktop-only account-module-trigger {% if template contains 'logged' or template contains 'customers' %}over active {% endif %}"><a href="/account">{{ customer.email }}</a></li>
       <li class="desktop-only">{{ 'layout.customer.log_out' | t | customer_logout_link }}</li>
     {% else %}
       <li data-module="login" class="desktop-only account-module-trigger over {% if template contains 'login' %}active {% endif %}"><a href="/account/login">Login</a></li>
@@ -16,14 +15,14 @@
     {% if link.title != 'Wishlist' and link.title != 'Purchase History' and link.title != 'Recently Viewed' %}
       <li class="{% if link.active %}active{% endif %}"><a href="{{ link.url }}">{{ link.title }}</a></li>
     {% elsif link.title == 'Recently Viewed' %}
-      <li data-module="recently-viewed" class="account-module-trigger {% if link.active %}active{% endif %}"><a href="{{ link.url }}">{{ link.title }}</a></li>
+      <li data-module="recently-viewed" class="account-module-trigger {% if link.active or template contains 'recently' %}over active{% endif %}"><a href="{{ link.url }}">{{ link.title }}</a></li>
     {% elsif link.title == 'Wishlist' and customer %}
-      <li data-module="wishlist" class="account-module-trigger wishlist-link {% if link.active %}active{% endif %}"><a  class="wk-link-dummy" href="{{ link.url }}">{{ link.title }}</a><!-- include 'wishlist-link' --></li>
+      <li data-module="wishlist" class="account-module-trigger wishlist-link {% if link.active %}over active{% endif %}"><a  class="wk-link-dummy" href="{{ link.url }}">{{ link.title }}</a><!-- include 'wishlist-link' --></li>
     {% elsif link.title == 'Purchase History' %}
-      {% if customer %}<li data-module="purchase-history" class="account-module-trigger {% if link.active %}active{% endif %}"><a href="{{ link.url }}">{{ link.title }}</a></li>{% endif %}
+      {% if customer %}<li data-module="purchase-history" class="account-module-trigger {% if link.active %}over active{% endif %}"><a href="{{ link.url }}">{{ link.title }}</a></li>{% endif %}
     {% else %}
       {% if customer %}
-        <li  data-module="wishlist" class="account-module-trigger wishlist-link {% if template contains 'wishlist' %}active{% endif %}"><a href="/pages/wishlist" class="wk-link-dummy" title="View Wishlist">Wishlist</a><!-- include 'wishlist-link' --></li>
+        <li  data-module="wishlist" class="account-module-trigger wishlist-link {% if template contains 'wishlist' or link.active %}over active{% endif %}"><a href="/pages/wishlist" class="wk-link-dummy" title="View Wishlist">Wishlist</a><!-- include 'wishlist-link' --></li>
         <script>
           // to prevent the wishlist link from jumping
           $('.wishlist-link').bind("DOMSubtreeModified",function(){
@@ -39,9 +38,13 @@
 </div>
 
 
-  <div class="account-module visible" data-module="login" {% if template contains 'login' or template contains 'account' %}style="display:block;"{% endif %}>
+  <div class="account-module visible" data-module="login" {% if template contains 'login' or template contains 'account' or template contains 'addresses' %}style="display:block;"{% endif %}>
     {% if customer %}
-      {% include 'account' %}
+      {% if template contains 'addresses' %}
+        {% include 'addresses' %}
+      {% else %}
+        {% include 'account' %}
+      {% endif %}
     {% else %}
       {% include 'login' %}
     {% endif %}
@@ -49,13 +52,13 @@
   <div class="account-module" data-module="register" {% if template contains 'register' %}style="display:block;"{% endif %}>
     {% include 'register' %}
   </div>
-  <div class="account-module" data-module="recently-viewed">
+  <div class="account-module" data-module="recently-viewed" {% if template contains 'recently' %}style="display:block;"{% endif %}>
     {% include 'recently-viewed' %}
   </div>
-  <div class="account-module" data-module="wishlist">
+  <div class="account-module" data-module="wishlist" {% if template contains 'wishlist' %}style="display:block;"{% endif %}>
     <!-- include 'wishlist-collection' -->
   </div>
-  <div class="account-module" data-module="purchase-history">
+  <div class="account-module" data-module="purchase-history" {% if template contains 'purchase' %}style="display:block;"{% endif %}>
     {% include 'purchase-history' %}
   </div>
 

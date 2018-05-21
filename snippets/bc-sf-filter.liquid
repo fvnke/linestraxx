@@ -68,7 +68,6 @@
 {{ 'bc-sf-filter-lib.js' | asset_url | script_tag }}
 {{ 'bc-sf-search.js' | asset_url | script_tag }}
 {% if template contains 'collection' or template contains 'search' or template contains 'index' %}
-filter 
 {{ 'bc-sf-filter.js' | asset_url | script_tag }}
 {% endif %}
 

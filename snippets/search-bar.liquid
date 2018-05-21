@@ -10,7 +10,7 @@
     </div>
     {% if settings.featured_search_terms != blank %}
     {% assign search_terms = settings.featured_search_terms | split:', ' %}
-    <div data-module-init="horizontal-scroll" class="overflow-container overflow-search">
+    <div data-module-init="horizontal-scroll" class="overflow-container overflow-search search-suggestions-alyx">
       <ul class="search-results">
         {% for term in search_terms %}
         <li><a class="search-result-suggestion" href="/search?q={{ term }}" />{{ term }}</a></li>

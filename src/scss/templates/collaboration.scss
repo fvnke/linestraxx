@@ -47,13 +47,30 @@
           margin-left: $mobile-gutter;
           margin-right: $mobile-gutter;
         }
+        .gallery {
+          @include flexbox;
+          white-space: unset;
+          overflow-x: visible;
+          overflow-y: visible;
+          
+          @include break(mobile) {
+            white-space: nowrap;
+                overflow-x: scroll;
+                overflow-y: hidden;
+          }
+        }
         .product-collab-block-references {
           @include two-cols;
           //visibility: hidden;
           @include break(mobile) {
             display: none;
           }
+          li {
+            //display: none; 
+          }
           li.over {
+            display: block;
+            
             .counter { 
                @include circleBbuttonFill(#fff, #000);
                
@@ -65,7 +82,11 @@
             }
           }
           .product-item {
-            display: none;
+            display: none; 
+          }
+          .grid-item {
+            padding-right: 0;
+            margin-left: 0 !important;
           }
           .product-collab-content {
             .product-collab-description {
@@ -94,7 +115,7 @@
           }
           a {
             @include circleBbutton(#fff);
-            visibility: hidden;
+            //visibility: hidden;
             position: absolute;
             top: 0;
             left: 0;
@@ -124,6 +145,9 @@
         }
         &>div {
           margin-left: 2rem;
+          @include break(mobile) {
+            margin-left: 0;
+          }
         }
         div {
           

@@ -1,5 +1,8 @@
 .page {
-  .customers-account &, .customers-order &, .customers-addresses &, &.account, &.account-details, .template-search & {
+  .customers-order &, .customers-addresses &, &.account, &.account-details, .template-search & {
+    padding-top: 0;
+  }
+  &.account-details {
     padding-top: 0;
   }
 }

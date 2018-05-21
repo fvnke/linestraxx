@@ -61,7 +61,7 @@
 .wk-item-column {
   @include smallFlickity;
   @include break(mobile) {
-    width: 154px !important;
+    //width: 154px !important;
   }
 }
 

@@ -8,12 +8,19 @@ module.exports = function( el ) {
   
   function init(){
     console.log('collaboration');
+    /*
     $('.product-collab-image').on('mouseover', function(){
       $('.product-collab-block').removeClass('visible');
       $(this).closest('.product-collab-block').addClass('visible');
     }).on('mouseout', function(){
       $(this).closest('.product-collab-block').removeClass('visible');
     }).on('click', function(){
+      $('.product-collab-block').removeClass('active');
+      $(this).closest('.product-collab-block').addClass('active');
+    });
+    */
+    
+    $('.product-collab-image').on('click', function(){
       $('.product-collab-block').removeClass('active');
       $(this).closest('.product-collab-block').addClass('active');
     });
@@ -28,10 +35,17 @@ module.exports = function( el ) {
     })
     
     $('.view-as-images').on('click', function(){
-      $(this).closest('.product-collab-block').addClass('show-images');
+      var $p = $(this).closest('.product-collab-block');
+      $p.addClass('show-images');
+      $p.find('ol').addClass('gallery');
+      $p.find('ol li').addClass('gallery-inner');
     });
     $('.view-as-text').on('click', function(){
       $(this).closest('.product-collab-block').removeClass('show-images');
+      var $p = $(this).closest('.product-collab-block');
+      $p.removeClass('show-images');
+      $p.find('ol').removeClass('gallery');
+      $p.find('ol li').removeClass('gallery-inner');
     });
     $('.back').on('click', function(){
       $(this).closest('.product-collab-block').removeClass('active');

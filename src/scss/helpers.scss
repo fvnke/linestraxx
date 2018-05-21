@@ -132,6 +132,10 @@
   @include break(mobile) {
     width: 154px;
     flex: 0 0 154px;
+    &.related, &.recently-child, &.wishlist-child, &.bc-sf-search-suggestion-item, &.ui-menu-item-wrapper {
+      width: 100px;
+      flex: 0 0 100px;
+    }
     .template-cart & {
       margin-bottom: 0;
     }
