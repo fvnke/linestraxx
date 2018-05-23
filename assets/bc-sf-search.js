@@ -113,12 +113,21 @@ BCSfFilter.prototype.buildSuggestionProductList = function(a, b, c) {
             if (!1 === this.getSettingValue("search.productAvailable") || this.getSettingValue("search.productAvailable") && i.available) {
                 var j = this.customizeSuggetionProductTitle(i.title, a, b);
                 j = this.highlightSuggestionResult(j, a);
+                var sku = null !== i.skus && i.skus.length > 0 ? i.skus[0] : "";
+                    var str1 = sku.slice(0,2) + '-';
+                    var str2 = sku.slice(2, 3) + '-';
+                    var str3 = sku.slice(3,5) + '-';
+                    var str4 = sku.length > 9 ? sku.slice(5,9) + '-' : sku.slice(5,9);
+                    var str5 = sku.length > 9 ? sku.slice(9,10) + '-' : '';
+                    var str6 = sku.length > 9 ? sku.slice(10, sku.length) : '';
+                    var new_sku = str1 + str2 + str3 + str4 + str5 + str6;
+                    
                 var k = this.buildProductItemUrl(i, !1),
                     l = i.images_info.length > 0 ? this.optimizeImage(i.images_info[0].src, "large") : bcSfFilterConfig.general.no_image_url,
                     m = null !== i.skus && i.skus.length > 0 ? i.skus[0] : "",
                     n = this.class.searchSuggestion,
                     o = this.getSettingValue("search.openProductNewTab") ? 'target="_blank"' : "";
-                f += '<li class="gallery-child list-num-' + h +' ' + this.class.searchSuggestionItem + " " + this.class.searchSuggestionItem + '-product" aria-label="' + this.escape(e) + ": " + this.escape(i.title) + '">', f += '<a class="gallery-inner-child" href="' + k + '" ' + o + ">", this.getSettingValue("search.showSuggestionProductImage") && (f += '<div class="' + n + '-left"><img src="' + l + '" /></div>'), f += '<div class="' + n + '-right">', f += '<div class="' + n + '-product-title">' + j + "</div>", this.getSettingValue("search.showSuggestionProductSku") && (f += '<div class="' + n + '-product-sku">' + m + "</div>"), this.getSettingValue("search.showSuggestionProductVendor") && (f += '<div class="' + n + '-product-vendor">' + i.vendor + "</div>"), f += this.buildSuggestionProductPrice(i), f += "</div>", f += "</a>", f += "</li>", g++
+                f += '<li class="gallery-child list-num-' + h +' ' + this.class.searchSuggestionItem + " " + this.class.searchSuggestionItem + '-product" aria-label="' + this.escape(e) + ": " + this.escape(i.title) + '">', f += '<a class="gallery-inner-child" href="' + k + '" ' + o + ">", this.getSettingValue("search.showSuggestionProductImage") && (f += '<div class="' + n + '-left"><img src="' + l + '" /></div>'), f += '<div class="' + n + '-right">', f += '<div class="' + n + '-product-title">' + j + "</div>", this.getSettingValue("search.showSuggestionProductSku") && (f += '<div class="' + n + '-product-sku product-bardcode">' + new_sku + "</div>"), this.getSettingValue("search.showSuggestionProductVendor") && (f += '<div class="' + n + '-product-vendor">' + i.vendor + "</div>"), f += this.buildSuggestionProductPrice(i), f += "</div>", f += "</a>", f += "</li>", g++
             }
         }
         f = '<div class="gallery"><ul class="gallery-inner">' + f + '</ul></div>';

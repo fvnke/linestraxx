@@ -678,7 +678,12 @@ form {
   }
 }
 
-
+.product-barcode {
+  text-overflow: ellipsis;
+  display: block;
+  overflow: hidden;
+}
+ 
 .error, .errors li, .subscribe-status {
   @include link-underline;
   background: #000;

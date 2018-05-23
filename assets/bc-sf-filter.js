@@ -3,7 +3,7 @@ var bcSfFilterSettings = {
     general: {
         limit: 50,
         /* Optional */
-        loadProductFirst: true,
+        loadProductFirst: false,
     }
 };
 
@@ -131,7 +131,19 @@ BCSfFilter.prototype.buildProductGridItem = function(data, index) {
             }
         }
     }
+    
+    //AAUBA0001001
+    //AA-U-SS-0017-0-02
+    //AAMSH0009001
     var sku = firstVariant.sku;
+    var str1 = sku.slice(0,2) + '-';
+    var str2 = sku.slice(2, 3) + '-';
+    var str3 = sku.slice(3,5) + '-';
+    var str4 = sku.slice(5,9) + '-';
+    var str5 = sku.slice(9,10) + '-';
+    var str6 = sku.slice(10, sku.length);
+    var new_sku = str1 + str2 + str3 + str4 + str5 + str6;
+ 
     /*** End Prepare data ***/
 
     // Get Template
@@ -150,7 +162,8 @@ BCSfFilter.prototype.buildProductGridItem = function(data, index) {
             itemPriceHtml += '<s class="grid-link__sale_price">' + this.formatMoney(data.compare_at_price_min) + '</s> ';
         }
         if (priceVaries) {
-            itemPriceHtml += (bcSfFilterConfig.label.from_price).replace(/{{ price }}/g, this.formatMoney(data.price_min));
+         //   itemPriceHtml += (bcSfFilterConfig.label.from_price).replace(/{{ price }}/g, this.formatMoney(data.price_min));
+          itemPriceHtml += this.formatMoney(data.price_min);
         } else {
             itemPriceHtml += this.formatMoney(data.price_min);
         }
@@ -179,7 +192,7 @@ BCSfFilter.prototype.buildProductGridItem = function(data, index) {
     itemHtml = itemHtml.replace(/{{itemVendor}}/g, itemVendorHtml);
     
     // Add SKU
-    var itemSkuHtml = sku;
+    var itemSkuHtml = new_sku;
     itemHtml = itemHtml.replace(/{{itemSku}}/g, itemSkuHtml);
 
     // Add main attribute (Always put at the end of this function)
@@ -337,6 +350,11 @@ BCSfFilter.prototype.buildFilterSorting = function() {
             jQ(this.selector.topSorting + ' select').val(this.queryParams.sort);
         }
     }
+  
+  if("undefined" != typeof checkShopifyFormatMoney){
+  $m("<style type=\"text/css\">span.money{ display: none; }</style>").appendTo("head");
+  checkShopifyFormatMoney();
+  }
 };
 
 // Build Display type (List / Grid / Collage)

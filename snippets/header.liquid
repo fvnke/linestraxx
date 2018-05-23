@@ -268,7 +268,7 @@ class="active"{%- endif -%}>
 		      <li class="desktop-only trigger-account-nav {% if template contains 'customers' %}active {% endif %}"><a href="/account/login">Account</a></li>
 	      {% endif %}
 	    {% endif %}
-      <li class="currency-switcher-container">{% include 'mlveda-currencies-switcher' %}</li>
+      <li class="currency-switcher-container"></li>
 	    <li class="{% if template contains 'cart' %}active {% endif %}"><a href="/cart" class="icon icon-cart {% if cart.item_count < 1 %}no-items{% endif %}" id="cart-trigger"><span class="cart-count">Bag ({{ cart.item_count }})</span></a></li>
 	  </ul>  
     <ul class="mobile-utilities">

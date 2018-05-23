@@ -40,9 +40,9 @@ assets/bc-sf-filter-sprite.png:
 assets/bc-sf-filter.css:
   production: 2018-05-18T18:36:27-04:00   5f308ae5974cfebcbe446b1c4e5b1405
 assets/bc-sf-filter.js:
-  production: 2018-05-19T19:12:24-04:00   c9e53cc5b84dd52bfc68911213cd9496
+  production: 2018-05-22T20:14:58-04:00   1f0459bf64afe3cbffaea30d9a753e8d
 assets/bc-sf-search.js:
-  production: 2018-05-20T14:27:40-04:00   99820f1c3ad70c9142053492c4c1da48
+  production: 2018-05-22T21:00:16-04:00   0df17905fe59c178264d666654c5a1c7
 assets/bc-sf-search.png:
   production: 2018-05-18T18:59:05-04:00   da6417b7ff170247afd7492825ce16f9
 assets/gift-card.js:
@@ -78,9 +78,9 @@ assets/style.css.liquid:
 assets/style.css.liquid.map:
   production: 2018-03-09T15:39:48-05:00   311a6475ee01ade903ba1585db6b5679
 assets/style.scss.liquid:
-  production: 2018-05-21T11:07:50-04:00   4035a9cc6516cc225d6fafc110d1d8dd
+  production: 2018-05-22T19:56:27-04:00   3a473e47774681446df9b66465973a68
 assets/style.scss.liquid.map:
-  production: 2018-05-21T11:07:49-04:00   d381f341a330f0ee5050c47261de8216
+  production: 2018-05-22T19:56:26-04:00   2412913c5ce78cd30ac68d1f816d817c
 assets/subway.jpg:
   production: 2018-04-15T12:19:08-04:00   d16f35dbd6fcb24315c8801694ec4af0
 assets/subway.mp4:
@@ -100,7 +100,7 @@ assets/video.webm:
 assets/wish-list.js:
   production: 2018-04-10T10:47:05-04:00   556325f26e11c7cec838d9ea3d24adcc
 config/settings_data.json:
-  production: 2018-05-18T13:47:45-04:00   25fbec12a0a5cbc9876003f8972cd008
+  production: 2018-05-21T10:50:02-04:00   034d4a92f1a98cd26047be09ea965cb2
 config/settings_schema.json:
   production: 2018-04-22T13:17:54-04:00   0c09f94a1a5d7f1a4c1009fde3e1f1fe
 layout/gift_card.liquid:
@@ -108,7 +108,7 @@ layout/gift_card.liquid:
 layout/password.liquid:
   production: 2018-03-09T14:14:45-05:00   6351674ea67c53e01643a5bea02f7d0a
 layout/theme.liquid:
-  production: 2018-05-19T16:29:46-04:00   77a57dbd9f01b7e35388f729031e17e5
+  production: 2018-05-22T21:27:29-04:00   7c2e5e87dcae4a9f817476785252493f
 locales/de.json:
   production: 2018-05-18T15:10:43-04:00   d21fdce0a4a52ad50be30b4baa321293
 locales/en.default.json:
@@ -244,7 +244,7 @@ snippets/google-fonts.liquid:
 snippets/handlebars-templates.liquid:
   production: 2018-03-09T15:40:00-05:00   47746bbe3705fbb3f8c6413eaec73bf7
 snippets/header.liquid:
-  production: 2018-05-19T21:51:52-04:00   3ce415d183deae7f6a993b70d15861cb
+  production: 2018-05-22T21:01:12-04:00   3ad75da8342f8c988be8546b7f4902d8
 snippets/icon-amazon_payments.liquid:
   production: 2018-03-09T14:14:46-05:00   f1ad8ba26dd5b98117703ede5357e408
 snippets/icon-american_express.liquid:
@@ -356,9 +356,17 @@ snippets/login.liquid:
 snippets/menu-breadcrumb.liquid:
   production: 2018-05-18T14:21:57-04:00   bc270aef5d66c4bb4ac5f5cdf34d6731
 snippets/mlveda-currencies-switcher.liquid:
-  production: 2018-05-18T12:54:17-04:00   b235fd152832aa93d3f28f8ab7e9f00b
+  production: 2018-05-22T21:25:41-04:00   0d84005513242f76d9ad2628b75a160b
 snippets/mlveda-currencies.liquid:
-  production: 2018-04-07T16:07:20-04:00   b70e5b285ded3ae696c431ab5103bff5
+  production: 2018-05-22T21:10:57-04:00   2696bf91473155adb499e58f59a52317
+snippets/mlveda-multipricing-options.liquid:
+  production: 2018-05-22T21:24:13-04:00   411fdc852a8bd332f15da6e4c414ad38
+snippets/mlveda-multipricing-selectBox.liquid:
+  production: 2018-05-21T11:15:01-04:00   ac8a5ae9c0c8b7191ab61fcce3431aa1
+snippets/mlveda-multipricing-selectors.liquid:
+  production: 2018-05-21T11:19:21-04:00   ce47509206210438d17b2ba2292cf93e
+snippets/mlveda-multipricing-updateprice.liquid:
+  production: 2018-05-21T07:32:55-04:00   d6c02149a46e987cc52819f25209a0f6
 snippets/mobile-menu.liquid:
   production: 2018-03-09T15:40:02-05:00   cdeb6de7846cd28aaf60326c9c92ea68
 snippets/narrative-interruptions.liquid:
@@ -367,6 +375,8 @@ snippets/nav-breadcrumb.liquid:
   production: 2018-05-18T14:18:47-04:00   d51570432587e6655d5a49e1825581d3
 snippets/nav-utilities-mobile.liquid:
   production: 2018-04-29T18:03:18-04:00   59616f8f490b750b44375680cb5ce5ce
+snippets/new-sku.liquid:
+  production: 2018-05-22T20:58:08-04:00   2d20d17ffeb5cd3dbdeae049444b899d
 snippets/newsletter-form.liquid:
   production: 2018-05-19T22:23:48-04:00   3b641faf7a4755ceaf4e037ad7745bd0
 snippets/newsletter-popup.liquid:
@@ -384,9 +394,9 @@ snippets/product-card-grid.liquid:
 snippets/product-card-list.liquid:
   production: 2018-03-09T14:14:48-05:00   701fa6db04bd9c70283028cc4274fc2f
 snippets/product-item-cart.liquid:
-  production: 2018-05-18T14:31:50-04:00   11837a828648cd59cf6de716243c12a3
+  production: 2018-05-22T19:50:38-04:00   8decbbe955143368009b950ddaf0f03f
 snippets/product-item.liquid:
-  production: 2018-05-19T13:52:03-04:00   e205b41c61136e77084a97f6442d224c
+  production: 2018-05-22T19:50:10-04:00   99b762a88e854558e28efc179382fcce
 snippets/product-price.liquid:
   production: 2018-03-09T14:14:48-05:00   6f6d1b55d488d08b5af74f762fa0a528
 snippets/product-qty.liquid:
@@ -398,13 +408,15 @@ snippets/product-thumbs.liquid:
 snippets/purchase-history.liquid:
   production: 2018-05-13T17:53:07-04:00   91658fd5de70857a1ef00c574e695e0d
 snippets/recently-viewed.liquid:
-  production: 2018-05-20T14:40:13-04:00   10cc5fe86d1e80cbeb95289be38b1ae0
+  production: 2018-05-21T09:30:30-04:00   7bce9d287c18507d1e56495370e2fbaa
 snippets/register.liquid:
   production: 2018-05-19T22:33:49-04:00   88cb1a4bc869a53c318da81f4cccde1c
 snippets/related-cart-products.liquid:
   production: 2018-05-18T14:29:49-04:00   3c9175cb88ccd569a24482cf27e05734
 snippets/related-collab-products.liquid:
   production: 2018-05-15T22:11:27-04:00   089910d53c44072d0a30fbe210e973d5
+snippets/related-products-by-tag.liquid:
+  production: 2018-05-13T22:16:05-04:00   37bf4e1c1d65e94fc60d7978e9396999
 snippets/related-products.liquid:
   production: 2018-05-16T19:33:22-04:00   ace6225a258957a451c500051e2a91f3
 snippets/respond.liquid:
@@ -478,11 +490,13 @@ templates/article.liquid:
 templates/blog.liquid:
   production: 2018-03-09T15:39:32-05:00   ff2a41a13c1545b180f2c4e341b3a84d
 templates/cart.liquid:
-  production: 2018-05-20T13:16:37-04:00   e58f2af84f3afd2d49398d93e0941e3e
+  production: 2018-05-22T19:51:26-04:00   fdeba47b74543aff7d9e81349b525e2a
 templates/collection.liquid:
   production: 2018-05-19T15:31:47-04:00   dcea9f54e2b65a95b49821985a684b5b
 templates/collection.main.liquid:
   production: 2018-05-21T10:58:07-04:00   5ec21b4372b9b34fb0d0d976d0a0fbfa
+templates/collection.products-endpoint.liquid:
+  production: 2018-05-21T00:43:38-04:00   457a7f0cbfed849e2b2dbb15c17c5afa
 templates/customers/account.liquid:
   production: 2018-05-19T21:54:47-04:00   93a148fc098286fdaf38d2a16a548ff7
 templates/customers/activate_account.liquid:
@@ -535,11 +549,15 @@ templates/page.wishlist.liquid:
   production: 2018-05-19T21:58:46-04:00   8460fa401e56fe320110e3ec7ab954bc
 templates/password.liquid:
   production: 2018-04-08T21:57:13-04:00   ff99c4e21bf8909829d5d5a1424c7c77
+templates/product.details-endpoint.liquid:
+  production: 2018-05-21T00:43:39-04:00   ce821ecdaa51a829df6564c34fb77892
 templates/product.liquid:
-  production: 2018-05-19T13:52:42-04:00   dc4f03f6478a497328d48189b9748024
+  production: 2018-05-22T19:49:19-04:00   c57227c16caab74416c217fd5bf08f37
 templates/search.bk.liquid:
   production: 2018-05-18T18:58:18-04:00   065faff97e41f886344de70ef33d7f0d
 templates/search.json.liquid:
   production: 2018-04-22T17:43:11-04:00   8ec73ba5d8fa7638193abd76ecd8c76f
 templates/search.liquid:
   production: 2018-05-18T19:34:13-04:00   02c39791a12746e022ce0ac32794234f
+templates/search.mlveda.liquid:
+  production: 2018-05-21T05:35:11-04:00   0cde70ebd2274cf601e9c04a86682065

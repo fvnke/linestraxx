@@ -14,7 +14,9 @@
 							<div class="c-col c-deets">
 								<div class="cart-inner">
                   <div class="cart-inner-content">
-									<h3><a href="{{ item.url }}">{{item.sku}}<br>{{ item.product.title }}</a></h3>
+                  {% assign sku = item.sku %}
+                  
+									<h3><a href="{{ item.url }}">{% include 'new-sku' with sku  %}<br>{{ item.product.title }}</a></h3>
 									
 									
                   

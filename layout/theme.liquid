@@ -5,6 +5,17 @@
 <!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
+  
+  {% assign mlveda_code_flag = true %}
+  
+  {% if mlveda_code_flag == true %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <script>
+      	$m = $.noConflict(true);
+	 window.pattern = /^(do|sv|ee|fi|fr|gd|gp|gg|hu|is|im|il|kz|ke|kg|la|mo|mk|mh|mq|ms|ma|nl|ne|ng|no|pw|py|pl|pt|kn|st|sc|sg|sk|za|sr|sj|th|to|tm|tc|uz|vu|vn|zm|af|al|as|ao|ai|an|ag|ar|as|bb|by|aq|bm|bq|bv|au|vg|bs|cv|bh|cf|bd|cn|be|co|ba|ci|bw|dk|bn|dm|bi|cd|cm|ec|ca|eg|td|gq|cx|er|cc|et|cr|eu|ga|gh|cy|gi|dj|gu|eu|gt|fk|gn|fo|gw|gf|hm|pf|hn|gm|iq|ge|ie|de|jm|gr|jp|in|ki|id|lr|je|mw|lv|my|ly|mu|li|yt|mv|mx|mc|mn|mz|nr|np|ni|nu|nf|pk|na|ph|oc|pn|om|qa|pg|re|pr|sh|ro|ru|rw|sm|bl|rs|pm|sx|vc|gs|sa|sd|sl|se|si|tj|tz|sb|tt|sa|tn|es|gb|lk|va|ch|zw|sy|tw|tl|tg|tr|um|vi|ug|us|uy|ve|af|ax|dz|ad|am|aw|at|az|bz|bj|bt|bo|br|io|bg|bf|kh|ky|cl|km|cg|ck|hr|cu|cw|cz|fj|tf|gl|gy|ht|hk|ir|it|jo|kw|lb|ls|lt|lu|mg|ml|mt|mr|fm|md|me|mm|na|nc|nz|kp|mp|ps|pa|pe|lc|mf|ws|sn|so|kr|ss|sz|tk|tv|ua|ae|wf|eh|ye|intl)$/;
+      </script>
+
+  {% endif %}
 
   <!-- Basic page needs ================================================== -->
   <meta charset="utf-8">
@@ -58,6 +69,15 @@
   {% endif %}
   
 
+  
+  {% if mlveda_code_flag == true %}
+ <script>
+  $m("<style type=\"text/css\">span.money{ display: none; }</style>").appendTo("head");
+</script>
+{% endif %}
+
+
+  
 <script>
 window.mlvedaShopCurrency = "{{ shop.currency }}";
 window.shopCurrency = "{{ shop.currency }}";
@@ -133,7 +153,27 @@ window.supported_currencies = "{{ settings.mlvedaACS_supportedCurrencies }}";
           $('#main-dummy').css('height', $('#app-header').outerHeight())
         }, 100)
       </script>
-      {{ content_for_layout }}
+      
+      
+      
+      
+	    {% if mlveda_code_flag == false %}
+			{{ content_for_layout }}	
+  		{% endif %}
+
+  		{% if mlveda_code_flag == true %}
+			<div class="mlvedaform">
+				{{ content_for_layout }}
+            {% include 'mlveda-multipricing-options' %}
+          	</div>
+          	{% include 'mlveda-multipricing-selectBox' %}
+
+          	{% include 'mlveda-multipricing-selectors' %}
+		{% endif %}
+
+      
+      
+      
       <div class="search-results-ajax-container wrapper collection-wrapper">
         <div class="live-search-results grid-wrapper"></div>
       </div>
@@ -265,8 +305,14 @@ window.supported_currencies = "{{ settings.mlvedaACS_supportedCurrencies }}";
   </script>
   {% endcomment %}
 
+
   
-{% include 'mlveda-currencies' %}
+{% if mlveda_code_flag == true %}
+  {% include 'mlveda-multipricing-updateprice' %}
+{% endif %}
+  
+  
+
 {% include 'bc-sf-filter' %}
 </body>
 </html>

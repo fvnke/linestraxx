@@ -1,0 +1,30 @@
+{% comment %}
+Pass a sku to this snippet to format it like:
+
+AA-W-OU-0002-A-01
+AA-U-SS-0017-0-02
+
+AAUBA0001001
+
+{% endcomment %}
+
+{% assign sku_size = sku | size %}
+
+{% assign str1 = sku | slice: 0,2 | append: '-' %}
+{% assign str2 = sku | slice: 2 | append: '-' %}
+{% assign str3 = sku | slice: 3,2 | append: '-' %}
+{% if sku_size > 9 %}
+{% assign str4 = sku | slice: 5,4 | append: '-' %}
+{% else %}
+{% assign str4 = sku | slice: 5,4 %}
+{% endif %}
+{% if sku_size > 9 %}
+{% assign str5 = sku | slice: 9 | append: '-' %}
+{% assign str6 = sku | slice: 10,11 %}
+{% else %}
+{% assign str5 = '' %}
+{% assign str6 = '' %}
+{% endif %}
+{% assign new_sku = str1 | append: str2 | append: str3 | append: str4 | append: str5 | append: str6 %}
+
+{{ new_sku }}

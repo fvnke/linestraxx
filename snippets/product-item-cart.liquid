@@ -30,7 +30,8 @@
         <span class="badge"><span>{{ 'products.product.sold_out' | t }}</span></span>
       {% endif %}
 	    {% if product.first_available_variant.sku %}
-		    <span class="product-barcode">{{ product.first_available_variant.sku }}</span>
+        {% assign sku = product.selected_or_first_available_variant.sku %}
+		    <span class="product-barcode">{% include 'new-sku' with sku  %}</span>
 	    {% endif %}
 	    <h3 class="product-title">{{ product.title }}</h3>
 	    <span class="product-price">
@@ -38,7 +39,12 @@
 	      {% if on_sale %}
 		      <s class="product-sale-price">{{ product.compare_at_price | money }}</s>
 	      {% endif %}
-	      {% if product.price_varies %}{{ 'products.general.from_html' | t: price: price }}{% else %}{{ price }}{% endif %}
+	      {% if product.price_varies %}
+          <!--	{{ 'products.general.from_html' | t: price: price }}	-->
+          	{{ price }}
+          {% else %}
+          	{{ price }}
+          {% endif %}
 	    </span>
     </div>
 

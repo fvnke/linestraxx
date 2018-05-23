@@ -25,7 +25,7 @@
       <a href="${url}">
       <h3>${variants[0].sku}</h3>
       <h3 class="title">${title}</h3>
-      {{if price_varies}}<em>from </em>{{/if}}{{html Shopify.formatMoney(price_min, window.money_format)}}
+      {{if price_varies}}{{/if}}{{html Shopify.formatMoney(price_min, window.money_format)}}
       </a>
     </div>
   </div>

@@ -68,7 +68,10 @@
 	    <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
       
 	    
-	    <h1 class="product-title" itemprop="name">{{ product.selected_or_first_available_variant.sku }}<br>{{ product.title }}</h1>
+	    <h1 class="product-title" itemprop="name">
+        {% assign sku = product.selected_or_first_available_variant.sku %}
+        {% include 'new-sku' with sku  %}
+        <br>{{ product.title }}</h1>
       <span class="product-prices">
         <span id="product-price" itemprop="price">
           {{ product.price | money }}
@@ -216,7 +219,8 @@
     // Selectors
     var $productImage = $('#ProductPhotoImg'),
         $addToCart = $('#AddToCart'),
-        $productPrice = $('#ProductPrice'),
+//        $productPrice = $('#ProductPrice'),
+        $productPrice = $('#product-price'),
         $comparePrice = $('#ComparePrice'),
         $quantityElements = $('.quantity-selector, label + .js-qty'),
         $addToCartText = $('#AddToCartText');
@@ -279,6 +283,11 @@
       $addToCart.addClass('disabled').prop('disabled', true);
       $addToCartText.html(translations.unavailable);
       $quantityElements.hide();
+    }
+    
+    
+    if(typeof ACSCurrency !== "undefined" && typeof ACSCurrency.moneyFormats !== "undefined") {
+      mlvedaload();
     }
     
   }
