@@ -92,10 +92,10 @@
         
         {%- if parent_link_active == false -%}
         
-          {%- if link.active -%}<li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a>/<a href="{{ product.url }}" title="{{ product.title }}">{{ product.selected_or_first_available_variant.sku }}</a>{%- endif -%}
+          {%- if link.active -%}<li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a>/<a href="{{ product.url }}" title="{{ product.title }}">{% assign sku = product.selected_or_first_available_variant.sku %}{% include 'new-sku' with sku %}</a>{%- endif -%}
         {%- else -%}
         <li>
-          <a href="{{ link.url }}" title="{{ link.title }}">{{ parent.title }}</a>/<a href="{{ sub.url }}" title="{{ sub.title }}">{{ sub.title }}</a>{% if template contains 'product' %}/<a href="{{ product.url }}" title="{{ product.title }}">{{ product.selected_or_first_available_variant.sku }}</a>
+          <a href="{{ link.url }}" title="{{ link.title }}">{{ parent.title }}</a>/<a href="{{ sub.url }}" title="{{ sub.title }}">{{ sub.title }}</a>{% if template contains 'product' %}/<a href="{{ product.url }}" title="{{ product.title }}">{% assign sku = product.selected_or_first_available_variant.sku %}{%- include 'new-sku' with sku -%}</a>
           {% endif %}
           
           

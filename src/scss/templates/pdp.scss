@@ -93,6 +93,10 @@ div[data-module-init="accordion"] {
   }
   li {
     @include globalTextUC;
+    .template-product & {
+      @include aft-mwc-regular;
+    }
+    
     position: relative;
     float: left;
     clear: left;
@@ -122,6 +126,11 @@ div[data-module-init="accordion"] {
   }
 }
 
+#GoToBag {
+  display: inline-block;
+  @include gutter-top(2);
+}
+
 .selector-wrapper {
   @include break(mobile) {
     @include flexbox;
@@ -134,6 +143,7 @@ div[data-module-init="accordion"] {
         display: inline-block;
         clear: none;
         margin-right: 1rem;
+        
       }
     }
   }

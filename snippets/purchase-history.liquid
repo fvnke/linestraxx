@@ -25,7 +25,8 @@
   				        <div class="oc order-payment">Payment: {{ order.financial_status_label }}</div>
   				        <div class="oc order-fulfill">Status: {{ order.fulfillment_status_label }}</div>
   				        <div class="oc order-total">Total: {{ order.total_price | money }}</div>
-                  <a class="request-return" href="/a/returns?order={{order.order_number}}&email={{customer.email}}"> Request a return </a>
+                  <!--<a class="request-return" href="/a/returns?order={{order.order_number}}&email={{customer.email}}"> Request a return </a>-->
+                  <a class="request-return" href="http://alyx.myreturnscenter.com/" target="_blank">Request a return</a>
   			        </div>
   		        {% endfor %}
   	        </div>

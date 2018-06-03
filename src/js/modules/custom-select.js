@@ -67,7 +67,7 @@ module.exports = function( el ) {
 			$me = $(this);
 			index = $me.index();
 			data = $me.data('val');
-			
+			$('.error').hide();
 			// update active classes
 			if (!$me.hasClass('active')){
 				$me.addClass('active').siblings('li').removeClass('active');  

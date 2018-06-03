@@ -98,6 +98,9 @@
               //top: 2rem;
             }
           }
+          ul {
+            display: inline-block;
+          }
         }
         .top-link {
           //margin-left: $gutter;
@@ -114,9 +117,9 @@
         }
         ul {
           white-space: nowrap;
-          display: inline-block;
-          //margin-left: 1.3em;
+          //display: inline-block;
           margin-right: $mobile-gutter;
+          display: none;
           li {
             display: inline-block;
             margin-left: 0;
@@ -196,17 +199,19 @@
     }
   
   
-    .tier-2 {
+    .tier-2, .tier-3 {
       .template-product &, .search-show & {
         display: none;
       }
     }
-  
+    
+    /*
     .tier-3 {
       .template-product &, .search-show & {
         display: none;
       }
     }
+    */
   
     .subnav {
       //top: 2em;
@@ -299,7 +304,7 @@
   
   .app-nav {
     &.over {
-      .tier-2 {
+      .tier-2, .tier-3 {
         display: none;
         &.active {
           display: none;
@@ -309,7 +314,7 @@
         }
       }
       .tier-3 {
-        display: block;
+        //display: block;
       }
     }
     
@@ -513,10 +518,21 @@
 
 #app-header {
   @include break(mobile) {
-    max-height: 100%;
+    max-height: 100vh;
+    //height: 100vh;
     @include touch;
     overflow-y: scroll;
+    overflow-x: hidden !important;
   }
+  
+  &.active {
+    @include break(mobile) {
+      body[data-nav="account"] & {
+        height: 100%;
+      }
+    }
+  }
+  
   
   
   .subnav-container {
@@ -559,17 +575,17 @@
     }
     &.filtered {
       .tier-3 {
-        display: none;
+        //display: none;
       }
       .app-nav.over {
         .tier-3 {
-          display: block;
+          //display: block;
         }
       }
     }
   }
   .account-nav-show &, body[data-nav="search"] &, body[data-nav="account"] & {
-    .subnav-container, .tier-2 {
+    .subnav-container, .tier-2, .tier-3 {
       display: none;
     }
   }
@@ -666,6 +682,7 @@
   
   @include break(mobile) {
     .account-tier {
+      margin-top: $desktop-nav-height; 
       .customers-login &,
       .customers-register &,
       .customers-account &,
@@ -679,6 +696,7 @@
     
     &.active {
       .account-tier {
+        margin-top: 0; 
         .customers-login &,
         .customers-register &,
         .customers-account &,
@@ -752,7 +770,7 @@
 .page-wishlist,
 .customers-addresses {
   #app-header {
-    position: absolute;
+    //position: absolute;
   }
   .mobile-app-utilities {
     @include borderBottom;

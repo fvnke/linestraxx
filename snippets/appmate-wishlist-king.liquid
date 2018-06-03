@@ -384,7 +384,7 @@ function initAppmate(Appmate){
 
 <script id="wishlist-button-product" data="product" type="text/x-template" app="wishlist-king">
 {% if product.in_wishlist %}
-  {% assign btn_text = 'In Wishlist' %}
+  {% assign btn_text = 'Added to Wishlist' %}
   {% assign btn_title = 'Remove from Wishlist' %}
   {% assign btn_action = 'wk-remove-product' %}
   {% assign btn_icon = 'wishlist-icon-filled' %}
@@ -408,7 +408,7 @@ function initAppmate(Appmate){
 
 <script id="wishlist-button-collection" data="product" type="text/x-template" app="wishlist-king">
 {% if product.in_wishlist %}
-  {% assign btn_text = 'In Wishlist' %}
+  {% assign btn_text = 'Added to Wishlist' %}
   {% assign btn_title = 'Remove from Wishlist' %}
   {% assign btn_action = 'wk-remove-product' %}
   {% assign btn_icon = 'wishlist-icon-filled' %}
@@ -438,12 +438,12 @@ function initAppmate(Appmate){
 
 {% assign add_class = '' %}
 {% if product.in_wishlist and wishlist.read_only == true %}
-  {% assign btn_text = 'In Wishlist' %}
+  {% assign btn_text = 'Added to Wishlist' %}
   {% assign btn_title = 'Remove from Wishlist' %}
   {% assign btn_action = 'wk-remove-product' %}
   {% assign btn_icon = 'wishlist-icon-filled' %}
 {% elsif product.in_wishlist and wishlist.read_only == false %}
-  {% assign btn_text = 'In Wishlist' %}
+  {% assign btn_text = 'Added to Wishlist' %}
   {% assign btn_title = 'Remove from Wishlist' %}
   {% assign btn_action = 'wk-remove-item' %}
   {% assign btn_icon = 'wishlist-icon-remove' %}
@@ -630,7 +630,10 @@ function initAppmate(Appmate){
 
 <script id="wishlist-collection-product-title" data="wishlist" type="text/x-template" app="wishlist-king">
 <div class="wk-product-title">
-  <a href="{{ product | variant_url }}" class="wk-variant-link" title="View product">{{ product.first_available_variant.sku }}<br>{{ product.title }}</a>
+  <a href="{{ product | variant_url }}" class="wk-variant-link" title="View product">
+    <span class="product-barcode product-barcode-wishlist">{{product.first_available_variant.sku}}</span>
+    <h3>{{ product.title }}</h3>
+  </a>
 </div>
 </script>
 

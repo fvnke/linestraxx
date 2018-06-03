@@ -2,17 +2,19 @@
 	<div class="wrapper wrapper-narrow">
 		<div class="account-inner">
 		
-			<div class="account-detail-header">
-				<!--<a class="return-link" href="/collections/all">{{ 'customer.account.return_to_store' | t }}</a>-->
-			  <h1>{{ 'customer.account.details' | t }}</h1>
-			</div>
+			
 		  
 			{% if customer.addresses_count > 0 %}		
 		    <div class="customer-address-wrap">
+          
+    			<div class="account-detail-header">
+    			  <h1>{{ 'customer.account.details' | t }}</h1>
+    			</div>
+
 					<div class="customer-address-block">
 						<div class="default-address">
               
-              {{ 'customer.addresses.default' | t }}:<br>
+              <!--{{ 'customer.addresses.default' | t }}:<br>-->
               {{ customer.default_address.first_name }} {{ customer.default_address.last_name }}<br>
 							{{ customer.default_address.address1 }}, {% if customer.default_address.address2 != "" %}
 				        {{ customer.default_address.address2 }}
@@ -41,10 +43,11 @@
             
 				   
 
-				    <p class="view-addresses"><a href="/account/addresses">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a></p>
 				    
 			    </div>
 				</div>
+		    <p class="view-addresses"><a href="/account/addresses">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a></p>
+        
 		  {% else %}
 			  <p class="view-addresses"><a href="/account/addresses">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a></p>
 		  {% endif %}

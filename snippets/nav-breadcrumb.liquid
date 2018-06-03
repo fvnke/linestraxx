@@ -9,6 +9,7 @@
 	    {% assign menu_index = forloop.index %}
 		  {% assign parent_link_active = false %}
 	    {% assign child_list_handle = link.title | handleize %}
+      
 	    {% assign break = false %}
 	    
       
@@ -37,11 +38,29 @@
           {% endcomment %}
         </li>
         {%- endif -%}
-      
-        
-	    {% else %}
 	      
-	    {% endif %}
+	    {%- endif -%}
+      
+      
+      {% assign child_list_handle_season = link.title | handleize | append: '-season' %}
+
+	    {%- if linklists[child_list_handle_season].links != blank -%}
+		    {%- for l in linklists[child_list_handle_season].links -%}
+		      {%- if l.active %}
+            {% assign parent = linklists[child_list_handle_season] %}
+            {% assign parent_title = parent.title | split: ' ' %}
+            {% assign sub_active = true %}
+            {% assign sub = l %}
+            <li>
+              <a href="{{ link.url }}" title="{{ link.title }}">{{ parent_title[0] }}</a>/<a href="{{ sub.url }}" class="active" title="{{ sub.title }}">{{ sub.title }}</a>
+            </li>
+          {%- endif -%}
+		    {%- endfor -%}
+        
+	      
+	    {%- endif -%}
+      
+      
 	  {% endfor %}
   
   

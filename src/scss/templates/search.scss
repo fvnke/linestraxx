@@ -55,6 +55,9 @@
     @include form-styles;
     //display: none;
     
+    input {
+      text-indent: 20px;
+    }
     
     .search-wrapper {
       @include gutter;
@@ -76,11 +79,11 @@
     
     .search-close {
       position: absolute;
-      right: 0;
+      left: 0;
       display: block;
       width: 12px;
       height: 12px;
-      bottom: 19px;
+      bottom: 21px;
       z-index: 2;
       svg {
         width: 100%;
@@ -120,7 +123,31 @@
   background: #fff;
   position: relative !important;
   top: 0 !important;
-  //top: 89px !important;
+  
+  @include break(mobile) {
+    ul.gallery-inner {
+      @include flex-wrap(wrap);
+      @include gutter-left(.5);
+      @include gutter-right(.5);
+      li.gallery-child {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+        width: 50% !important;
+        -webkit-box-flex: 0 0 50% !important;
+        -ms-flex: 0 0 50% !important;
+        flex: 0 0 50% !important;
+        a {
+          -webkit-box-flex: 0 0 100% !important;
+          -ms-flex: 0 0 100% !important;
+          flex: 0 0 100% !important;
+          width: auto !important;
+          @include gutter-left(.5);
+          @include gutter-right(.5);
+        }
+      }
+    }
+  }
+  
   
   .bc-sf-search-suggestion-popover {
     display: none !important;
@@ -138,6 +165,8 @@
     @include no-select;
     @include flex-wrap(wrap);
     text-align: left;
+    
+   
     
     &>div:first-child:not(.suggestion-list-wrapper) {
       @include gutter-top(1);
@@ -179,6 +208,8 @@
       @include overflow;
       font-weight: normal !important;
       b, strong {
+        @include aft-regular;
+        font-family: 'aft-mc-regular' !important;
         color: blue;
       }
     }
@@ -200,6 +231,7 @@
         padding-right: $gutter !important;
         @include break(mobile) {
           padding-right: $mobile-gutter !important;
+          @include largerMarginBottom;
         }
       }
       
@@ -225,10 +257,11 @@
       a {
         @include globalTextUC;
         @include link-underline;
-        //@include gutter-right(1);
         b {
           font-weight: normal !important;
           text-decoration: none;
+          @include aft-regular;
+          font-family: 'aft-mc-regular' !important;
           color: blue;
         }
       }

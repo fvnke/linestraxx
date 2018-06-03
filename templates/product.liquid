@@ -20,7 +20,7 @@
   }
 </style>
 
-<div itemscope itemtype="http://schema.org/Product" id="productPage">
+<div itemscope itemtype="http://schema.org/Product" id="productPage" data-module-init="product">
 
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
   <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
@@ -118,6 +118,8 @@
           <button type="submit" name="add" id="AddToCart" class="btn">
             <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
           </button>
+          <span class="error" style="display: none;"></span>
+          <a id="GoToBag" href="/cart" title="Go To Bag" style="display: none;">Go To Bag (<span class="cart-count-num"></span>)</a>
           
           {% if customer %}
           <!-- include 'wishlist-button-product' with '{{ product.id }}' -->

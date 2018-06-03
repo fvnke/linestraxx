@@ -83,9 +83,9 @@ var bcSfFilterTemplate = {
                                           '<img src="{{itemThumbUrl}}" alt="{{itemTitle}}" />' +
                                         '</div>' +
                                         '<div class="item-details mh-details">' +
-                                            '<span class="product-barcode">{{itemSku}}</span>' +
                                             '{{itemSaleLabel}}' +
                                             '{{itemSoldOutLabel}}' +
+                                            '<span class="product-barcode">{{itemSku}}</span>' +
                                             '<h3 class="product-title">{{itemTitle}}</h3>' +
                                             '<span class="product-price">{{itemPrice}}</span>' +
                                         '</div>' +
@@ -139,9 +139,9 @@ BCSfFilter.prototype.buildProductGridItem = function(data, index) {
     var str1 = sku.slice(0,2) + '-';
     var str2 = sku.slice(2, 3) + '-';
     var str3 = sku.slice(3,5) + '-';
-    var str4 = sku.slice(5,9) + '-';
-    var str5 = sku.slice(9,10) + '-';
-    var str6 = sku.slice(10, sku.length);
+    var str4 = sku.length > 9 ? sku.slice(5,9) + '-' : sku.slice(5,9);
+    var str5 = sku.length > 9 ? sku.slice(9,10) + '-' : '';
+    var str6 = sku.length > 9 ? sku.slice(10, sku.length) : '';
     var new_sku = str1 + str2 + str3 + str4 + str5 + str6;
  
     /*** End Prepare data ***/
@@ -352,7 +352,7 @@ BCSfFilter.prototype.buildFilterSorting = function() {
     }
   
   if("undefined" != typeof checkShopifyFormatMoney){
-  $m("<style type=\"text/css\">span.money{ display: none; }</style>").appendTo("head");
+  //$m("<style type=\"text/css\">span.money{ display: none; }</style>").appendTo("head");
   checkShopifyFormatMoney();
   }
 };

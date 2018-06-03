@@ -13,6 +13,10 @@
   font-family: 'aft-msc-regular', 'helvetica', sans-serif;
 }
 
+@mixin aft-mnc-regular {
+  font-family: 'aft-mnc-regular', 'helvetica', sans-serif;
+}
+
 @mixin aft-mwc-regular {
   font-family: 'aft-mwc-regular', 'helvetica', sans-serif;
 }
@@ -134,6 +138,23 @@
   }
 }
 
+@mixin borderRight {
+  &:after {
+    content: '';
+    -ms-transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -ms-transform:scale(0.5);
+    -webkit-transform:scale(0.5);
+    transform: scale(0.5);
+    width: 200%;
+    height: 200%;
+    top: 0;
+    display: block;
+    border-right: 1px solid black;
+  }
+}
+
 @mixin borderTop {
   &:before {
     padding-bottom: $gutter;
@@ -180,13 +201,14 @@
 	@include line-height($p-line-height); 
   -webkit-font-smoothing: antialiased;
   letter-spacing: .01rem;
+  text-transform: none;
 }
 
 @mixin overrideText {
   @include aft-regular;
   -webkit-font-smoothing: antialiased;
   letter-spacing: .01rem !important;
-  font-size: 14px !important;
+  font-size: 16px !important;
   line-height: 18px !important;
   @media screen and (min-width: 901px) {
     font-size: 16px !important;
@@ -199,7 +221,7 @@
   -webkit-font-smoothing: antialiased;
   letter-spacing: .06rem !important;
   text-transform: uppercase;
-  font-size: 14px !important;
+  font-size: 16px !important;
   line-height: 18px !important;
   @media screen and (min-width: 901px) {
     font-size: 16px !important;
@@ -262,6 +284,27 @@
   text-transform: uppercase;
   letter-spacing: .06rem;
 } 
+
+@mixin list-bullet {
+  list-style:none;
+  position: relative;
+  &:before {
+    content: '';
+    display: block;
+    background-color: #000;
+    width: 4px;
+    height: 4px;
+    top: .35rem; 
+    left:-$gutter;
+    position: absolute;
+    @include break(mobile) {
+      left: -$mobile-gutter;
+      width: .2rem;
+      height: .2rem;
+      top: .45rem;
+    }
+  }
+}
 
 @mixin horizontal-list {
   ul {
@@ -326,6 +369,7 @@
   height: $desktop-nav-height;
   width: 100vw;
   overflow-x: hidden;
+  overflow-y: hidden;
   //background-color: #646464;
   //overflow: hidden;
   position: absolute;
@@ -558,7 +602,8 @@ form {
     margin-top: .8rem;
     position: relative;
     @include globalTextUC;
-    &:not(.btn-container):not(.field-standalone):not(.textarea-wrap) {
+    //:not(.field-standalone)
+    &:not(.btn-container):not(.textarea-wrap):not(.btn-wrap) {
       @include borderBottom;
       &:after {
         margin-top: 0;
@@ -578,6 +623,9 @@ form {
       position: absolute;
       bottom: 0.25em;
       line-height: 1;
+      &.right-link {
+        bottom: 0;
+      }
       @include break(mobile) {
         bottom: 0.2em;
       }
@@ -682,6 +730,7 @@ form {
   text-overflow: ellipsis;
   display: block;
   overflow: hidden;
+  white-space: nowrap;
 }
  
 .error, .errors li, .subscribe-status {
@@ -704,7 +753,10 @@ form {
 .dummy-select li, button { @include no-select; }
 
 p {
-  @include gutter-bottom(.7);
+  @include gutter-bottom(1);
+  @include break(mobile){
+    @include gutter-bottom(1.5);
+  }
 }
 
 select {
@@ -718,7 +770,9 @@ select {
   width: 100%;
   //border: 1px solid #000;
   //padding: .5rem;
-  max-width:calc((#{$desktop-column * 2}) + #{$gutter});
+  //max-width:calc((#{$desktop-column * 2}) + #{$gutter});
+  @include two-cols; 
+  
   position: relative;
   display: block;
   text-align: center;
@@ -918,6 +972,9 @@ table {
   &.p-section {
     @include largerPaddingBottom;
     @include two-cols;
+    @include break(mobile){
+      width: auto;
+    }
     h3 {
       margin-bottom: .2em;
     }
@@ -974,10 +1031,21 @@ div, a, img {
 
 b, strong {
   font-weight: normal !important;
+  @include aft-mwc-regular;
 }
 
 a {
    outline: none !important;
+}
+
+em {
+  @include aft-msc-regular;
+  font-style: normal;
+  letter-spacing: .05em;
+}
+
+.condensed {
+  @include aft-mnc-regular;
 }
 
 .note {

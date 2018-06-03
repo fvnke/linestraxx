@@ -1,10 +1,32 @@
 .page-collaboration, body[class*="page-collaboration"] {
+  .page {
+    @include break(mobile){
+      padding-top: 0;
+    }
+  }
   .page-content {
     width: auto;
+    @include break(mobile){
+      width: 100%;
+      max-width: 100%;
+    }
     .product-collab-block {
       @include flexbox;
       flex-direction: column;
-      @include gutter-bottom(1);
+      @include gutter-bottom(3);
+      
+      .back-to-look {
+        display:none;
+        @include gutter-bottom(4);
+      }
+      
+      &.active {
+        @include break(mobile) {
+          .back-to-look {
+            display: block;
+          }
+        }
+      }
       
       ol {
         counter-reset: section;
@@ -12,7 +34,7 @@
           list-style:none;
           //margin-bottom: $v-padding * 2;
           .product-collab-content {
-            margin-left: 2rem;
+            @include gutter-left(4);
             @include gutter-bottom(2);
             a {
               @include gutter-top(1);
@@ -44,9 +66,45 @@
         @include flexbox;
         @include justify-content(space-between);
         @include break(mobile) {
-          margin-left: $mobile-gutter;
-          margin-right: $mobile-gutter;
+          //margin-left: $mobile-gutter;
+          //margin-right: $mobile-gutter;
         }
+        
+        .product-collab-controls {
+          @include globalTextUC;
+          @include horizontal-list;
+          @include break(mobile) {
+            @include gutter-top(1);
+            @include gutter-left(1);
+          }
+          .back {
+            display: none;
+            //@include break(mobile) { display: block; }
+          }
+          .shop-collaboration {
+            @include break(mobile) {
+              display: none !important;
+            }
+          }
+          li {
+            &:first-child {
+              margin-left: 0 !important;
+            }
+            button, a {
+              @include link-underline;
+            }
+            &.active {
+              button, a {
+                @include link-underline-active;
+              }
+            }
+            list-style: none !important;
+            &:before { display: none; }
+           
+          }
+        }
+        
+        
         .gallery {
           @include flexbox;
           white-space: unset;
@@ -64,11 +122,20 @@
           //visibility: hidden;
           @include break(mobile) {
             display: none;
+            @include flex-direction(column);
+          }
+          &.over {
+            ol li {
+              @include opacity(.3);
+              &.over {
+                @include opacity(1);
+              }
+            }
           }
           li {
             //display: none; 
           }
-          li.over {
+          li.over, li:hover {
             display: block;
             
             .counter { 
@@ -89,8 +156,13 @@
             margin-left: 0 !important;
           }
           .product-collab-content {
+            .product-collab-sku {
+              margin-bottom: .2em;
+              display: block;
+            }
             .product-collab-description {
               display: block;
+              @include gutter-top(1);
             }
             a {
               @include globalTextUC;
@@ -108,6 +180,15 @@
           position: relative;
           align-self: flex-start;
           cursor: pointer; 
+          @include break(mobile){
+            width: auto;
+            max-width: 100%;
+            @include gutter;
+          }
+          .product-collab-counter {
+            @include gutter-top(1);
+            display: block;
+          }
           &:hover, &.show_numbers {
             button {
               visibility: visible;
@@ -126,6 +207,11 @@
             border-radius: 10rem;
             width: 20px;
             height: 20px;
+            &:hover, &.over {
+              position: absolute !important;
+              @include circleBbutton(#000);
+              color: #000;
+            }
             @include break(mobile) {
               visibility: visible;
             }
@@ -195,6 +281,9 @@
           visibility: visible;
           @include break(mobile) {
             @include flexbox;
+            ol {
+              @include gutter;
+            }
           }
         }
         .product-collab-block-lower {
@@ -216,11 +305,30 @@
       }
       
       &.show-images {
+        @include break(mobile) {
+          .product-collab-upper {
+            margin-top: -5px;
+          }
+          
+          ol {
+            margin: 0 !important;
+            li:first-child { @include gutter-left(1); }
+            li:last-child { @include gutter-padding-right(1); }
+            li { @include flex(0); }
+          }
+        }
         .counter {
-          display: none;
+          display: block;
+          @include gutter-bottom(.8);
+          @include break(mobile) {
+            margin-top: 2px;
+          }
         }
         
         .product-collab-upper {
+          
+          
+          
           
           .product-collab-block-references {
             @include three-cols;
@@ -231,12 +339,16 @@
               }
             }
             
-            li {
+            ol li {
               float: left;
               @include gutter-right(1);
+              @include flex-direction(column);
               @include break(mobile) {
                 display: inline-block;
                 float: none;
+              }
+              &:hover, &.over {
+                @include flexbox;
               }
               
               &:before {
@@ -265,4 +377,11 @@
       
     }
   }
+}
+
+.shop-collaboration {
+  @include globalTextUC;
+  @include link-underline;
+  @include gutter-right(1);
+  float: right;
 }

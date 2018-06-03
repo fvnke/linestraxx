@@ -1,7 +1,7 @@
 <div class="toggle-filter-container">
   <ul>
     <li><button class="toggle-filter">Filter <span class="filter-count">(<span class="filter-count-num"></span>)</span></button></li>
-    <li class="filter-clear-all" style="display:none;"><a href="javascript:;" class="bc-sf-filter-clear-all" onclick="clearAllFilterOptions(event)">Clear All</a></li>
+    <li class="filter-clear-all" style="display:none;"><a href="javascript:;" class="bc-sf-filter-clear-all" onclick="clearAllFilterOptions(event)">Clear</a></li>
   </ul>
 </div>
 <script type="text/javascript">
@@ -16,6 +16,7 @@
       e.stopPropagation();
       console.log('click')
       $(this).toggleClass('open');
+      //$('body').toggleClass('filter-open');
       if($(this).hasClass('open')){
         $('#bc-sf-filter-tree').removeClass('init-hide').show();
       } else {

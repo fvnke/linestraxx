@@ -44,13 +44,22 @@ module.exports = function( el ) {
     $img.on('click', function(e){
       //e.preventDefault();
       //e.stopPropagation();
-      $('#related-products .grid-item.related').removeClass('active');
+      //$('#related-products .grid-item.related').removeClass('active');
       //$el.addClass('open');
-      $(this).closest('.product-item').addClass('active');
+      //$(this).closest('.product-item').toggleClass('active');
       
+      if($(this).closest('.product-item').hasClass('active')){
+        $('#related-products .grid-item.related').removeClass('active selected');
+      } else {
+        $('#related-products .grid-item.related').removeClass('active');
+        $(this).closest('.product-item').addClass('active')
+      }
+      
+      /*
       if($(this).closest('.product-item').hasClass('selected')){
         $(this).closest('.product-item').removeClass('selected');
       }
+      */
       
       //console.log('cart related image click');
       
@@ -63,8 +72,9 @@ module.exports = function( el ) {
 			if ($(this).find('label').text() == 'Color' || $(this).find('label').text() == 'Size') {
 				
 				var $label = $select.find('label');
+        var select_length = $select.find('option').length > 5 ? true : false;
 				//console.log($label)
-				$select.append('<ul class="dummy-select option-'+$label.text()+'"></ul>');
+				$select.append('<ul class="dummy-select dummy-split-'+ select_length +' option-'+$label.text()+'"></ul>');
 				$dummy = $select.find('.dummy-select');
 				
 				var $options = $select.find('option');

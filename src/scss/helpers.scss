@@ -211,9 +211,19 @@
   }
   @include break(mobile) {
     width: 100%;
-    //max-width: 459px;
+    max-width: 459px;
   }
-  
+}
+
+@mixin full-cols {
+  width: 100%;
+  p, li {
+    max-width: 100%;
+  }
+  @include break(mobile) {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 @mixin three-cols {

@@ -4,7 +4,7 @@
 
 .social-sharing {
   a {
-    @include globalTextUC;
+    @include globalText;
     float: left;
     clear: left;
   }

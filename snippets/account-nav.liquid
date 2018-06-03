@@ -4,7 +4,6 @@
   {% if shop.customer_accounts_enabled %}
     {% if customer %}
       <li data-module="login" class="desktop-only account-module-trigger {% if template contains 'logged' or template contains 'customers' %}over active {% endif %}"><a href="/account">{{ customer.email }}</a></li>
-      <li class="desktop-only">{{ 'layout.customer.log_out' | t | customer_logout_link }}</li>
     {% else %}
       <li data-module="login" class="desktop-only account-module-trigger over {% if template contains 'login' %}active {% endif %}"><a href="/account/login">Login</a></li>
       <li data-module="register" class="desktop-only account-module-trigger {% if template contains 'register' %}active {% endif %}"><a href="/account/register">Register</a></li>
@@ -34,6 +33,10 @@
   
   {% endfor %}
   
+  {% if customer %}
+  <li class="desktop-only">{{ 'layout.customer.log_out' | t | customer_logout_link }}</li>
+  {% endif %}
+  
 </ul>
 </div>
 
@@ -57,6 +60,27 @@
   </div>
   <div class="account-module" data-module="wishlist" {% if template contains 'wishlist' %}style="display:block;"{% endif %}>
     <!-- include 'wishlist-collection' -->
+    <script type="text/javascript">
+      function formatSku(s){
+        var sku = s;
+        var str1 = sku.slice(0,2) + '-';
+        var str2 = sku.slice(2, 3) + '-';
+        var str3 = sku.slice(3,5) + '-';
+        var str4 = sku.length > 9 ? sku.slice(5,9) + '-' : sku.slice(5,9);
+        var str5 = sku.length > 9 ? sku.slice(9,10) + '-' : '';
+        var str6 = sku.length > 9 ? sku.slice(10, sku.length) : '';
+        var new_sku = str1 + str2 + str3 + str4 + str5 + str6;
+        return new_sku;
+      }
+      $(document).ready(function(){
+        $('.product-barcode-wishlist').each(function(){
+          var sku = $(this).text();
+          console.log(sku)
+          $(this).text( formatSku(sku) );
+        })
+      })
+      
+    </script>
   </div>
   <div class="account-module" data-module="purchase-history" {% if template contains 'purchase' %}style="display:block;"{% endif %}>
     {% include 'purchase-history' %}

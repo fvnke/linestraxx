@@ -20,10 +20,89 @@
   }
 }
 
+.customer-address-wrap {
+  @include flexbox;
+  @include borderBottom;
+  position: relative;
+  @include gutter-padding-bottom(1);
+  &:after {
+    position: absolute;
+    bottom: 0;
+  }
+  .account-detail-header {
+    min-width: 10rem;
+    //@include gutter-right(4);
+  }
+}
+
+#AddressWrap {
+  position: relative;
+  @include flexbox;
+  @include flex-direction(column);
+  .customer-address-wrap {
+    position: relative;
+    @include gutter-padding-top(1);
+    @include gutter-padding-bottom(1);
+    @include break(mobile) {
+      @include flex-wrap(wrap);
+     
+    }
+    &:first-child {
+       @include gutter-padding-top(0);
+       .address-edit-btns {
+         @include gutter-top(0);
+         @include break(mobile) {
+           @include gutter-top(2);
+         }
+       }
+      //@include gutter-padding-bottom(0);
+    }
+  }
+}
+
+.address-edit-btns {
+  position: absolute;
+  @include break(mobile) {
+    position: relative;
+    width: 100%;
+    @include gutter-top(2);
+  }
+  right: 0;
+  top: 0;
+  @include gutter-top(1);
+  li {
+    display: inline-block;
+    margin-left: $list-spacing;
+    @include break(mobile) {
+      
+     margin-left: 0;
+     margin-right: $list-spacing; 
+    }
+  }
+}
+
+.address-btns {
+  @include flexbox;
+  @include break(mobile) {
+    @include flex-direction(column);
+    .btn {
+      @include gutter-bottom(1);
+    }
+  }
+  a, button, input {
+    @include gutter-right(1);
+  }
+  //@include btn;
+}
+
 .login-box-header {
   p {
     text-transform: none;
   }
+}
+
+.view-addresses {
+  @include gutter-padding-top(1);
 }
 
 .customer-address-block {
@@ -33,7 +112,7 @@
 }
 
 .default-address {
-  @include borderBottom;
+  
 }
 
 .edit-address-wrap {

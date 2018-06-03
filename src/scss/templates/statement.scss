@@ -1,0 +1,124 @@
+.page-statement {
+  //background-color: #b2b2b2;
+  .page {
+    @include gutter-padding-top(5.5);
+    @include gutter-padding-bottom(5.5);
+    @include break(mobile) {
+      @include gutter-padding-bottom(10);
+    }
+  }
+  .main-content {
+    //background-color: #b2b2b2;
+  }
+}
+
+.page {
+  .gallery-child {
+    img {
+      width: 40vw;
+    }
+    @include break(mobile) {
+      img {
+        width: 80vw;
+      }
+    }
+  }
+  
+  td#countdown, td#countdown-mobile {
+      text-transform: none !important;
+  }
+  
+  .statement-content {
+    @include gutter;
+    @include gutter-bottom(10);
+    
+    #desktop-statement {
+      @include break(mobile) {
+        display: none;
+      }
+    }
+    
+    #mobile-statement {
+      display: none;
+      @include break(mobile) {
+        display: table;
+        @include gutter-top(6);
+      }
+    }
+    
+    
+    
+    .rte {
+      @include full-cols;
+      h1 {
+        margin-bottom: $gutter * 5;
+        @include break(mobile) {
+          margin-bottom: $mobile-gutter * 4.7;
+        }
+      }
+      
+      p + table {
+        @include gutter-top(6);
+        
+      }
+      
+      *:not(table):not(td):not(th):not(tr) {
+        //@include two-cols;
+        @include full-cols;
+      }
+      table th {
+        width: 50%;
+      }
+      a {
+        position: relative;
+        z-index: 44;
+      }
+      table tbody>tr>td {
+          padding: .3rem .5rem .8rem .3rem;
+          
+          &.parent-td {
+            padding: 0;
+            td:first-child {
+              width: 30%;
+            }
+            td:last-child {
+              width: 70%; 
+              &:after {
+                border-left-style: dashed;
+              }
+            }
+          }
+      }
+      .parent-td {
+        table {
+          height: 100%;
+        }
+      }
+       h2 {
+        @include gutter-padding-top(2);
+        margin-bottom: 1em;
+      }
+      
+      table + p {
+        margin-top: 1em;
+      }
+      
+      blockquote {
+        max-width: 100%;
+      }
+      
+      table {
+        width: 100%;
+        td {
+          width: 25%;
+          @include globalTextUC;
+        }
+        &>td {
+          &:nth-child(2) {
+            padding: .3rem .5rem .8rem .3rem;
+          }
+        }
+      }
+    }
+  }
+}

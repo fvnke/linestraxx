@@ -2,7 +2,6 @@ div.page {
   
   padding-top: $gutter * 5;
   text-align: left;
-  
   @include break(mobile) {
     padding-top: $mobile-gutter * 2;
   }
@@ -18,6 +17,12 @@ div.page {
   
   
 
+}
+
+.template-page.header-active {
+  .main-content, #app-footer, #app-footer .overflow-container {
+    background-color: #f2f2f2;
+  }
 }
 
 .page-content {
@@ -40,15 +45,119 @@ div.page {
   }
   
   .rte {
+    h1 {
+      margin-bottom: $gutter * 5;
+      @include break(mobile) {
+        margin-bottom: $mobile-gutter * 2;
+      }
+    } 
+    h2 { 
+      @include globalTextUC;
+    }
     h3 {
       margin-top: 2.4em;
     }
+    /*
+    * 
+    *
+    */
+    
     ol {
-      @include gutter-left(1);
-      @include gutter-bottom(1);
-      li {
-        margin-left: .2em;
+      list-style-type: none;
+      counter-increment: main;
+      counter-reset: item;
+      margin: 0;
+      padding: 0;
+      ol {
+        counter-increment: main - 1;
       }
+      li {
+        
+      }
+    }
+    
+    
+
+    ol > li {
+      display: table;
+      counter-increment: item;
+      margin-bottom: 0.6em;
+
+      &:before {
+        content: counter(main) ".";
+        display: table-cell;
+        padding-right: 0.6em;
+      }
+    }
+
+    ol > ol > li {
+      //margin: 0;
+      @include gutter-bottom(1);
+      &:before {
+        content: counter(main) "." counter(item) " ";
+      }
+    }
+    
+    ol {
+      //counter-increment: section;
+      //counter-increment: mainsection;
+      @include gutter-left(3);
+      @include gutter-bottom(1);
+      @include gutter-top(2); 
+      li {
+ 
+        list-style: none;
+        &:before {
+          position: absolute;
+          left: 0;
+          @include gutter-left(1);
+          //content: counter(mainsection) ".";
+        }
+      }
+      
+      b, strong {
+        @include globalTextUC;
+      }
+      
+      &>li {
+        @include globalTextUC; 
+        p {
+          @include globalText;
+          @include gutter-bottom(0);
+        }
+      }
+      
+      ol, ul {
+        @include gutter-top(1);
+        @include gutter-bottom(0);
+        margin-left: 0;
+        list-style: none;
+        li {
+          @include globalText;
+        }
+      }
+
+      ol {
+        
+        li {
+          //counter-increment: section;
+          //counter-increment: subsection;
+          &:before {
+            position: absolute;
+            left: 0;
+            @include gutter-left(1);
+            //content: counter(section) "." counter(subsection) " ";
+          }
+        }
+        ul {
+          //counter-reset: subsection;
+          li {
+            @include list-bullet;
+            @include gutter-padding-left(2);
+          }
+        }
+      }
+      
       &.gallery {
         @include gutter-left(0);
         @include gutter-bottom(0);
@@ -65,24 +174,7 @@ div.page {
     @include gutter-left(1);
     @include gutter-bottom(1);
     li {
-      list-style:none;
-      position: relative;
-      &:before {
-        content: '';
-        display: block;
-        background-color: #000;
-        width: 4px;
-        height: 4px;
-        top: .35rem; 
-        left:-$gutter;
-        position: absolute;
-        @include break(mobile) {
-          left: -$mobile-gutter;
-          width: .2rem;
-          height: .2rem;
-          top: .45rem;
-        }
-      }
+      @include list-bullet;
     }
   }
 }

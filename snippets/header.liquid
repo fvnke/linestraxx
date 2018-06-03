@@ -98,6 +98,8 @@ class="active"{%- endif -%}>
 		    {% assign menu_index = forloop.index %}
 			  {% assign parent_link_active = false %}
 		    {% assign child_list_handle = link.title | handleize %}
+        {% assign child_list_season_handle = link.title | handleize | append: '-season' %}
+        {% assign page_handle = page.handle | split: '-' %}
 		    {% assign break = false %}
 		    
 		    {% if linklists[child_list_handle].links != blank %}
@@ -107,10 +109,24 @@ class="active"{%- endif -%}>
 			      {% endif %}
 			    {% endfor %}
 			    
-		      <li class="has-dropdown {% if link.active or parent_link_active  or current_tags.first == link.title  %}active{% endif %}" data-mega-menu="{{ link.handle }}" data-sub="{{ link.handle }}" aria-haspopup="true">
+		      <li class="has-dropdown {% if link.active or parent_link_active or current_tags.first == link.title or page_handle[0] == link.handle %}active{% endif %}" data-mega-menu="{{ link.handle }}" data-sub="{{ link.handle }}" aria-haspopup="true">
 		        <a class="top-link" href="{{ link.url }}">{{ link.title }}</a>
             <ul class="" id="subnav-{{ link.handle }}">
               {% for childlink in linklists[child_list_handle].links %}
+    	          {% if break == true %}
+    							{% assign break = false %}
+                  </ul>
+    					    <ul>
+    						{% endif %}
+    						{% if childlink.handle == 'break' %}
+                  {% assign break = true %}
+                  {% continue%}
+    						{% endif %}
+                <li class="{{ childlink.handle }} {% if childlink.active %}active{% endif %}">
+                  <a href="{{ childlink.url }}">{{ childlink.title | escape }}</a>
+                </li>
+              {% endfor %}
+              {% for childlink in linklists[child_list_season_handle].links %}
     	          {% if break == true %}
     							{% assign break = false %}
                   </ul>
@@ -134,15 +150,7 @@ class="active"{%- endif -%}>
 		  {% endfor %}
 		</ul>
     
-    {% if linklists.submenu-season.size > 0 %}
-    <ul class="nav-container">
-      <li class="{% if link.active %}active{% endif %}">
-        {% for link in linklists.submenu-season.links %}
-          <a href="{{ link.url }}">{{ link.title }}</a>
-        {% endfor %}
-      </li>
-    </ul>
-    {% endif %}
+    
     
     {% include 'nav-utilities-mobile' %}
     {%- if template contains 'customer' or
@@ -165,6 +173,7 @@ class="active"{%- endif -%}>
 				  {% assign parent_link_active = false %}
 			    {% assign child_list_handle = link.title | handleize %}
 			    {% assign break = false %}
+          {% assign page_handle = page.handle | split: '-' %}
 			    
 			    {% if linklists[child_list_handle].links != blank %}
 				    {% for l in linklists[child_list_handle].links %}
@@ -173,7 +182,7 @@ class="active"{%- endif -%}>
 				      {% endif %}
 				    {% endfor %}
 				    
-			      <li class="has-dropdown {% if link.active or parent_link_active  or current_tags.first == link.title  %}active{% endif %}" data-main="{{ link.handle }}" aria-haspopup="true" data-page="{{ link.handle }}">
+			      <li class="has-dropdown {% if link.active or parent_link_active  or current_tags.first == link.title or page_handle[0] == link.handle %}active{% endif %}" data-main="{{ link.handle }}" aria-haspopup="true" data-page="{{ link.handle }}">
 			        <a href="{{ link.url }}">{{ link.title }}</a>
 			      </li>
 			    {% else %}
@@ -235,7 +244,36 @@ class="active"{%- endif -%}>
         {% endif %}
       {% endfor %}
       
-
+      
+      {% if linklists.woman-season.size > 0 %}
+      {% assign tier_3_active = false %}
+      {% for link in linklists.woman-season.links %}
+        {% if link.active %}{% assign tier_3_active = true %}{% endif %}
+      {% endfor %}
+      <div data-sub="woman" class="overflow-container tier-3 subnav-container nav-container last-tier ">
+        <ul class="subnav">
+          {% for link in linklists.woman-season.links %}
+          <li class="{% if link.active %}active{% endif %}"><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      
+      {% if linklists.man-season.size > 0 %}
+      {% assign tier_3_active = false %}
+      {% for link in linklists.man-season.links %}
+        {% if link.active %}{% assign tier_3_active = true %}{% endif %}
+      {% endfor %}
+      <div data-sub="man" class="overflow-container tier-3 subnav-container nav-container last-tier ">
+        <ul class="subnav">
+          {% for link in linklists.man-season.links %}
+          <li class="{% if link.active %}active{% endif %}"><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      
+      {% comment %}
       {% if linklists.submenu-season.size > 0 %}
       {% assign tier_3_active = false %}
       {% for link in linklists.submenu-season.links %}
@@ -249,7 +287,7 @@ class="active"{%- endif -%}>
         </ul>
       </div>
       {% endif %}
-
+      {% endcomment %}
 
       
       
@@ -269,10 +307,10 @@ class="active"{%- endif -%}>
 	      {% endif %}
 	    {% endif %}
       <li class="currency-switcher-container"></li>
-	    <li class="{% if template contains 'cart' %}active {% endif %}"><a href="/cart" class="icon icon-cart {% if cart.item_count < 1 %}no-items{% endif %}" id="cart-trigger"><span class="cart-count">Bag ({{ cart.item_count }})</span></a></li>
+	    <li class="{% if template contains 'cart' %}active {% endif %}"><a href="/cart" class="icon icon-cart {% if cart.item_count < 1 %}no-items{% endif %}" id="cart-trigger"><span class="cart-count">Bag (<span class="cart-count-num">{{ cart.item_count }}</span>)</span></a></li>
 	  </ul>  
     <ul class="mobile-utilities">
-      <li class="mobile-cart {% if template contains 'cart' %}active {% endif %}"><a href="/cart" class="icon icon-cart {% if cart.item_count < 1 %}no-items{% endif %}"><svg class="icon-bag"><use xlink:href="#icon-bag{% if template contains 'cart' %}-full{% endif %}"></use></svg><span class="cart-count">{{ cart.item_count }}</span></a></li>
+      <li class="mobile-cart {% if template contains 'cart' %}active {% endif %}"><a href="/cart" class="icon icon-cart {% if cart.item_count < 1 %}no-items{% endif %}"><svg class="icon-bag"><use xlink:href="#icon-bag{% if template contains 'cart' %}-full{% endif %}"></use></svg><span class="cart-count"><span class="cart-count-num">{{ cart.item_count }}</span></span></a></li>
       <li class="utility-trigger-j" data-utility="app-search"><a href="#"><svg class="icon-search"><use xlink:href="#icon-search"></use></svg></a></li>
     </ul>
 	</div>

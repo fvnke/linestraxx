@@ -1,6 +1,21 @@
 <script type="text/javascript">
   window.money_format = "{{ shop.money_without_currency_format }}";
   console.log(window.money_format);
+  
+  //${variants[0].sku} 
+  function formatSku(s){
+    var sku = s;
+    var str1 = sku.slice(0,2) + '-';
+    var str2 = sku.slice(2, 3) + '-';
+    var str3 = sku.slice(3,5) + '-';
+    var str4 = sku.length > 9 ? sku.slice(5,9) + '-' : sku.slice(5,9);
+    var str5 = sku.length > 9 ? sku.slice(9,10) + '-' : '';
+    var str6 = sku.length > 9 ? sku.slice(10, sku.length) : '';
+    var new_sku = str1 + str2 + str3 + str4 + str5 + str6;
+    return new_sku;
+  }
+
+
 </script>
 
 
@@ -23,7 +38,7 @@
     </div>
     <div class="details">
       <a href="${url}">
-      <h3>${variants[0].sku}</h3>
+      <h3 class="product-barcode-recently">{{html formatSku(variants[0].sku)}} </h3>
       <h3 class="title">${title}</h3>
       {{if price_varies}}{{/if}}{{html Shopify.formatMoney(price_min, window.money_format)}}
       </a>
@@ -35,5 +50,6 @@
 
 <script>
 Shopify.Products.showRecentlyViewed( { howManyToShow:15 } );
+
 </script>
 

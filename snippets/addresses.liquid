@@ -7,10 +7,9 @@
 			
 			  <div class="account-detail-header">
 				  
-			    <h1>{{ 'customer.account.title' | t }}</h1>
-			    <a href="#" onclick="Shopify.CustomerAddress.toggleNewForm(); return false;">{{ 'customer.addresses.add_new' | t }}</a><br>
-          <a class="return-link" href="/account">{{ 'customer.account.return' | t }}</a>
-          <br><br>
+			    <!--<h1>{{ 'customer.account.title' | t }}</h1>-->
+			    
+
 			  </div>
 				
 			  {% form 'customer_address', customer.new_address %}
@@ -19,88 +18,97 @@
 			        {{ form.errors | default_errors }}
 			
 			        <div class="field-wrap half">
+                <label class="label">{{ 'customer.addresses.first_name' | t }}</label>
 			          <input type="text" id="AddressFirstNameNew" class="address_form" name="address[first_name]" value="{{form.first_name}}" autocapitalize="words" placeholder="{{ 'customer.addresses.first_name' | t }}">
 			        </div>
 			
 			        <div class="field-wrap half last">
+                <label class="label">{{ 'customer.addresses.last_name' | t }}</label>
 			          <input type="text" id="AddressLastNameNew" class="address_form" name="address[last_name]" value="{{form.last_name}}" autocapitalize="words" placeholder="{{ 'customer.addresses.last_name' | t }}">
 			        </div>
 			
 							<div class="field-wrap">
+                <label class="label">{{ 'customer.addresses.company' | t }}</label>
 				        <input type="text" id="AddressCompanyNew" class="address_form" name="address[company]" value="{{form.company}}" autocapitalize="words" placeholder="{{ 'customer.addresses.company' | t }}">
 							</div>
 							
 							<div class="field-wrap half">
+                <label class="label">{{ 'customer.addresses.address1' | t }}</label>
 				        <input type="text" id="AddressAddress1New" class="address_form" name="address[address1]" value="{{form.address1}}" autocapitalize="words" placeholder="{{ 'customer.addresses.address1' | t }}">
 							</div>
 							
 							<div class="field-wrap half last">
+                <label class="label">{{ 'customer.addresses.address2' | t }}</label>
 				        <input type="text" id="AddressAddress2New" class="address_form" name="address[address2]" value="{{form.address2}}" autocapitalize="words" placeholder="{{ 'customer.addresses.address2' | t }}">
 							</div>
 			
 							<div class="field-wrap half">
+                <label class="label">{{ 'customer.addresses.city' | t }}</label>
 			          <input type="text" id="AddressCityNew" class="address_form" name="address[city]" value="{{form.city}}" autocapitalize="words" placeholder="{{ 'customer.addresses.city' | t }}">
 							</div>
 			
 							<div class="field-wrap half last">
+                <label class="label">Country</label>
 			          <select id="AddressCountryNew" name="address[country]" data-default="{{form.country}}">{{ country_option_tags }}</select>
 							</div>
 							
 			        <div class="field-wrap" id="AddressProvinceContainerNew" style="display:none">
+                <label class="label">Province</label>
 			          <select id="AddressProvinceNew" class="address_form" name="address[province]" data-default="{{form.province}}"></select>
 			        </div>
 			
 							<div class="field-wrap half">
+                <label class="label">{{ 'customer.addresses.zip' | t }}</label>
 			          <input type="text" id="AddressZipNew" class="address_form" name="address[zip]" value="{{form.zip}}" autocapitalize="characters" placeholder="{{ 'customer.addresses.zip' | t }}">
 							</div>
 			
 							<div class="field-wrap half last">
+                <label class="label">{{ 'customer.addresses.phone' | t }}</label>
 			          <input type="tel" id="AddressPhoneNew" class="address_form" name="address[phone]" value="{{form.phone}}" placeholder="{{ 'customer.addresses.phone' | t }}">
 							</div>
 			
-			        <div class="account-note">
+			        <div class="account-note field-wrap field-break field-checkbox field-standalone">
 			          {{ form.set_as_default_checkbox }}
-			          <label for="address_default_address_new" class="inline">{{ 'customer.addresses.set_default' | t }}</label>
+			          {{ 'customer.addresses.set_default' | t }}
 			        </div>
 			
-			        <div class="field-wrap btn-wrap">
-				        <input type="submit" class="btn solid lg-btn" value="{{ 'customer.addresses.add' | t }}">
-				        <span>or <a href="#" onclick="Shopify.CustomerAddress.toggleNewForm(); return false;">{{ 'customer.addresses.cancel' | t }}</a></span>
+			        <div class="field-wrap btn-wrap address-btns">
+                
+				        <button type="submit" class="btn solid lg-btn">{{ 'customer.addresses.add' | t }}</button>
+				        <button class="btn" href="#" onclick="Shopify.CustomerAddress.toggleNewForm(); return false;">{{ 'customer.addresses.cancel' | t }}</button>
 			        </div>
 			        
 			    </div>
 			  {% endform %}
 			
-				<div class="customer-address-wrap">
+				<div id="AddressWrap">
 				  {% for address in customer.addresses %}
-						<div class="customer-address-block">
-							
-					    <div class="default-address"> 
-					      {% if address == customer.default_address %}
-						      <div>{{ address.street }}</div>
-						      ({{ 'customer.addresses.default' | t }})
-						    {% else %}
-							    {{ address.street }}
-					      {% endif %}
-					    </div>
-					    
-					    <p>
-						    {{ address.first_name | capitalize }} {{address.last_name | capitalize }}<br>
-					      {% if address.company %}{{ address.company }}<br>{% endif %}
-					      {% if address.street  %}{{ address.street }}<br>{% endif %}
-					      {{ address.city | capitalize }}
-					      {% if address.province_code %}
-					        {{ address.province_code | upcase }}
-					      {% endif %}
-					      {{ address.zip | upcase }}<br>
-					      {{ address.country }}<br>
-					      {{ address.phone }}
-					    </p>
-					    <ul>
-					      <li>{{ 'customer.addresses.edit' | t | edit_customer_address_link: address.id }}</li>
-					      <li>{{ 'customer.addresses.delete' | t | delete_customer_address_link: address.id }}</li>
-					    </ul>
-					  </div>
+            <div class="customer-address-wrap">
+      			  <div class="account-detail-header">
+                {% if address == customer.default_address %}
+      			    <h1>{{ 'customer.addresses.default' | t }}</h1>
+                {% endif %}
+      			  </div>
+          
+          
+  						<div class="customer-address-block">
+  						    {{ address.first_name | capitalize }} {{address.last_name | capitalize }}<br>
+  					      {% if address.company %}{{ address.company }}<br>{% endif %}
+  					      {% if address.street  %}{{ address.street }}<br>{% endif %}
+  					      {{ address.city | capitalize }}
+  					      {% if address.province_code %}
+  					        {{ address.province_code | upcase }}
+  					      {% endif %}
+  					      {{ address.zip | upcase }}<br>
+  					      {{ address.country }}<br>
+  					      {{ address.phone }}
+  					  </div>
+            
+  				    <ul class="address-edit-btns">
+  				      <li class="address-btn">{{ 'customer.addresses.edit' | t | edit_customer_address_link: address.id }}</li>
+  				      <li class="address-btn">{{ 'customer.addresses.delete' | t | delete_customer_address_link: address.id }}</li>
+  				    </ul>
+            </div>
 				  {% endfor %}
 			  </div> 
 				
@@ -165,11 +173,13 @@
 			            {{ 'customer.addresses.set_default' | t }}
 			          </div>
 							  
-							  <div class="field-wrap btn-wrap btn-container">
-				          <input type="submit" class="btn" value="{{ 'customer.addresses.update' | t }}">
-							  </div>
-                <br>
-                <span>or <a href="#" onclick="Shopify.CustomerAddress.toggleForm({{form.id}}); return false;">{{ 'customer.addresses.cancel' | t }}</a></span>
+                
+  			        <div class="field-wrap btn-wrap address-btns">
+  				        <button type="submit" class="btn solid lg-btn">{{ 'customer.addresses.update' | t }}</button>
+                  <button class="btn" href="#" onclick="Shopify.CustomerAddress.toggleForm({{form.id}}); return false;">{{ 'customer.addresses.cancel' | t }}</button>
+  			        </div>
+                
+
 			  
 			        </div>
 			    {% endform %}
@@ -181,7 +191,11 @@
 				    {% include 'pagination' %}
 				  </div>
 			  {% endif %}
-
+        
+        <div id="AddNewAddress" class="address-btns">
+		      <a class="btn" href="#" onclick="Shopify.CustomerAddress.toggleNewForm(); return false;">{{ 'customer.addresses.add_new' | t }}</a>
+          <a class="return-link btn" href="/account">{{ 'customer.account.return' | t }}</a>
+       </div>
 		</div>
 	</div>
 </div>
@@ -198,18 +212,30 @@
       hideElement: 'AddressProvinceContainer_{{address.id}}'}
     );
   {% endfor %}
-
+  
+  $(document).ready(function(){
+    if( $('.errors').length > 0 ) {
+      $('#AddressWrap').hide();
+      $('#AddNewAddress').hide();
+    }
+  })
   // Modified contents of customer_area.js (global asset)
   Shopify.CustomerAddress = {
     toggleForm: function(id) {
       var editEl = document.getElementById('EditAddress_'+id);
+      var el_btns = document.getElementById('AddNewAddress');
       editEl.style.display = editEl.style.display == 'none' ? '' : 'none';
+      el_btns.style.display = el_btns.style.display == 'none' ? '' : 'none';
       return false;
     },
 
     toggleNewForm: function() {
       var el = document.getElementById('AddAddress');
+      var el_wrap = document.getElementById('AddressWrap');
+      var el_btns = document.getElementById('AddNewAddress');
       el.style.display = el.style.display == 'none' ? '' : 'none';
+      el_wrap.style.display = el_wrap.style.display == 'none' ? '' : 'none';
+      el_btns.style.display = el_btns.style.display == 'none' ? '' : 'none';
       return false;
     },
 

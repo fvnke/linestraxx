@@ -1,0 +1,214 @@
+{% assign product = section.settings['featured_product'] %}
+{% assign featured_product = all_products[product] %}
+{% assign collab_image = section.settings['collab_image'] %}
+{% assign collection = section.settings['collab_collection'] %}
+{% assign featured_collection = collections[collection] %}
+
+
+<div class="section">
+  
+  {% for block in section.blocks %}
+    <div class="product-collab-block">   
+      <div class="product-collab-upper">
+        <div class="product-collab-block-references">
+          <ol>
+            {% if block.settings.product_one != '' %}
+            {% assign product = all_products[block.settings.product_one] %}
+            <li data-id="1"><span class="counter"><span>1</span></span><div class="product-collab-content"><span class="product-collab-description">{{ product.description }}</span><a href="{{ product.url}}">View Item</a></div>{% include 'product-item' with item_width %}</li>
+            {% endif %}
+            {% if block.settings.product_two != '' %}
+            {% assign product = all_products[block.settings.product_two] %}
+            <li data-id="2"><span class="counter"><span>2</span></span><div class="product-collab-content"><span class="product-collab-description">{{ product.description }}</span><a href="{{ product.url}}">View Item</a></div>{% include 'product-item' with item_width %}</li>
+            {% endif %}
+            {% if block.settings.product_three != '' %}
+            {% assign product = all_products[block.settings.product_three] %}
+            <li data-id="3"><span class="counter"><span>3</span></span><div class="product-collab-content"><span class="product-collab-description">{{ product.description }}</span><a href="{{ product.url}}">View Item</a></div>{% include 'product-item' with item_width %}</li>
+            {% endif %}
+            {% if block.settings.product_four != '' %}
+            {% assign product = all_products[block.settings.product_four] %}
+            <li data-id="4"><span class="counter"><span>4</span></span><div class="product-collab-content"><span class="product-collab-description">{{ product.description }}</span><a href="{{ product.url}}">View Item</a></div>{% include 'product-item' with item_width %}</li>
+            {% endif %}
+          </ol>
+        </div>
+        <div class="product-collab-image {% if section.settings['show_numbers'] == true %}show_numbers{% endif %}">
+          {% if block.settings.product_one != '' %}
+          <a data-id="1" href="{{ all_products[block.settings.product_one].url }}" style="left:{{ block.settings.product_one_x }}%; top:{{ block.settings.product_one_y }}%; ">1</a>
+          {% endif %}
+          {% if block.settings.product_two != '' %}
+          <a data-id="2" href="{{ all_products[block.settings.product_two].url }}" style="left:{{ block.settings.product_two_x }}%; top:{{ block.settings.product_two_y }}%; ">2</a>
+          {% endif %}
+          {% if block.settings.product_three != '' %}
+          <a data-id="3" href="{{ all_products[block.settings.product_three].url }}" style="left:{{ block.settings.product_three_x }}%; top:{{ block.settings.product_three_y }}%; ">3</a>
+          {% endif %}
+          {% if block.settings.product_four != '' %}
+          <a data-id="4" href="{{ all_products[block.settings.product_four].url }}" style="left:{{ block.settings.product_four_x }}%; top:{{ block.settings.product_four_y }}%; ">4</a>
+          {% endif %}
+          {{ block.settings.collab_image | img_url: '1024x' | img_tag }}
+        </div>
+      </div>
+      <div class="product-collab-block-lower">
+        <div>
+          <button class="view-as-images">View as Images</button>
+          <button class="view-as-text">View as Text</button>
+          <a href="{{ featured_collection.url }}">Shop Collection</a>
+          <button class="back">Back</button>
+        </div>
+        <span class="product-collab-counter">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}/{% if section.blocks.size < 10 %}0{% endif %}{{ section.blocks.size }}</span>
+      </div>
+      
+    </div> 
+  {% endfor %}
+	
+</div>
+
+{% schema %}
+{
+  "name": "Products",
+  "settings": [
+    {
+      "id": "collab_collection",
+      "type": "collection",
+      "label": "Collection"
+    },
+    {
+      "id": "show_numbers",
+      "type": "checkbox",
+      "label": "Show Numbers (uncheck before publishing)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "select",
+      "name": "Product",
+      "settings": [
+        {
+          "id": "collab_image",
+          "type": "image_picker",
+       		"label": "Select Image"
+        },
+        {
+          "id": "product_one",
+          "type": "product",
+       		"label": "Product 1"
+        },
+        {
+          "type": "range",
+          "id": "product_one_x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Product One Label X Position",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "product_one_y",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Product One Label Y Position",
+          "default": 16
+        },
+        {
+          "id": "product_two",
+          "type": "product",
+       		"label": "Product 2"
+        },
+        {
+          "type": "range",
+          "id": "product_two_x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Product Two Label X Position",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "product_two_y",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Product Two Label Y Position",
+          "default": 16
+        },
+        {
+          "id": "product_three",
+          "type": "product",
+       		"label": "Product 3"
+        },
+        {
+          "type": "range",
+          "id": "product_three_x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Product Three Label X Position",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "product_three_y",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Product Three Label Y Position",
+          "default": 16
+        },
+        {
+          "id": "product_four",
+          "type": "product",
+       		"label": "Product 4"
+        },
+        {
+          "type": "range",
+          "id": "product_four_x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Product Four Label X Position",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "product_four_y",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Product Four Label Y Position",
+          "default": 16
+        }
+        
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Blocks",
+      "category": "Product",
+      "blocks": [
+        { 
+          "type": "select"
+        },
+        {
+          "type": "select"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
