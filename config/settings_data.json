@@ -150,7 +150,7 @@
     "footer_text_color": "#fff",
     "footer_menu_1": "footer",
     "footer_menu_2": "",
-    "home_enable_video": false,
+    "home_enable_video": true,
     "home_video_mp4": "\/\/cdn.shopify.com\/s\/files\/1\/0007\/2918\/6359\/t\/1\/assets\/subway.mp4?6890511868323837192",
     "home_video_ogv": "\/\/cdn.shopify.com\/s\/files\/1\/0007\/2918\/6359\/t\/1\/assets\/subway.ogv?5276688145104987887",
     "home_video_webm": "\/\/cdn.shopify.com\/s\/files\/1\/0007\/2918\/6359\/t\/1\/assets\/subway.webm?5276688145104987887",
